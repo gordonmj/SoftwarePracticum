@@ -18,6 +18,7 @@ class InsertionSort{
             if (split[i].equals("")) continue;
             bW.write("listHead-->(");
             Node newNode = new Node(split[i]);
+            System.out.println(split[i]);
             Node walker = list.ListHead;
             while (walker.next != null && walker.next.data.compareTo(newNode.data) < 0){
               walker = walker.next;

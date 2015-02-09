@@ -1,0 +1,238 @@
+listHead-->(dummy, CS731)-->(CS731, NULL)-->NULL
+
+listHead-->(dummy, CS731)-->(CS731, Spring2015)-->(Spring2015, NULL)-->NULL
+
+listHead-->(dummy, Basic)-->(Basic, CS731)-->(CS731, Spring2015)-->(Spring2015, NULL)-->NULL
+
+listHead-->(dummy, Basic)-->(Basic, C++)-->(C++, CS731)-->(CS731, Spring2015)-->(Spring2015, NULL)-->NULL
+
+listHead-->(dummy, Basic)-->(Basic, C++)-->(C++, CS731)-->(CS731, Java)-->(Java, Spring2015)
+-->(Spring2015, NULL)-->NULL
+
+listHead-->(dummy, Basic)-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)-->(IO, Java)
+-->(Java, Spring2015)-->(Spring2015, NULL)-->NULL
+
+listHead-->(dummy, Basic)-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)-->(IO, Java)
+-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, NULL)-->NULL
+
+listHead-->(dummy, Basic)-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)-->(IO, Java)
+-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, declare)-->(declare, NULL)-->NULL
+
+listHead-->(dummy, Basic)-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)-->(IO, Java)
+-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, a)-->(a, declare)-->(declare, NULL)-->NULL
+
+listHead-->(dummy, Basic)-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)-->(IO, Java)
+-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, a)-->(a, declare)-->(declare, one)
+-->(one, NULL)-->NULL
+
+listHead-->(dummy, Basic)-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)-->(IO, Java)
+-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, a)-->(a, declare)-->(declare, dimensional)
+-->(dimensional, one)-->(one, NULL)-->NULL
+
+listHead-->(dummy, 1D)-->(1D, Basic)-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)
+-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, a)-->(a, declare)
+-->(declare, dimensional)-->(dimensional, one)-->(one, NULL)-->NULL
+
+listHead-->(dummy, 1D)-->(1D, Basic)-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)
+-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, a)-->(a, declare)
+-->(declare, dimensional)-->(dimensional, integer)-->(integer, one)-->(one, NULL)-->NULL
+
+listHead-->(dummy, 1D)-->(1D, Basic)-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)
+-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, a)-->(a, array)
+-->(array, declare)-->(declare, dimensional)-->(dimensional, integer)-->(integer, one)-->(one, NULL)-->NULL
+
+listHead-->(dummy, 1D)-->(1D, Basic)-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)
+-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, a)-->(a, array)
+-->(array, declare)-->(declare, dimensional)-->(dimensional, integer)-->(integer, of)-->(of, one)
+-->(one, NULL)-->NULL
+
+listHead-->(dummy, 1D)-->(1D, Basic)-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)
+-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, a)-->(a, array)
+-->(array, declare)-->(declare, dimensional)-->(dimensional, integer)-->(integer, of)-->(of, one)
+-->(one, size)-->(size, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 1D)-->(1D, Basic)-->(Basic, C++)-->(C++, CS731)
+-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, a)
+-->(a, array)-->(array, declare)-->(declare, dimensional)-->(dimensional, integer)-->(integer, of)
+-->(of, one)-->(one, size)-->(size, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 1D)-->(1D, Basic)-->(Basic, C++)-->(C++, CS731)
+-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, a)
+-->(a, array)-->(array, declare)-->(declare, dimensional)-->(dimensional, integer)-->(integer, let)
+-->(let, of)-->(of, one)-->(one, size)-->(size, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 1D)-->(1D, Basic)-->(Basic, C++)-->(C++, CS731)
+-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, a)
+-->(a, array)-->(array, declare)-->(declare, dimensional)-->(dimensional, integer)-->(integer, let)
+-->(let, of)-->(of, one)-->(one, size)-->(size, the)-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 1D)-->(1D, Basic)-->(Basic, C++)-->(C++, CS731)
+-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, a)
+-->(a, array)-->(array, array)-->(array, declare)-->(declare, dimensional)-->(dimensional, integer)
+-->(integer, let)-->(let, of)-->(of, one)-->(one, size)-->(size, the)
+-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 1D)-->(1D, Basic)-->(Basic, C++)-->(C++, CS731)
+-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, a)
+-->(a, array)-->(array, array)-->(array, be)-->(be, declare)-->(declare, dimensional)
+-->(dimensional, integer)-->(integer, let)-->(let, of)-->(of, one)-->(one, size)
+-->(size, the)-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 1D)-->(1D, Basic)-->(Basic, C++)-->(C++, CS731)
+-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, a)
+-->(a, array)-->(array, array)-->(array, be)-->(be, declare)-->(declare, dimensional)
+-->(dimensional, integer)-->(integer, let)-->(let, named)-->(named, of)-->(of, one)
+-->(one, size)-->(size, the)-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 1D)-->(1D, Basic)-->(Basic, C++)-->(C++, CS731)
+-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, a)
+-->(a, array)-->(array, array)-->(array, be)-->(be, declare)-->(declare, dimensional)
+-->(dimensional, integer)-->(integer, integerData)-->(integerData, let)-->(let, named)-->(named, of)
+-->(of, one)-->(one, size)-->(size, the)-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 1D)-->(1D, Basic)-->(Basic, C++)-->(C++, CS731)
+-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, Statically)
+-->(Statically, a)-->(a, array)-->(array, array)-->(array, be)-->(be, declare)
+-->(declare, dimensional)-->(dimensional, integer)-->(integer, integerData)-->(integerData, let)-->(let, named)
+-->(named, of)-->(of, one)-->(one, size)-->(size, the)-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 1D)-->(1D, Basic)-->(Basic, C++)-->(C++, CS731)
+-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, Statically)
+-->(Statically, a)-->(a, array)-->(array, array)-->(array, be)-->(be, declare)
+-->(declare, declare)-->(declare, dimensional)-->(dimensional, integer)-->(integer, integerData)-->(integerData, let)
+-->(let, named)-->(named, of)-->(of, one)-->(one, size)-->(size, the)
+-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 1D)-->(1D, Basic)-->(Basic, C++)-->(C++, CS731)
+-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)-->(Statically, Statically)
+-->(Statically, a)-->(a, a)-->(a, array)-->(array, array)-->(array, be)
+-->(be, declare)-->(declare, declare)-->(declare, dimensional)-->(dimensional, integer)-->(integer, integerData)
+-->(integerData, let)-->(let, named)-->(named, of)-->(of, one)-->(one, size)
+-->(size, the)-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 1D)-->(1D, 1D)-->(1D, Basic)-->(Basic, C++)
+-->(C++, CS731)-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)
+-->(Statically, Statically)-->(Statically, a)-->(a, a)-->(a, array)-->(array, array)
+-->(array, be)-->(be, declare)-->(declare, declare)-->(declare, dimensional)-->(dimensional, integer)
+-->(integer, integerData)-->(integerData, let)-->(let, named)-->(named, of)-->(of, one)
+-->(one, size)-->(size, the)-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 1D)-->(1D, 1D)-->(1D, Basic)-->(Basic, C++)
+-->(C++, CS731)-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)
+-->(Statically, Statically)-->(Statically, a)-->(a, a)-->(a, array)-->(array, array)
+-->(array, be)-->(be, character)-->(character, declare)-->(declare, declare)-->(declare, dimensional)
+-->(dimensional, integer)-->(integer, integerData)-->(integerData, let)-->(let, named)-->(named, of)
+-->(of, one)-->(one, size)-->(size, the)-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 1D)-->(1D, 1D)-->(1D, Basic)-->(Basic, C++)
+-->(C++, CS731)-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)
+-->(Statically, Statically)-->(Statically, a)-->(a, a)-->(a, array)-->(array, array)
+-->(array, array)-->(array, be)-->(be, character)-->(character, declare)-->(declare, declare)
+-->(declare, dimensional)-->(dimensional, integer)-->(integer, integerData)-->(integerData, let)-->(let, named)
+-->(named, of)-->(of, one)-->(one, size)-->(size, the)-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 1D)-->(1D, 1D)-->(1D, Basic)-->(Basic, C++)
+-->(C++, CS731)-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)
+-->(Statically, Statically)-->(Statically, a)-->(a, a)-->(a, array)-->(array, array)
+-->(array, array)-->(array, be)-->(be, character)-->(character, declare)-->(declare, declare)
+-->(declare, dimensional)-->(dimensional, integer)-->(integer, integerData)-->(integerData, let)-->(let, named)
+-->(named, of)-->(of, of)-->(of, one)-->(one, size)-->(size, the)
+-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 1D)-->(1D, 1D)-->(1D, Basic)-->(Basic, C++)
+-->(C++, CS731)-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)-->(Spring2015, Statically)
+-->(Statically, Statically)-->(Statically, a)-->(a, a)-->(a, array)-->(array, array)
+-->(array, array)-->(array, be)-->(be, character)-->(character, declare)-->(declare, declare)
+-->(declare, dimensional)-->(dimensional, integer)-->(integer, integerData)-->(integerData, let)-->(let, named)
+-->(named, of)-->(of, of)-->(of, one)-->(one, size)-->(size, size)
+-->(size, the)-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 100)-->(100, 1D)-->(1D, 1D)-->(1D, Basic)
+-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)
+-->(Spring2015, Statically)-->(Statically, Statically)-->(Statically, a)-->(a, a)-->(a, array)
+-->(array, array)-->(array, array)-->(array, be)-->(be, character)-->(character, declare)
+-->(declare, declare)-->(declare, dimensional)-->(dimensional, integer)-->(integer, integerData)-->(integerData, let)
+-->(let, named)-->(named, of)-->(of, of)-->(of, one)-->(one, size)
+-->(size, size)-->(size, the)-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 100)-->(100, 1D)-->(1D, 1D)-->(1D, Basic)
+-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)
+-->(Spring2015, Statically)-->(Statically, Statically)-->(Statically, a)-->(a, a)-->(a, array)
+-->(array, array)-->(array, array)-->(array, be)-->(be, character)-->(character, declare)
+-->(declare, declare)-->(declare, dimensional)-->(dimensional, integer)-->(integer, integerData)-->(integerData, let)
+-->(let, let)-->(let, named)-->(named, of)-->(of, of)-->(of, one)
+-->(one, size)-->(size, size)-->(size, the)-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 100)-->(100, 1D)-->(1D, 1D)-->(1D, Basic)
+-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)
+-->(Spring2015, Statically)-->(Statically, Statically)-->(Statically, a)-->(a, a)-->(a, array)
+-->(array, array)-->(array, array)-->(array, be)-->(be, character)-->(character, declare)
+-->(declare, declare)-->(declare, dimensional)-->(dimensional, integer)-->(integer, integerData)-->(integerData, let)
+-->(let, let)-->(let, named)-->(named, of)-->(of, of)-->(of, one)
+-->(one, size)-->(size, size)-->(size, the)-->(the, the)-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 100)-->(100, 1D)-->(1D, 1D)-->(1D, Basic)
+-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)
+-->(Spring2015, Statically)-->(Statically, Statically)-->(Statically, a)-->(a, a)-->(a, array)
+-->(array, array)-->(array, array)-->(array, array)-->(array, be)-->(be, character)
+-->(character, declare)-->(declare, declare)-->(declare, dimensional)-->(dimensional, integer)-->(integer, integerData)
+-->(integerData, let)-->(let, let)-->(let, named)-->(named, of)-->(of, of)
+-->(of, one)-->(one, size)-->(size, size)-->(size, the)-->(the, the)
+-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 100)-->(100, 1D)-->(1D, 1D)-->(1D, Basic)
+-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)
+-->(Spring2015, Statically)-->(Statically, Statically)-->(Statically, a)-->(a, a)-->(a, array)
+-->(array, array)-->(array, array)-->(array, array)-->(array, be)-->(be, be)
+-->(be, character)-->(character, declare)-->(declare, declare)-->(declare, dimensional)-->(dimensional, integer)
+-->(integer, integerData)-->(integerData, let)-->(let, let)-->(let, named)-->(named, of)
+-->(of, of)-->(of, one)-->(one, size)-->(size, size)-->(size, the)
+-->(the, the)-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 100)-->(100, 1D)-->(1D, 1D)-->(1D, Basic)
+-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)
+-->(Spring2015, Statically)-->(Statically, Statically)-->(Statically, a)-->(a, a)-->(a, array)
+-->(array, array)-->(array, array)-->(array, array)-->(array, be)-->(be, be)
+-->(be, character)-->(character, declare)-->(declare, declare)-->(declare, dimensional)-->(dimensional, integer)
+-->(integer, integerData)-->(integerData, let)-->(let, let)-->(let, named)-->(named, named)
+-->(named, of)-->(of, of)-->(of, one)-->(one, size)-->(size, size)
+-->(size, the)-->(the, the)-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 100)-->(100, 1D)-->(1D, 1D)-->(1D, Basic)
+-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)
+-->(Spring2015, Statically)-->(Statically, Statically)-->(Statically, a)-->(a, a)-->(a, array)
+-->(array, array)-->(array, array)-->(array, array)-->(array, be)-->(be, be)
+-->(be, character)-->(character, characterData)-->(characterData, declare)-->(declare, declare)-->(declare, dimensional)
+-->(dimensional, integer)-->(integer, integerData)-->(integerData, let)-->(let, let)-->(let, named)
+-->(named, named)-->(named, of)-->(of, of)-->(of, one)-->(one, size)
+-->(size, size)-->(size, the)-->(the, the)-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 100)-->(100, 1D)-->(1D, 1D)-->(1D, Basic)
+-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)
+-->(Spring2015, Statically)-->(Statically, Statically)-->(Statically, a)-->(a, a)-->(a, array)
+-->(array, array)-->(array, array)-->(array, array)-->(array, be)-->(be, be)
+-->(be, character)-->(character, characterData)-->(characterData, declare)-->(declare, declare)-->(declare, dimensional)
+-->(dimensional, int)-->(int, integer)-->(integer, integerData)-->(integerData, let)-->(let, let)
+-->(let, named)-->(named, named)-->(named, of)-->(of, of)-->(of, one)
+-->(one, size)-->(size, size)-->(size, the)-->(the, the)-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 100)-->(100, 1D)-->(1D, 1D)-->(1D, Basic)
+-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)
+-->(Spring2015, Statically)-->(Statically, Statically)-->(Statically, a)-->(a, a)-->(a, array)
+-->(array, array)-->(array, array)-->(array, array)-->(array, be)-->(be, be)
+-->(be, character)-->(character, characterData)-->(characterData, declare)-->(declare, declare)-->(declare, dimensional)
+-->(dimensional, int)-->(int, intItem)-->(intItem, integer)-->(integer, integerData)-->(integerData, let)
+-->(let, let)-->(let, named)-->(named, named)-->(named, of)-->(of, of)
+-->(of, one)-->(one, size)-->(size, size)-->(size, the)-->(the, the)
+-->(the, NULL)-->NULL
+
+listHead-->(dummy, 100)-->(100, 100)-->(100, 1D)-->(1D, 1D)-->(1D, Basic)
+-->(Basic, C++)-->(C++, CS731)-->(CS731, IO)-->(IO, Java)-->(Java, Spring2015)
+-->(Spring2015, Statically)-->(Statically, Statically)-->(Statically, a)-->(a, a)-->(a, array)
+-->(array, array)-->(array, array)-->(array, array)-->(array, be)-->(be, be)
+-->(be, character)-->(character, characterData)-->(characterData, declare)-->(declare, declare)-->(declare, dimensional)
+-->(dimensional, inFile)-->(inFile, int)-->(int, intItem)-->(intItem, integer)-->(integer, integerData)
+-->(integerData, let)-->(let, let)-->(let, named)-->(named, named)-->(named, of)
+-->(of, of)-->(of, one)-->(one, size)-->(size, size)-->(size, the)
+-->(the, the)-->(the, NULL)-->NULL
+
