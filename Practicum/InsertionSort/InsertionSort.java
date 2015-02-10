@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Scanner;
 
 class InsertionSort{
   public static LinkedList list = new LinkedList();
@@ -7,18 +8,16 @@ class InsertionSort{
     try{
        File in = new File(args[0]);
        File out = new File(args[1]);
-       FileReader fR = new FileReader(in);
        FileOutputStream fOS = new FileOutputStream(out);
-       BufferedReader bR = new BufferedReader(fR);
        BufferedWriter bW = new BufferedWriter(new OutputStreamWriter(fOS));
-       String line;
-       while((line = bR.readLine()) != null){
-          String[] split = line.split("\\s+?");
-          for (int i=0;i<split.length;i++){
-            if (split[i].equals("")) continue;
+
+       Scanner sc = new Scanner(in).useDelimiter("\\s+?");
+       while(sc.hasNext()){
+    	   	String word = sc.next();
+            if (word.equals("")) continue;
             bW.write("listHead-->(");
-            Node newNode = new Node(split[i]);
-            System.out.println(split[i]);
+            Node newNode = new Node(word);
+            System.out.println(word);
             Node walker = list.ListHead;
             while (walker.next != null && walker.next.data.compareTo(newNode.data) < 0){
               walker = walker.next;
@@ -34,10 +33,9 @@ class InsertionSort{
              count++;
            }
            bW.write(walker2.data+", NULL)-->NULL\n\n");
-        }//for
       }//while
-     fR.close();
-     bW.close();
+       sc.close();
+       bW.close();
    }//try
    catch (IOException e){
      e.printStackTrace();
