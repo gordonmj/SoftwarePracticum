@@ -11,13 +11,12 @@ class InsertionSort{
        FileOutputStream fOS = new FileOutputStream(out);
        BufferedWriter bW = new BufferedWriter(new OutputStreamWriter(fOS));
 
-       Scanner sc = new Scanner(in).useDelimiter("\\s+?");
+       Scanner sc = new Scanner(in);
        while(sc.hasNext()){
     	   	String word = sc.next();
             if (word.equals("")) continue;
             bW.write("listHead-->(");
             Node newNode = new Node(word);
-            System.out.println(word);
             Node walker = list.ListHead;
             while (walker.next != null && walker.next.data.compareTo(newNode.data) < 0){
               walker = walker.next;
