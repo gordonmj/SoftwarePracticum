@@ -1,3 +1,23 @@
-This repo is for assignments/projects I will be creating for my Software Practicum (capstone requirement for my C.S. Master's). All projects are likely to have a C++ version as well.
+Insertion Sort using linked list
 
-First assignment was to write an insertion sort program (with a few little challenges thrown in).
+Algorithm steps:
+Step 2.0: prepareing everything, including a initialize linked list with a dummy node
+
+Step 2.1: charString  get a word from the file
+Step 2.2: newNode  make a new node
+Step 2.3: assign charString to newNode
+Step 2.4: walker  listHead
+Step 2.5: if walker.next != NULL && walker.charString less than charString
+            walker  walker.next
+Step 2.6: repeat step 2.5 until condition failed
+Step 2.7:  newNode.next = walker.next
+            walker.next = newNode
+Step 2.8: print the linked list with the format given below:
+
+listHead -->(dummy, next)-->(charString, next) -->(charString, next) -->(charString, next)
+-->(charString, next)--> ...... --> -->(charString, next)--> NULL
+
+             // where next is the charString of the next node (or NULL) the current node
+            // is pointed to.
+
+Step 2.9: repeat step 2.1 to step 2.8 until the file is empty
