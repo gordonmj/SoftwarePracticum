@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 namespace QTFormApp
 {
@@ -35,6 +36,13 @@ namespace QTFormApp
         {
             clicked = "drawBlackNode";
             MessageBox.Show("Double click anywhere on the panel to draw a black node.");
+
+        }
+
+        private void drawGreyNodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clicked = "drawGreyNode";
+            MessageBox.Show("Double click anywhere on the panel to draw a grey node.");
 
         }
 
@@ -71,6 +79,7 @@ namespace QTFormApp
             Graphics graphic_obj = canvas.CreateGraphics();
             Brush black = new SolidBrush(Color.Black);
             Pen border = new Pen(black, 1);
+
             switch (clicked)
             {
                 case "drawWhiteNode":
@@ -78,6 +87,15 @@ namespace QTFormApp
                     break;
                 case "drawBlackNode":
                     graphic_obj.FillEllipse(black, new Rectangle(whereClicked, new Size(50, 25)));
+                    break;
+                case "drawGreyNode":
+                    LinearGradientBrush lgb = new LinearGradientBrush(
+                    whereClicked,
+                    new Point(whereClicked.X + 50, whereClicked.Y),
+                    Color.FromArgb(255, 255, 255),
+                    Color.FromArgb(0, 0, 0));
+                    Pen gradientPen = new Pen(lgb);
+                    graphic_obj.FillEllipse(lgb, new Rectangle(whereClicked, new Size(50, 25)));
                     break;
 
                 default:
@@ -89,6 +107,7 @@ namespace QTFormApp
         {
 
         }
+
 
     }
 }
