@@ -41,6 +41,8 @@
             this.drawRandomNodetoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.canvas = new System.Windows.Forms.Panel();
+            this.drawArrowtoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.drawWholeTreetoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -98,7 +100,9 @@
             this.drawWhiteNodeToolStripMenuItem,
             this.drawBlackNodeToolStripMenuItem,
             this.drawGreyNodetoComeToolStripMenuItem,
-            this.drawRandomNodetoComeToolStripMenuItem});
+            this.drawRandomNodetoComeToolStripMenuItem,
+            this.drawArrowtoComeToolStripMenuItem,
+            this.drawWholeTreetoComeToolStripMenuItem});
             this.drawToolStripMenuItem.Name = "drawToolStripMenuItem";
             this.drawToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.drawToolStripMenuItem.Text = "Draw";
@@ -148,6 +152,18 @@
             this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
             this.canvas.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseDoubleClick);
             // 
+            // drawArrowtoComeToolStripMenuItem
+            // 
+            this.drawArrowtoComeToolStripMenuItem.Name = "drawArrowtoComeToolStripMenuItem";
+            this.drawArrowtoComeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.drawArrowtoComeToolStripMenuItem.Text = "Draw arrow <to come>";
+            // 
+            // drawWholeTreetoComeToolStripMenuItem
+            // 
+            this.drawWholeTreetoComeToolStripMenuItem.Name = "drawWholeTreetoComeToolStripMenuItem";
+            this.drawWholeTreetoComeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.drawWholeTreetoComeToolStripMenuItem.Text = "Draw whole tree <to come>";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -158,7 +174,8 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "QuadTree Painter";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -182,6 +199,8 @@
         private System.Windows.Forms.ToolStripMenuItem drawBlackNodeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drawGreyNodetoComeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drawRandomNodetoComeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem drawArrowtoComeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem drawWholeTreetoComeToolStripMenuItem;
     }
 }
 
