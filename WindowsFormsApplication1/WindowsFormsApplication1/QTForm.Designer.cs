@@ -34,12 +34,12 @@
             this.inputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.toComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.opentoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.savetoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAstoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.atCoordinatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.randomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.drawArrowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.atCoordinatesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.tofromGivenNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.drawEntireTreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,6 +58,9 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.opentoComeToolStripMenuItem,
+            this.savetoComeToolStripMenuItem,
+            this.saveAstoComeToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -68,9 +71,12 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // inputToolStripMenuItem
             // 
+            this.inputToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toComeToolStripMenuItem});
             this.inputToolStripMenuItem.Name = "inputToolStripMenuItem";
             this.inputToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.inputToolStripMenuItem.Text = "Input";
@@ -78,9 +84,7 @@
             // drawToolStripMenuItem
             // 
             this.drawToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.drawNodeToolStripMenuItem,
-            this.drawArrowToolStripMenuItem,
-            this.drawEntireTreeToolStripMenuItem});
+            this.drawNodeToolStripMenuItem});
             this.drawToolStripMenuItem.Name = "drawToolStripMenuItem";
             this.drawToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.drawToolStripMenuItem.Text = "Draw";
@@ -88,50 +92,41 @@
             // drawNodeToolStripMenuItem
             // 
             this.drawNodeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.atCoordinatesToolStripMenuItem,
-            this.randomToolStripMenuItem});
+            this.atCoordinatesToolStripMenuItem});
             this.drawNodeToolStripMenuItem.Name = "drawNodeToolStripMenuItem";
-            this.drawNodeToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.drawNodeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.drawNodeToolStripMenuItem.Text = "Draw node";
+            this.drawNodeToolStripMenuItem.Click += new System.EventHandler(this.drawNodeToolStripMenuItem_Click);
+            // 
+            // toComeToolStripMenuItem
+            // 
+            this.toComeToolStripMenuItem.Name = "toComeToolStripMenuItem";
+            this.toComeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.toComeToolStripMenuItem.Text = "<To come>";
+            // 
+            // opentoComeToolStripMenuItem
+            // 
+            this.opentoComeToolStripMenuItem.Name = "opentoComeToolStripMenuItem";
+            this.opentoComeToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.opentoComeToolStripMenuItem.Text = "Open <to come>";
+            // 
+            // savetoComeToolStripMenuItem
+            // 
+            this.savetoComeToolStripMenuItem.Name = "savetoComeToolStripMenuItem";
+            this.savetoComeToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.savetoComeToolStripMenuItem.Text = "Save <to come>";
+            // 
+            // saveAstoComeToolStripMenuItem
+            // 
+            this.saveAstoComeToolStripMenuItem.Name = "saveAstoComeToolStripMenuItem";
+            this.saveAstoComeToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.saveAstoComeToolStripMenuItem.Text = "Save as <to come>";
             // 
             // atCoordinatesToolStripMenuItem
             // 
             this.atCoordinatesToolStripMenuItem.Name = "atCoordinatesToolStripMenuItem";
             this.atCoordinatesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.atCoordinatesToolStripMenuItem.Text = "At coordinates";
-            // 
-            // randomToolStripMenuItem
-            // 
-            this.randomToolStripMenuItem.Name = "randomToolStripMenuItem";
-            this.randomToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.randomToolStripMenuItem.Text = "Random";
-            // 
-            // drawArrowToolStripMenuItem
-            // 
-            this.drawArrowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.atCoordinatesToolStripMenuItem1,
-            this.tofromGivenNodeToolStripMenuItem});
-            this.drawArrowToolStripMenuItem.Name = "drawArrowToolStripMenuItem";
-            this.drawArrowToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.drawArrowToolStripMenuItem.Text = "Draw arrow";
-            // 
-            // atCoordinatesToolStripMenuItem1
-            // 
-            this.atCoordinatesToolStripMenuItem1.Name = "atCoordinatesToolStripMenuItem1";
-            this.atCoordinatesToolStripMenuItem1.Size = new System.Drawing.Size(181, 22);
-            this.atCoordinatesToolStripMenuItem1.Text = "At coordinates";
-            // 
-            // tofromGivenNodeToolStripMenuItem
-            // 
-            this.tofromGivenNodeToolStripMenuItem.Name = "tofromGivenNodeToolStripMenuItem";
-            this.tofromGivenNodeToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.tofromGivenNodeToolStripMenuItem.Text = "To/from given node";
-            // 
-            // drawEntireTreeToolStripMenuItem
-            // 
-            this.drawEntireTreeToolStripMenuItem.Name = "drawEntireTreeToolStripMenuItem";
-            this.drawEntireTreeToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.drawEntireTreeToolStripMenuItem.Text = "Draw entire tree";
             // 
             // Form1
             // 
@@ -157,12 +152,12 @@
         private System.Windows.Forms.ToolStripMenuItem inputToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drawToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drawNodeToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.ToolStripMenuItem opentoComeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem savetoComeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAstoComeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toComeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem atCoordinatesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem randomToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem drawArrowToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem atCoordinatesToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem tofromGivenNodeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem drawEntireTreeToolStripMenuItem;
     }
 }
 

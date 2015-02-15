@@ -16,5 +16,16 @@ namespace WindowsFormsApplication1
         {
             InitializeComponent();
         }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void drawNodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form inputBox = new Form();
+            inputBox.ShowDialog();
+        }
     }
 }
