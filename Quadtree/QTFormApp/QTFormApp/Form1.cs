@@ -15,6 +15,7 @@ namespace QTFormApp
     {
         private String clicked;
         public Point coords;
+        public Point firstClick;
 
         public Form1()
         {
@@ -46,6 +47,13 @@ namespace QTFormApp
 
         }
 
+        private void drawArrowtoComeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clicked = "drawArrow";
+            MessageBox.Show("Double click on two points on the panel to draw an arrow.");
+
+        }
+
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             if (e.GetType() == typeof(MouseEventArgs))
@@ -55,21 +63,7 @@ namespace QTFormApp
             }
         }
 
-        private void canvas_Paint(object sender, PaintEventArgs e)
-        {
-            //Graphics graphic_obj = canvas.CreateGraphics();
-            //Brush black = new SolidBrush(Color.Black);
-            //Pen border = new Pen(black, 1);
-            //switch (clicked)
-            //{
-            //    case "drawNode":
-            //        graphic_obj.DrawEllipse(border, new Rectangle(new Point(50, 50), new Size(50, 25)));
-            //        break;
-
-            //    default:
-            //        break;
-            //}
-        }
+        private void canvas_Paint(object sender, PaintEventArgs e){}
 
         private void canvas_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -97,7 +91,15 @@ namespace QTFormApp
                     Pen gradientPen = new Pen(lgb);
                     graphic_obj.FillEllipse(lgb, new Rectangle(whereClicked, new Size(50, 25)));
                     break;
-
+                case "drawArrow":
+                    clicked = "finishArrow";
+                    firstClick = whereClicked;
+                    break;
+                case "finishArrow":
+                    Pen arrow = new Pen(black, 1);
+                    arrow.EndCap = LineCap.ArrowAnchor;
+                    graphic_obj.DrawLine(arrow,firstClick,whereClicked);
+                    break;
                 default:
                     break;
             }
@@ -107,7 +109,6 @@ namespace QTFormApp
         {
 
         }
-
 
     }
 }

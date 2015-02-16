@@ -100,8 +100,8 @@
             this.drawWhiteNodeToolStripMenuItem,
             this.drawBlackNodeToolStripMenuItem,
             this.drawGreyNodeToolStripMenuItem,
-            this.drawRandomNodetoComeToolStripMenuItem,
             this.drawArrowtoComeToolStripMenuItem,
+            this.drawRandomNodetoComeToolStripMenuItem,
             this.drawWholeTreetoComeToolStripMenuItem});
             this.drawToolStripMenuItem.Name = "drawToolStripMenuItem";
             this.drawToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
@@ -139,6 +139,7 @@
             this.drawArrowtoComeToolStripMenuItem.Name = "drawArrowtoComeToolStripMenuItem";
             this.drawArrowtoComeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
             this.drawArrowtoComeToolStripMenuItem.Text = "Draw arrow <to come>";
+            this.drawArrowtoComeToolStripMenuItem.Click += new System.EventHandler(this.drawArrowtoComeToolStripMenuItem_Click);
             // 
             // drawWholeTreetoComeToolStripMenuItem
             // 
