@@ -73,11 +73,11 @@ namespace QTFormApp
             Graphics graphic_obj = canvas.CreateGraphics();
             Brush black = new SolidBrush(Color.Black);
             Pen border = new Pen(black, 1);
-
+            Brush white = new SolidBrush(Color.White);
             switch (clicked)
             {
                 case "drawWhiteNode":
-                    graphic_obj.DrawEllipse(border, new Rectangle(whereClicked, new Size(50, 25)));
+                    graphic_obj.FillEllipse(white, new Rectangle(whereClicked, new Size(50, 25)));
                     break;
                 case "drawBlackNode":
                     graphic_obj.FillEllipse(black, new Rectangle(whereClicked, new Size(50, 25)));
@@ -88,6 +88,12 @@ namespace QTFormApp
                     new Point(whereClicked.X + 50, whereClicked.Y),
                     Color.FromArgb(255, 255, 255),
                     Color.FromArgb(0, 0, 0));
+                    float[] intensities = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+                    float[] positions = { 0.0f, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f };
+                    Blend blend = new Blend();
+                    blend.Factors = intensities;
+                    blend.Positions = positions;
+                    lgb.Blend = blend;
                     Pen gradientPen = new Pen(lgb);
                     graphic_obj.FillEllipse(lgb, new Rectangle(whereClicked, new Size(50, 25)));
                     break;
@@ -96,7 +102,7 @@ namespace QTFormApp
                     firstClick = whereClicked;
                     break;
                 case "finishArrow":
-                    Pen arrow = new Pen(black, 1);
+                    Pen arrow = new Pen(black, 3);
                     arrow.EndCap = LineCap.ArrowAnchor;
                     graphic_obj.DrawLine(arrow,firstClick,whereClicked);
                     break;

@@ -138,7 +138,7 @@
             // 
             this.drawArrowtoComeToolStripMenuItem.Name = "drawArrowtoComeToolStripMenuItem";
             this.drawArrowtoComeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
-            this.drawArrowtoComeToolStripMenuItem.Text = "Draw arrow <to come>";
+            this.drawArrowtoComeToolStripMenuItem.Text = "Draw arrow";
             this.drawArrowtoComeToolStripMenuItem.Click += new System.EventHandler(this.drawArrowtoComeToolStripMenuItem_Click);
             // 
             // drawWholeTreetoComeToolStripMenuItem
@@ -158,7 +158,7 @@
             // 
             // canvas
             // 
-            this.canvas.BackColor = System.Drawing.SystemColors.Window;
+            this.canvas.BackColor = System.Drawing.Color.Gainsboro;
             this.canvas.Location = new System.Drawing.Point(0, 27);
             this.canvas.Name = "canvas";
             this.canvas.Size = new System.Drawing.Size(284, 236);
