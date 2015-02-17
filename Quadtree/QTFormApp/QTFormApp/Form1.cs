@@ -16,6 +16,9 @@ namespace QTFormApp
         private String clicked;
         public Point coords;
         public Point firstClick;
+        public string fileName;
+        public int nodeW = 50;
+        public int nodeH = 25;
 
         public Form1()
         {
@@ -77,10 +80,10 @@ namespace QTFormApp
             switch (clicked)
             {
                 case "drawWhiteNode":
-                    graphic_obj.FillEllipse(white, new Rectangle(whereClicked, new Size(50, 25)));
+                    graphic_obj.FillEllipse(white, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
                     break;
                 case "drawBlackNode":
-                    graphic_obj.FillEllipse(black, new Rectangle(whereClicked, new Size(50, 25)));
+                    graphic_obj.FillEllipse(black, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
                     break;
                 case "drawGreyNode":
                     LinearGradientBrush lgb = new LinearGradientBrush(
@@ -95,7 +98,7 @@ namespace QTFormApp
                     blend.Positions = positions;
                     lgb.Blend = blend;
                     Pen gradientPen = new Pen(lgb);
-                    graphic_obj.FillEllipse(lgb, new Rectangle(whereClicked, new Size(50, 25)));
+                    graphic_obj.FillEllipse(lgb, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
                     break;
                 case "drawArrow":
                     clicked = "finishArrow";
@@ -113,6 +116,37 @@ namespace QTFormApp
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
+        }
+
+        private void opentoComeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog oFD = new OpenFileDialog();
+            oFD.Filter = "Plaintext Files|*.txt";
+            oFD.Title = "Select a Plaintext File";
+
+            if (oFD.ShowDialog() == DialogResult.OK)
+            {
+                fileName = oFD.FileName;
+            }
+        }
+
+        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void drawMaptoComeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            string[] lines = System.IO.File.ReadAllLines(@fileName);
+            char[] delims = { ' ', '\n' };
+            string[] firstLine = lines[0].Split(delims);
+            int numRows = Convert.ToInt32(firstLine[0]);
+            int numCols = Convert.ToInt32(firstLine[1]);
+            int maxVal = Convert.ToInt32(firstLine[2]);
+            int minVal = Convert.ToInt32(firstLine[3]);
+//            MessageBox.Show("Number of rows is " + numRows + ", number of colums is " + numCols + ", max value is " + maxVal + ", and min value is " + minVal);
 
         }
 

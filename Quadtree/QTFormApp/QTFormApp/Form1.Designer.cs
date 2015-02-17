@@ -43,6 +43,9 @@
             this.drawWholeTreetoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.canvas = new System.Windows.Forms.Panel();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.drawMaptoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -74,6 +77,7 @@
             this.opentoComeToolStripMenuItem.Name = "opentoComeToolStripMenuItem";
             this.opentoComeToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.opentoComeToolStripMenuItem.Text = "Open <to come>";
+            this.opentoComeToolStripMenuItem.Click += new System.EventHandler(this.opentoComeToolStripMenuItem_Click);
             // 
             // savetoComeToolStripMenuItem
             // 
@@ -102,7 +106,8 @@
             this.drawGreyNodeToolStripMenuItem,
             this.drawArrowtoComeToolStripMenuItem,
             this.drawRandomNodetoComeToolStripMenuItem,
-            this.drawWholeTreetoComeToolStripMenuItem});
+            this.drawWholeTreetoComeToolStripMenuItem,
+            this.drawMaptoComeToolStripMenuItem});
             this.drawToolStripMenuItem.Name = "drawToolStripMenuItem";
             this.drawToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.drawToolStripMenuItem.Text = "Draw";
@@ -166,6 +171,21 @@
             this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
             this.canvas.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseDoubleClick);
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+            // 
+            // drawMaptoComeToolStripMenuItem
+            // 
+            this.drawMaptoComeToolStripMenuItem.Name = "drawMaptoComeToolStripMenuItem";
+            this.drawMaptoComeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.drawMaptoComeToolStripMenuItem.Text = "Draw map <to come>";
+            this.drawMaptoComeToolStripMenuItem.Click += new System.EventHandler(this.drawMaptoComeToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -203,6 +223,9 @@
         private System.Windows.Forms.ToolStripMenuItem drawRandomNodetoComeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drawArrowtoComeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drawWholeTreetoComeToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.ToolStripMenuItem drawMaptoComeToolStripMenuItem;
     }
 }
 
