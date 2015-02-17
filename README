@@ -1,1 +1,7 @@
-This is the README
+This repo is for assignments/projects I will be creating for my Software Practicum (capstone requirement for my C.S. Master's).
+
+It will contain a mix of languages (so far Java, C++, C#).
+
+Assignments so far:
+InsertionSort (implement in Java and C++)
+Quadtree drawing (C# with Visual Studio)

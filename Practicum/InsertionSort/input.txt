@@ -1,6 +1,0 @@
-CS731   Spring2015      Basic C++ Java IO
-Statically declare a one dimensional 1D integer array of size 100
-let the array be named integerData
-Statically declare a 1D character array of size 100
-let the array be named characterData
-int  intItem  inFile
