@@ -38,16 +38,20 @@
             this.drawWhiteNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawBlackNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawGreyNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.drawRandomNodetoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawArrowtoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.drawRandomNodetoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawWholeTreetoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.drawMaptoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.canvas = new System.Windows.Forms.Panel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.drawMaptoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -57,7 +61,7 @@
             this.drawToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(284, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(676, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -133,12 +137,6 @@
             this.drawGreyNodeToolStripMenuItem.Text = "Draw grey node";
             this.drawGreyNodeToolStripMenuItem.Click += new System.EventHandler(this.drawGreyNodeToolStripMenuItem_Click);
             // 
-            // drawRandomNodetoComeToolStripMenuItem
-            // 
-            this.drawRandomNodetoComeToolStripMenuItem.Name = "drawRandomNodetoComeToolStripMenuItem";
-            this.drawRandomNodetoComeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
-            this.drawRandomNodetoComeToolStripMenuItem.Text = "Draw random node <to come>";
-            // 
             // drawArrowtoComeToolStripMenuItem
             // 
             this.drawArrowtoComeToolStripMenuItem.Name = "drawArrowtoComeToolStripMenuItem";
@@ -146,27 +144,31 @@
             this.drawArrowtoComeToolStripMenuItem.Text = "Draw arrow";
             this.drawArrowtoComeToolStripMenuItem.Click += new System.EventHandler(this.drawArrowtoComeToolStripMenuItem_Click);
             // 
+            // drawRandomNodetoComeToolStripMenuItem
+            // 
+            this.drawRandomNodetoComeToolStripMenuItem.Name = "drawRandomNodetoComeToolStripMenuItem";
+            this.drawRandomNodetoComeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.drawRandomNodetoComeToolStripMenuItem.Text = "Draw random node <to come>";
+            // 
             // drawWholeTreetoComeToolStripMenuItem
             // 
             this.drawWholeTreetoComeToolStripMenuItem.Name = "drawWholeTreetoComeToolStripMenuItem";
             this.drawWholeTreetoComeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
             this.drawWholeTreetoComeToolStripMenuItem.Text = "Draw whole tree <to come>";
             // 
-            // pictureBox1
+            // drawMaptoComeToolStripMenuItem
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(0, 27);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(284, 236);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.drawMaptoComeToolStripMenuItem.Name = "drawMaptoComeToolStripMenuItem";
+            this.drawMaptoComeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.drawMaptoComeToolStripMenuItem.Text = "Draw map <to come>";
+            this.drawMaptoComeToolStripMenuItem.Click += new System.EventHandler(this.drawMaptoComeToolStripMenuItem_Click);
             // 
             // canvas
             // 
             this.canvas.BackColor = System.Drawing.Color.Gainsboro;
-            this.canvas.Location = new System.Drawing.Point(0, 27);
+            this.canvas.Location = new System.Drawing.Point(3, 0);
             this.canvas.Name = "canvas";
-            this.canvas.Size = new System.Drawing.Size(284, 236);
+            this.canvas.Size = new System.Drawing.Size(341, 234);
             this.canvas.TabIndex = 2;
             this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
             this.canvas.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseDoubleClick);
@@ -179,20 +181,37 @@
             // 
             this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
             // 
-            // drawMaptoComeToolStripMenuItem
+            // splitContainer1
             // 
-            this.drawMaptoComeToolStripMenuItem.Name = "drawMaptoComeToolStripMenuItem";
-            this.drawMaptoComeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
-            this.drawMaptoComeToolStripMenuItem.Text = "Draw map <to come>";
-            this.drawMaptoComeToolStripMenuItem.Click += new System.EventHandler(this.drawMaptoComeToolStripMenuItem_Click);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 27);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.panel1);
+            this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.canvas);
+            this.splitContainer1.Size = new System.Drawing.Size(676, 234);
+            this.splitContainer1.SplitterDistance = 326;
+            this.splitContainer1.TabIndex = 3;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Gainsboro;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(327, 231);
+            this.panel1.TabIndex = 3;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Controls.Add(this.canvas);
-            this.Controls.Add(this.pictureBox1);
+            this.ClientSize = new System.Drawing.Size(676, 262);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
@@ -200,7 +219,10 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -216,7 +238,6 @@
         private System.Windows.Forms.ToolStripMenuItem saveAstoComeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drawToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drawWhiteNodeToolStripMenuItem;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel canvas;
         private System.Windows.Forms.ToolStripMenuItem drawBlackNodeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drawGreyNodeToolStripMenuItem;
@@ -226,6 +247,8 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem drawMaptoComeToolStripMenuItem;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
