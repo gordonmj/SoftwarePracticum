@@ -33,27 +33,27 @@ namespace QTFormApp
         private void drawWhiteNodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             clicked = "drawWhiteNode";
-            MessageBox.Show("Double click anywhere on the panel to draw a white node.");
+            MessageBox.Show("Double click anywhere on the right panel to draw a white node.");
         }
 
         private void drawBlackNodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             clicked = "drawBlackNode";
-            MessageBox.Show("Double click anywhere on the panel to draw a black node.");
+            MessageBox.Show("Double click anywhere on the right panel to draw a black node.");
 
         }
 
         private void drawGreyNodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             clicked = "drawGreyNode";
-            MessageBox.Show("Double click anywhere on the panel to draw a grey node.");
+            MessageBox.Show("Double click anywhere on the right panel to draw a grey node.");
 
         }
 
         private void drawArrowtoComeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             clicked = "drawArrow";
-            MessageBox.Show("Double click on two points on the panel to draw an arrow.");
+            MessageBox.Show("Double click on two points on the right panel to draw an arrow.");
 
         }
 
