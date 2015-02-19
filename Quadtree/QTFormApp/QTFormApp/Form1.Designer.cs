@@ -39,10 +39,10 @@
             this.drawBlackNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawGreyNodetoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawRandomNodetoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.canvas = new System.Windows.Forms.Panel();
             this.drawArrowtoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawWholeTreetoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.canvas = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -133,6 +133,18 @@
             this.drawRandomNodetoComeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
             this.drawRandomNodetoComeToolStripMenuItem.Text = "Draw random node <to come>";
             // 
+            // drawArrowtoComeToolStripMenuItem
+            // 
+            this.drawArrowtoComeToolStripMenuItem.Name = "drawArrowtoComeToolStripMenuItem";
+            this.drawArrowtoComeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.drawArrowtoComeToolStripMenuItem.Text = "Draw arrow <to come>";
+            // 
+            // drawWholeTreetoComeToolStripMenuItem
+            // 
+            this.drawWholeTreetoComeToolStripMenuItem.Name = "drawWholeTreetoComeToolStripMenuItem";
+            this.drawWholeTreetoComeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.drawWholeTreetoComeToolStripMenuItem.Text = "Draw whole tree <to come>";
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(0, 27);
@@ -151,18 +163,6 @@
             this.canvas.TabIndex = 2;
             this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
             this.canvas.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseDoubleClick);
-            // 
-            // drawArrowtoComeToolStripMenuItem
-            // 
-            this.drawArrowtoComeToolStripMenuItem.Name = "drawArrowtoComeToolStripMenuItem";
-            this.drawArrowtoComeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
-            this.drawArrowtoComeToolStripMenuItem.Text = "Draw arrow <to come>";
-            // 
-            // drawWholeTreetoComeToolStripMenuItem
-            // 
-            this.drawWholeTreetoComeToolStripMenuItem.Name = "drawWholeTreetoComeToolStripMenuItem";
-            this.drawWholeTreetoComeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
-            this.drawWholeTreetoComeToolStripMenuItem.Text = "Draw whole tree <to come>";
             // 
             // Form1
             // 

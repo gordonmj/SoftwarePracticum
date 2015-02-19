@@ -47,21 +47,7 @@ namespace QTFormApp
             }
         }
 
-        private void canvas_Paint(object sender, PaintEventArgs e)
-        {
-            //Graphics graphic_obj = canvas.CreateGraphics();
-            //Brush black = new SolidBrush(Color.Black);
-            //Pen border = new Pen(black, 1);
-            //switch (clicked)
-            //{
-            //    case "drawNode":
-            //        graphic_obj.DrawEllipse(border, new Rectangle(new Point(50, 50), new Size(50, 25)));
-            //        break;
-
-            //    default:
-            //        break;
-            //}
-        }
+        private void canvas_Paint(object sender, PaintEventArgs e){}
 
         private void canvas_MouseDoubleClick(object sender, MouseEventArgs e)
         {
