@@ -73,10 +73,35 @@ namespace QTFormApp
 
         private void canvas_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ImageAndTree_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+
+        }
+
+        private void ImageAndTree_ImagePanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void ImageAndTree_TreePanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void ImageAndTree_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
             MouseEventArgs mea = e;
             Point whereClicked = mea.Location;
          
-            Graphics graphic_obj = canvas.CreateGraphics();
+            Graphics graphic_obj = ImageAndTree.CreateGraphics();
             Brush black = new SolidBrush(Color.Black);
             Pen border = new Pen(black, 1);
 
@@ -101,21 +126,6 @@ namespace QTFormApp
                 default:
                     break;
             }
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-
-        }
-
-        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
 

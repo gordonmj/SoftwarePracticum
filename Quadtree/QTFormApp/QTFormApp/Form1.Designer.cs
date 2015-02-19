@@ -41,10 +41,10 @@
             this.drawRandomNodetoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawArrowtoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawWholeTreetoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.ImageAndTree = new System.Windows.Forms.SplitContainer();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ImageAndTree)).BeginInit();
+            this.ImageAndTree.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -146,26 +146,32 @@
             this.drawWholeTreetoComeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
             this.drawWholeTreetoComeToolStripMenuItem.Text = "Draw whole tree <to come>";
             // 
-            // splitContainer1
+            // ImageAndTree
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
-            this.splitContainer1.Name = "splitContainer1";
+            this.ImageAndTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ImageAndTree.Location = new System.Drawing.Point(0, 24);
+            this.ImageAndTree.Name = "ImageAndTree";
             // 
-            // splitContainer1.Panel1
+            // ImageAndTree.Panel1
             // 
-            this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
-            this.splitContainer1.Size = new System.Drawing.Size(670, 261);
-            this.splitContainer1.SplitterDistance = 334;
-            this.splitContainer1.TabIndex = 1;
-            this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
+            this.ImageAndTree.Panel1.AccessibleName = "ImagePanel";
+            this.ImageAndTree.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.ImageAndTree_ImagePanel_Paint);
+            // 
+            // ImageAndTree.Panel2
+            // 
+            this.ImageAndTree.Panel2.AccessibleName = "TreePanel";
+            this.ImageAndTree.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.ImageAndTree_TreePanel_Paint);
+            this.ImageAndTree.Size = new System.Drawing.Size(670, 261);
+            this.ImageAndTree.SplitterDistance = 334;
+            this.ImageAndTree.TabIndex = 1;
+            this.ImageAndTree.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.ImageAndTree_SplitterMoved);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(670, 285);
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.ImageAndTree);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
@@ -173,8 +179,8 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ImageAndTree)).EndInit();
+            this.ImageAndTree.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -195,7 +201,7 @@
         private System.Windows.Forms.ToolStripMenuItem drawRandomNodetoComeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drawArrowtoComeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drawWholeTreetoComeToolStripMenuItem;
-        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.SplitContainer ImageAndTree;
     }
 }
 
