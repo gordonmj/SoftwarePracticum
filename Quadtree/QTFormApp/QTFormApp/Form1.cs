@@ -66,7 +66,7 @@ namespace QTFormApp
             }
         }
 
-        private void canvas_Paint(object sender, PaintEventArgs e){}
+      //  private void canvas_Paint(object sender, PaintEventArgs e){}
 
         private void canvas_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -147,10 +147,40 @@ namespace QTFormApp
             int maxVal = Convert.ToInt32(firstLine[2]);
             int minVal = Convert.ToInt32(firstLine[3]);
 //            MessageBox.Show("Number of rows is " + numRows + ", number of colums is " + numCols + ", max value is " + maxVal + ", and min value is " + minVal);
-
+            int[,] map = new int[numRows,numCols];
+            string mapToPrint = "";
+            for (int r = 0; r < numRows; r++)
+            {
+                string[] nextLine = lines[r + 1].Split(delims);
+                for (int c = 0; c < numCols; c++)
+                {
+                    map[r, c] = Convert.ToInt32(nextLine[c]);
+                    mapToPrint += nextLine[c];
+                }
+                mapToPrint += "\n";
+            }
+            MessageBox.Show("Map!");
+            MessageBox.Show(mapToPrint);
         }
 
         private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+            System.Drawing.Graphics panelGraphics = this.CreateGraphics();
+            System.Drawing.Font panelFont = new System.Drawing.Font("Arial", 16);
+            System.Drawing.SolidBrush panelBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
+            float x = 50.0f;
+            float y = 50.0f;
+            System.Drawing.StringFormat panelFormat = new System.Drawing.StringFormat();
+            panelGraphics.DrawString("Text", panelFont, panelBrush, x, y, panelFormat);
+        }
+
+        private void pictureBox1_Click_1(object sender, EventArgs e)
         {
 
         }

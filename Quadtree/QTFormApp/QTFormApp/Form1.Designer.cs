@@ -170,7 +170,6 @@
             this.canvas.Name = "canvas";
             this.canvas.Size = new System.Drawing.Size(341, 234);
             this.canvas.TabIndex = 2;
-            this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
             this.canvas.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseDoubleClick);
             // 
             // openFileDialog1
@@ -205,6 +204,7 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(327, 231);
             this.panel1.TabIndex = 3;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // Form1
             // 
