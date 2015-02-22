@@ -71,8 +71,9 @@ namespace QTFormApp
         {
             clicked = "drawRandom";
             Random rando = new Random();
-            int y = rando.Next(0, formHeight);
-            int x = rando.Next(0, formWidth / 2) + (formWidth / 2);
+            
+            int y = rando.Next(10, panel1.Height-nodeH);
+            int x = rando.Next(5, panel1.Width-nodeW);
             int color = rando.Next(0, 2);
             Brush[] brushes = {black, white};
             //formGraphic.FillEllipse(brushes[color], new Rectangle(new Point(x, y), new Size(nodeW, nodeH)));
@@ -214,7 +215,7 @@ namespace QTFormApp
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
             //InitializeComponent();
-            panel1Graphics = this.CreateGraphics();
+            panel1Graphics = panel1.CreateGraphics();
             //panel1Graphics = e.Graphics;
         }
 
@@ -244,7 +245,7 @@ namespace QTFormApp
                     blend.Positions = positions;
                     lgb.Blend = blend;
                     Pen gradientPen = new Pen(lgb);
-                    formGraphic.FillEllipse(lgb, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+//                    formGraphic.FillEllipse(lgb, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
                     panel1Graphics.FillEllipse(lgb, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
                     break;
                 case "drawArrow":

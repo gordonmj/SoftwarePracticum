@@ -168,9 +168,9 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.DarkGray;
-            this.panel1.Location = new System.Drawing.Point(176, 27);
+            this.panel1.Location = new System.Drawing.Point(284, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(230, 193);
+            this.panel1.Size = new System.Drawing.Size(392, 254);
             this.panel1.TabIndex = 1;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             this.panel1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDoubleClick);
