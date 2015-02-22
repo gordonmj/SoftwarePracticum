@@ -30,7 +30,7 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.opentoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.savetoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAstoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,13 +38,20 @@
             this.drawWhiteNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawBlackNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawGreyNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.drawRandomNodetoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.drawArrowtoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.drawArrowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.drawRandomNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.drawMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawWholeTreetoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+<<<<<<< HEAD
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.menuStrip1.SuspendLayout();
+=======
             this.ImageAndTree = new System.Windows.Forms.SplitContainer();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImageAndTree)).BeginInit();
             this.ImageAndTree.SuspendLayout();
+>>>>>>> quadtree
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -54,14 +61,17 @@
             this.drawToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
+<<<<<<< HEAD
+            this.menuStrip1.Size = new System.Drawing.Size(676, 24);
+=======
             this.menuStrip1.Size = new System.Drawing.Size(670, 24);
+>>>>>>> quadtree
             this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.opentoComeToolStripMenuItem,
+            this.openToolStripMenuItem,
             this.savetoComeToolStripMenuItem,
             this.saveAstoComeToolStripMenuItem,
             this.exitToolStripMenuItem});
@@ -69,11 +79,12 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
-            // opentoComeToolStripMenuItem
+            // openToolStripMenuItem
             // 
-            this.opentoComeToolStripMenuItem.Name = "opentoComeToolStripMenuItem";
-            this.opentoComeToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.opentoComeToolStripMenuItem.Text = "Open <to come>";
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.openToolStripMenuItem.Text = "Load/Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.opentoComeToolStripMenuItem_Click);
             // 
             // savetoComeToolStripMenuItem
             // 
@@ -100,8 +111,9 @@
             this.drawWhiteNodeToolStripMenuItem,
             this.drawBlackNodeToolStripMenuItem,
             this.drawGreyNodeToolStripMenuItem,
-            this.drawRandomNodetoComeToolStripMenuItem,
-            this.drawArrowtoComeToolStripMenuItem,
+            this.drawArrowToolStripMenuItem,
+            this.drawRandomNodeToolStripMenuItem,
+            this.drawMapToolStripMenuItem,
             this.drawWholeTreetoComeToolStripMenuItem});
             this.drawToolStripMenuItem.Name = "drawToolStripMenuItem";
             this.drawToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
@@ -110,42 +122,60 @@
             // drawWhiteNodeToolStripMenuItem
             // 
             this.drawWhiteNodeToolStripMenuItem.Name = "drawWhiteNodeToolStripMenuItem";
-            this.drawWhiteNodeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.drawWhiteNodeToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.drawWhiteNodeToolStripMenuItem.Text = "Draw white node";
             this.drawWhiteNodeToolStripMenuItem.Click += new System.EventHandler(this.drawWhiteNodeToolStripMenuItem_Click);
             // 
             // drawBlackNodeToolStripMenuItem
             // 
             this.drawBlackNodeToolStripMenuItem.Name = "drawBlackNodeToolStripMenuItem";
-            this.drawBlackNodeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.drawBlackNodeToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.drawBlackNodeToolStripMenuItem.Text = "Draw black node";
             this.drawBlackNodeToolStripMenuItem.Click += new System.EventHandler(this.drawBlackNodeToolStripMenuItem_Click);
             // 
             // drawGreyNodeToolStripMenuItem
             // 
             this.drawGreyNodeToolStripMenuItem.Name = "drawGreyNodeToolStripMenuItem";
-            this.drawGreyNodeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.drawGreyNodeToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.drawGreyNodeToolStripMenuItem.Text = "Draw grey node";
             this.drawGreyNodeToolStripMenuItem.Click += new System.EventHandler(this.drawGreyNodeToolStripMenuItem_Click);
             // 
-            // drawRandomNodetoComeToolStripMenuItem
+            // drawArrowToolStripMenuItem
             // 
-            this.drawRandomNodetoComeToolStripMenuItem.Name = "drawRandomNodetoComeToolStripMenuItem";
-            this.drawRandomNodetoComeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
-            this.drawRandomNodetoComeToolStripMenuItem.Text = "Draw random node <to come>";
+            this.drawArrowToolStripMenuItem.Name = "drawArrowToolStripMenuItem";
+            this.drawArrowToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.drawArrowToolStripMenuItem.Text = "Draw arrow";
+            this.drawArrowToolStripMenuItem.Click += new System.EventHandler(this.drawArrowtoComeToolStripMenuItem_Click);
             // 
-            // drawArrowtoComeToolStripMenuItem
+            // drawRandomNodeToolStripMenuItem
             // 
-            this.drawArrowtoComeToolStripMenuItem.Name = "drawArrowtoComeToolStripMenuItem";
-            this.drawArrowtoComeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
-            this.drawArrowtoComeToolStripMenuItem.Text = "Draw arrow <to come>";
+            this.drawRandomNodeToolStripMenuItem.Name = "drawRandomNodeToolStripMenuItem";
+            this.drawRandomNodeToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.drawRandomNodeToolStripMenuItem.Text = "Draw random node";
+            this.drawRandomNodeToolStripMenuItem.Click += new System.EventHandler(this.drawRandomNodetoComeToolStripMenuItem_Click);
+            // 
+            // drawMapToolStripMenuItem
+            // 
+            this.drawMapToolStripMenuItem.Name = "drawMapToolStripMenuItem";
+            this.drawMapToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.drawMapToolStripMenuItem.Text = "Draw map";
+            this.drawMapToolStripMenuItem.Click += new System.EventHandler(this.drawMaptoComeToolStripMenuItem_Click);
             // 
             // drawWholeTreetoComeToolStripMenuItem
             // 
             this.drawWholeTreetoComeToolStripMenuItem.Name = "drawWholeTreetoComeToolStripMenuItem";
-            this.drawWholeTreetoComeToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.drawWholeTreetoComeToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.drawWholeTreetoComeToolStripMenuItem.Text = "Draw whole tree <to come>";
             // 
+<<<<<<< HEAD
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+=======
             // ImageAndTree
             // 
             this.ImageAndTree.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -165,22 +195,32 @@
             this.ImageAndTree.SplitterDistance = 334;
             this.ImageAndTree.TabIndex = 1;
             this.ImageAndTree.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.ImageAndTree_SplitterMoved);
+>>>>>>> quadtree
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+<<<<<<< HEAD
+            this.BackColor = System.Drawing.Color.Gray;
+            this.ClientSize = new System.Drawing.Size(676, 262);
+=======
             this.ClientSize = new System.Drawing.Size(670, 285);
             this.Controls.Add(this.ImageAndTree);
+>>>>>>> quadtree
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "QuadTree Painter";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDoubleClick);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+<<<<<<< HEAD
+=======
             ((System.ComponentModel.ISupportInitialize)(this.ImageAndTree)).EndInit();
             this.ImageAndTree.ResumeLayout(false);
+>>>>>>> quadtree
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -191,17 +231,23 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem opentoComeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem savetoComeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAstoComeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drawToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drawWhiteNodeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drawBlackNodeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drawGreyNodeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem drawRandomNodetoComeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem drawArrowtoComeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem drawRandomNodeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem drawArrowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drawWholeTreetoComeToolStripMenuItem;
+<<<<<<< HEAD
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.ToolStripMenuItem drawMapToolStripMenuItem;
+=======
         private System.Windows.Forms.SplitContainer ImageAndTree;
+>>>>>>> quadtree
     }
 }
 
