@@ -87,52 +87,6 @@ namespace QTFormApp
             }
         }
 
-        private void canvas_Paint(object sender, PaintEventArgs e){
-        }
-
-        private void canvas_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            MouseEventArgs mea = e;
-            Point whereClicked = mea.Location;
-         
-//            graphic_obj = canvas.CreateGraphics();
-            switch (clicked)
-            {
-                case "drawWhiteNode":
-                    formGraphic.FillEllipse(white, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
-                    break;
-                case "drawBlackNode":
-                    formGraphic.FillEllipse(black, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
-                    break;
-                case "drawGreyNode":
-                    LinearGradientBrush lgb = new LinearGradientBrush(
-                    whereClicked,
-                    new Point(whereClicked.X + 50, whereClicked.Y),
-                    Color.FromArgb(255, 255, 255),
-                    Color.FromArgb(0, 0, 0));
-                    float[] intensities = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
-                    float[] positions = { 0.0f, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f };
-                    Blend blend = new Blend();
-                    blend.Factors = intensities;
-                    blend.Positions = positions;
-                    lgb.Blend = blend;
-                    Pen gradientPen = new Pen(lgb);
-                    formGraphic.FillEllipse(lgb, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
-                    break;
-                case "drawArrow":
-                    clicked = "finishArrow";
-                    firstClick = whereClicked;
-                    break;
-                case "finishArrow":
-                    Pen arrow = new Pen(black, 3);
-                    arrow.EndCap = LineCap.ArrowAnchor;
-                    graphic_obj.DrawLine(arrow,firstClick,whereClicked);
-                    break;
-                default:
-                    break;
-            }
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -206,39 +160,7 @@ namespace QTFormApp
                     }
                 }
             }
-//            MessageBox.Show("Map!");
 //            MessageBox.Show(mapToPrint);
-        }
-
-        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
-        {
-            //panelGraphics1 = this.CreateGraphics();
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-//            System.Drawing.Font panelFont = new System.Drawing.Font("Arial", 16);
-  //          System.Drawing.SolidBrush panelBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
-    //        float x = 50.0f;
-      //      float y = 50.0f;
-        //    System.Drawing.StringFormat panelFormat = new System.Drawing.StringFormat();
-            //panelGraphics1.DrawString("Text", panelFont, panelBrush, x, y, panelFormat);
-        }
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void canvas_Paint_1(object sender, PaintEventArgs e)
-        {
-            canvasGraphics = this.CreateGraphics();
-
         }
 
         private void Form1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -278,6 +200,7 @@ namespace QTFormApp
                     Pen arrow = new Pen(black, 3);
                     arrow.EndCap = LineCap.ArrowAnchor;
                     formGraphic.DrawLine(arrow, firstClick, whereClicked);
+                    clicked = "drawArrow";
                     break;
                 default:
                     break;
