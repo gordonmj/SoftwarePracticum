@@ -42,9 +42,16 @@
             this.drawRandomNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawWholeTreetoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+<<<<<<< HEAD
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1.SuspendLayout();
+=======
+            this.ImageAndTree = new System.Windows.Forms.SplitContainer();
+            this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ImageAndTree)).BeginInit();
+            this.ImageAndTree.SuspendLayout();
+>>>>>>> quadtree
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -54,7 +61,11 @@
             this.drawToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
+<<<<<<< HEAD
             this.menuStrip1.Size = new System.Drawing.Size(676, 24);
+=======
+            this.menuStrip1.Size = new System.Drawing.Size(670, 24);
+>>>>>>> quadtree
             this.menuStrip1.TabIndex = 0;
             // 
             // fileToolStripMenuItem
@@ -156,6 +167,7 @@
             this.drawWholeTreetoComeToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.drawWholeTreetoComeToolStripMenuItem.Text = "Draw whole tree <to come>";
             // 
+<<<<<<< HEAD
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
@@ -163,13 +175,39 @@
             // saveFileDialog1
             // 
             this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+=======
+            // ImageAndTree
+            // 
+            this.ImageAndTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ImageAndTree.Location = new System.Drawing.Point(0, 24);
+            this.ImageAndTree.Name = "ImageAndTree";
+            // 
+            // ImageAndTree.Panel1
+            // 
+            this.ImageAndTree.Panel1.AccessibleName = "ImagePanel";
+            this.ImageAndTree.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.ImageAndTree_ImagePanel_Paint);
+            // 
+            // ImageAndTree.Panel2
+            // 
+            this.ImageAndTree.Panel2.AccessibleName = "TreePanel";
+            this.ImageAndTree.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.ImageAndTree_TreePanel_Paint);
+            this.ImageAndTree.Size = new System.Drawing.Size(670, 261);
+            this.ImageAndTree.SplitterDistance = 334;
+            this.ImageAndTree.TabIndex = 1;
+            this.ImageAndTree.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.ImageAndTree_SplitterMoved);
+>>>>>>> quadtree
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+<<<<<<< HEAD
             this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(676, 262);
+=======
+            this.ClientSize = new System.Drawing.Size(670, 285);
+            this.Controls.Add(this.ImageAndTree);
+>>>>>>> quadtree
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
@@ -178,6 +216,11 @@
             this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDoubleClick);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+<<<<<<< HEAD
+=======
+            ((System.ComponentModel.ISupportInitialize)(this.ImageAndTree)).EndInit();
+            this.ImageAndTree.ResumeLayout(false);
+>>>>>>> quadtree
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -198,9 +241,13 @@
         private System.Windows.Forms.ToolStripMenuItem drawRandomNodeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drawArrowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drawWholeTreetoComeToolStripMenuItem;
+<<<<<<< HEAD
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem drawMapToolStripMenuItem;
+=======
+        private System.Windows.Forms.SplitContainer ImageAndTree;
+>>>>>>> quadtree
     }
 }
 

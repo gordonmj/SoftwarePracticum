@@ -165,8 +165,40 @@ namespace QTFormApp
 
         private void Form1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ImageAndTree_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+
+        }
+
+        private void ImageAndTree_ImagePanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void ImageAndTree_TreePanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void ImageAndTree_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
             MouseEventArgs mea = e;
             Point whereClicked = mea.Location;
+<<<<<<< HEAD
+=======
+         
+            Graphics graphic_obj = ImageAndTree.CreateGraphics();
+            Brush black = new SolidBrush(Color.Black);
+            Pen border = new Pen(black, 1);
+>>>>>>> quadtree
 
             //            graphic_obj = canvas.CreateGraphics();
             switch (clicked)
