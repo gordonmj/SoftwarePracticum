@@ -96,14 +96,7 @@ namespace QTFormApp
 
         private void opentoComeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog oFD = new OpenFileDialog();
-            oFD.Filter = "Plaintext Files|*.txt";
-            oFD.Title = "Select a Plaintext File";
-
-            if (oFD.ShowDialog() == DialogResult.OK)
-            {
-                fileName = oFD.FileName;
-            }
+            
         }
 
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
@@ -243,26 +236,30 @@ namespace QTFormApp
             }
         }
 
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            OpenFileDialog oFD = new OpenFileDialog();
+            oFD.Filter = "Plaintext Files|*.txt";
+            oFD.Title = "Select a Plaintext File";
 
+            if (oFD.ShowDialog() == DialogResult.OK)
+            {
+                fileName = oFD.FileName;
+            }
         }
 
-        private void savetoComeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            Stream myStream;
-            saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-            saveFileDialog1.FilterIndex = 2;
-            saveFileDialog1.RestoreDirectory = true;
+            DialogResult answer = MessageBox.Show("Are you sure you want to quit?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            if (answer == DialogResult.Yes)
             {
-                if ((myStream = saveFileDialog1.OpenFile()) != null)
-                {
-                    // Code to write the stream goes here.
-                    myStream.Close();
-                }
+                this.Close();
+            }
+
+            else if (answer == DialogResult.No)
+            {
+                return;
             }
 
         }
