@@ -47,6 +47,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -61,7 +62,7 @@
             this.drawToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(670, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(676, 24);
             this.menuStrip1.TabIndex = 0;
             // 
             // fileToolStripMenuItem
@@ -86,7 +87,8 @@
             // 
             this.savetoComeToolStripMenuItem.Name = "savetoComeToolStripMenuItem";
             this.savetoComeToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.savetoComeToolStripMenuItem.Text = "Save <to come>";
+            this.savetoComeToolStripMenuItem.Text = "Save";
+            this.savetoComeToolStripMenuItem.Click += new System.EventHandler(this.savetoComeToolStripMenuItem_Click);
             // 
             // saveAstoComeToolStripMenuItem
             // 
@@ -166,6 +168,7 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
             // 
             // saveFileDialog1
             // 
@@ -255,6 +258,7 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog2;
     }
 }
 
