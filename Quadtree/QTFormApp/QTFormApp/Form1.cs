@@ -96,14 +96,7 @@ namespace QTFormApp
 
         private void opentoComeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog oFD = new OpenFileDialog();
-            oFD.Filter = "Plaintext Files|*.txt";
-            oFD.Title = "Select a Plaintext File";
-
-            if (oFD.ShowDialog() == DialogResult.OK)
-            {
-                fileName = oFD.FileName;
-            }
+            
         }
 
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
@@ -243,6 +236,34 @@ namespace QTFormApp
                 default:
                     break;
             }
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog oFD = new OpenFileDialog();
+            oFD.Filter = "Plaintext Files|*.txt";
+            oFD.Title = "Select a Plaintext File";
+
+            if (oFD.ShowDialog() == DialogResult.OK)
+            {
+                fileName = oFD.FileName;
+            }
+        }
+
+        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            DialogResult answer = MessageBox.Show("Are you sure you want to quit?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (answer == DialogResult.Yes)
+            {
+                this.Close();
+            }
+
+            else if (answer == DialogResult.No)
+            {
+                return;
+            }
+
         }
 
 
