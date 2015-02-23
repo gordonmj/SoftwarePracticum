@@ -29,14 +29,6 @@
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.drawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.drawWhiteNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.drawBlackNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.drawGreyNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.drawArrowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.drawRandomNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.drawMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.drawWholeTreetoComeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
@@ -65,74 +57,11 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.imageToolStripMenuItem,
             this.displayImageToolStripMenuItem,
-            this.drawToolStripMenuItem,
             this.exitToolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(676, 24);
             this.menuStrip1.TabIndex = 0;
-            // 
-            // drawToolStripMenuItem
-            // 
-            this.drawToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.drawWhiteNodeToolStripMenuItem,
-            this.drawBlackNodeToolStripMenuItem,
-            this.drawGreyNodeToolStripMenuItem,
-            this.drawArrowToolStripMenuItem,
-            this.drawRandomNodeToolStripMenuItem,
-            this.drawMapToolStripMenuItem,
-            this.drawWholeTreetoComeToolStripMenuItem});
-            this.drawToolStripMenuItem.Name = "drawToolStripMenuItem";
-            this.drawToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
-            this.drawToolStripMenuItem.Text = "Manual draw";
-            // 
-            // drawWhiteNodeToolStripMenuItem
-            // 
-            this.drawWhiteNodeToolStripMenuItem.Name = "drawWhiteNodeToolStripMenuItem";
-            this.drawWhiteNodeToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-            this.drawWhiteNodeToolStripMenuItem.Text = "Draw white node";
-            this.drawWhiteNodeToolStripMenuItem.Click += new System.EventHandler(this.drawWhiteNodeToolStripMenuItem_Click);
-            // 
-            // drawBlackNodeToolStripMenuItem
-            // 
-            this.drawBlackNodeToolStripMenuItem.Name = "drawBlackNodeToolStripMenuItem";
-            this.drawBlackNodeToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-            this.drawBlackNodeToolStripMenuItem.Text = "Draw black node";
-            this.drawBlackNodeToolStripMenuItem.Click += new System.EventHandler(this.drawBlackNodeToolStripMenuItem_Click);
-            // 
-            // drawGreyNodeToolStripMenuItem
-            // 
-            this.drawGreyNodeToolStripMenuItem.Name = "drawGreyNodeToolStripMenuItem";
-            this.drawGreyNodeToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-            this.drawGreyNodeToolStripMenuItem.Text = "Draw grey node";
-            this.drawGreyNodeToolStripMenuItem.Click += new System.EventHandler(this.drawGreyNodeToolStripMenuItem_Click);
-            // 
-            // drawArrowToolStripMenuItem
-            // 
-            this.drawArrowToolStripMenuItem.Name = "drawArrowToolStripMenuItem";
-            this.drawArrowToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-            this.drawArrowToolStripMenuItem.Text = "Draw arrow";
-            this.drawArrowToolStripMenuItem.Click += new System.EventHandler(this.drawArrowtoComeToolStripMenuItem_Click);
-            // 
-            // drawRandomNodeToolStripMenuItem
-            // 
-            this.drawRandomNodeToolStripMenuItem.Name = "drawRandomNodeToolStripMenuItem";
-            this.drawRandomNodeToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-            this.drawRandomNodeToolStripMenuItem.Text = "Draw random node";
-            this.drawRandomNodeToolStripMenuItem.Click += new System.EventHandler(this.drawRandomNodetoComeToolStripMenuItem_Click);
-            // 
-            // drawMapToolStripMenuItem
-            // 
-            this.drawMapToolStripMenuItem.Name = "drawMapToolStripMenuItem";
-            this.drawMapToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-            this.drawMapToolStripMenuItem.Text = "Draw map";
-            this.drawMapToolStripMenuItem.Click += new System.EventHandler(this.drawMaptoComeToolStripMenuItem_Click);
-            // 
-            // drawWholeTreetoComeToolStripMenuItem
-            // 
-            this.drawWholeTreetoComeToolStripMenuItem.Name = "drawWholeTreetoComeToolStripMenuItem";
-            this.drawWholeTreetoComeToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-            this.drawWholeTreetoComeToolStripMenuItem.Text = "Draw whole tree";
             // 
             // exitToolStripMenuItem1
             // 
@@ -283,16 +212,8 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem drawToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem drawWhiteNodeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem drawBlackNodeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem drawGreyNodeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem drawRandomNodeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem drawArrowToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem drawWholeTreetoComeToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.ToolStripMenuItem drawMapToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
