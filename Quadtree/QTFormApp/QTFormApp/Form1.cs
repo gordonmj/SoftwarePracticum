@@ -20,7 +20,7 @@ namespace QTFormApp
         public int nodeW = 50;
         public int nodeH = 25;
         public System.Drawing.Graphics panel1Graphics;
-        public System.Drawing.Graphics graphic_obj;
+        public System.Drawing.Graphics panel2Graphics;
         public System.Drawing.Graphics formGraphic;
         public System.Drawing.Graphics canvasGraphics;
         public Brush black = new SolidBrush(Color.Black);
@@ -72,12 +72,12 @@ namespace QTFormApp
             clicked = "drawRandom";
             Random rando = new Random();
             
-            int y = rando.Next(10, panel1.Height-nodeH);
-            int x = rando.Next(5, panel1.Width-nodeW);
+            int y = rando.Next(10, splitContainer1.Height-nodeH);
+            int x = rando.Next(5, splitContainer1.Width-nodeW);
             int color = rando.Next(0, 2);
             Brush[] brushes = {black, white};
             //formGraphic.FillEllipse(brushes[color], new Rectangle(new Point(x, y), new Size(nodeW, nodeH)));
-            panel1Graphics.FillEllipse(brushes[color], new Rectangle(new Point(x, y), new Size(nodeW, nodeH)));
+            panel2Graphics.FillEllipse(brushes[color], new Rectangle(new Point(x, y), new Size(nodeW, nodeH)));
         }
         /*
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -144,7 +144,7 @@ namespace QTFormApp
                 size = (formHeight-offset)/numRows;
             else
                 size = (formWidth/numCols)/2;
-            formGraphic.Clear(Color.Gray);
+            panel1Graphics.Clear(Color.Gray);
             //MessageBox.Show("Form: width " + formWidth + " and hieght " + formHeight + " and size " + size);
             for (int r = 0; r < numRows; r++)
             {
@@ -153,12 +153,12 @@ namespace QTFormApp
                     if (map[r, c] == 1)
                     {
                         //MessageBox.Show("Postion "+r+" & "+c+": 1!");
-                        formGraphic.FillRectangle(black, new Rectangle(offset+(c*size), offset+10+(r*size), size, size));
+                        panel1Graphics.FillRectangle(black, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                     }
                     else
                     {
                         //MessageBox.Show("Postion " + r + " & " + c + ": 0!");
-                        formGraphic.FillRectangle(white, new Rectangle(offset+(c * size), offset+10+(r * size), size, size));
+                        panel1Graphics.FillRectangle(white, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                     }
                 }
             }
@@ -215,11 +215,29 @@ namespace QTFormApp
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
             //InitializeComponent();
-            panel1Graphics = panel1.CreateGraphics();
+            //panel1Graphics = panel1.CreateGraphics();
             //panel1Graphics = e.Graphics;
         }
 
-        private void panel1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void panel1_MouseDoubleClick(object sender, MouseEventArgs e){}
+
+        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e){}
+
+        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e){}
+
+        private void splitContainer1_Paint(object sender, PaintEventArgs e){}
+
+        private void panel1_Paint_1(object sender, PaintEventArgs e)
+        {
+            panel1Graphics = panel1.CreateGraphics();
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+            panel2Graphics = panel2.CreateGraphics();
+        }
+
+        private void panel2_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             MouseEventArgs mea = e;
             Point whereClicked = mea.Location;
@@ -227,10 +245,10 @@ namespace QTFormApp
             switch (clicked)
             {
                 case "drawWhiteNode":
-                    panel1Graphics.FillEllipse(white, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+                    panel2Graphics.FillEllipse(white, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
                     break;
                 case "drawBlackNode":
-                    panel1Graphics.FillEllipse(black, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+                    panel2Graphics.FillEllipse(black, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
                     break;
                 case "drawGreyNode":
                     LinearGradientBrush lgb = new LinearGradientBrush(
@@ -245,8 +263,8 @@ namespace QTFormApp
                     blend.Positions = positions;
                     lgb.Blend = blend;
                     Pen gradientPen = new Pen(lgb);
-//                    formGraphic.FillEllipse(lgb, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
-                    panel1Graphics.FillEllipse(lgb, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+                    //                    formGraphic.FillEllipse(lgb, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+                    panel2Graphics.FillEllipse(lgb, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
                     break;
                 case "drawArrow":
                     clicked = "finishArrow";
@@ -255,13 +273,12 @@ namespace QTFormApp
                 case "finishArrow":
                     Pen arrow = new Pen(black, 3);
                     arrow.EndCap = LineCap.ArrowAnchor;
-                    panel1Graphics.DrawLine(arrow, firstClick, whereClicked);
+                    panel2Graphics.DrawLine(arrow, firstClick, whereClicked);
                     clicked = "drawArrow";
                     break;
                 default:
                     break;
             }
-
         }
 
 
