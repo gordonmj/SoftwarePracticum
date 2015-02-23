@@ -167,83 +167,12 @@ namespace QTFormApp
 
         private void Form1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-<<<<<<< HEAD
             /*
-=======
-            
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ImageAndTree_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-
-        }
-
-        private void ImageAndTree_ImagePanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void ImageAndTree_TreePanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void ImageAndTree_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
->>>>>>> master
             MouseEventArgs mea = e;
             Point whereClicked = mea.Location;
-<<<<<<< HEAD
-=======
-         
             Graphics graphic_obj = ImageAndTree.CreateGraphics();
             Brush black = new SolidBrush(Color.Black);
             Pen border = new Pen(black, 1);
->>>>>>> quadtree
-
-            //            graphic_obj = canvas.CreateGraphics();
-            switch (clicked)
-            {
-                case "drawWhiteNode":
-                    formGraphic.FillEllipse(white, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
-                    break;
-                case "drawBlackNode":
-                    formGraphic.FillEllipse(black, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
-                    break;
-                case "drawGreyNode":
-                    LinearGradientBrush lgb = new LinearGradientBrush(
-                    whereClicked,
-                    new Point(whereClicked.X + 50, whereClicked.Y),
-                    Color.FromArgb(255, 255, 255),
-                    Color.FromArgb(0, 0, 0));
-                    float[] intensities = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
-                    float[] positions = { 0.0f, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f };
-                    Blend blend = new Blend();
-                    blend.Factors = intensities;
-                    blend.Positions = positions;
-                    lgb.Blend = blend;
-                    Pen gradientPen = new Pen(lgb);
-                    formGraphic.FillEllipse(lgb, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
-                    panel1Graphics.FillEllipse(lgb, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
-                    break;
-                case "drawArrow":
-                    clicked = "finishArrow";
-                    firstClick = whereClicked;
-                    break;
-                case "finishArrow":
-                    Pen arrow = new Pen(black, 3);
-                    arrow.EndCap = LineCap.ArrowAnchor;
-                    formGraphic.DrawLine(arrow, firstClick, whereClicked);
-                    clicked = "drawArrow";
-                    break;
-                default:
-                    break;
-            }
              */
         }
 
