@@ -238,14 +238,6 @@ namespace QTFormApp
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog oFD = new OpenFileDialog();
-            oFD.Filter = "Plaintext Files|*.txt";
-            oFD.Title = "Select a Plaintext File";
-
-            if (oFD.ShowDialog() == DialogResult.OK)
-            {
-                fileName = oFD.FileName;
-            }
         }
 
         private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -261,6 +253,23 @@ namespace QTFormApp
             {
                 return;
             }
+
+        }
+
+        private void loadToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog oFD = new OpenFileDialog();
+            oFD.Filter = "Plaintext Files|*.txt";
+            oFD.Title = "Select a Plaintext File";
+
+            if (oFD.ShowDialog() == DialogResult.OK)
+            {
+                fileName = oFD.FileName;
+            }
+        }
+
+        private void displayImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
 
         }
 
