@@ -100,9 +100,7 @@ namespace QTFormApp
         }
 
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
-        {
-
-        }
+        {        }
 
         private void drawMaptoComeToolStripMenuItem_Click(object sender, EventArgs e)
         {
