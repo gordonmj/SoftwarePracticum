@@ -45,13 +45,23 @@
 <<<<<<< HEAD
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
+<<<<<<< HEAD
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+=======
 =======
             this.ImageAndTree = new System.Windows.Forms.SplitContainer();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImageAndTree)).BeginInit();
             this.ImageAndTree.SuspendLayout();
 >>>>>>> quadtree
+>>>>>>> master
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -197,6 +207,45 @@
             this.ImageAndTree.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.ImageAndTree_SplitterMoved);
 >>>>>>> quadtree
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.panel1);
+            this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.panel2);
+            this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
+            this.splitContainer1.Size = new System.Drawing.Size(676, 238);
+            this.splitContainer1.SplitterDistance = 310;
+            this.splitContainer1.TabIndex = 1;
+            this.splitContainer1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Paint);
+            // 
+            // panel1
+            // 
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(310, 238);
+            this.panel1.TabIndex = 0;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint_1);
+            // 
+            // panel2
+            // 
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(362, 238);
+            this.panel2.TabIndex = 0;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
+            this.panel2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDoubleClick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -204,10 +253,14 @@
 <<<<<<< HEAD
             this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(676, 262);
+<<<<<<< HEAD
+            this.Controls.Add(this.splitContainer1);
+=======
 =======
             this.ClientSize = new System.Drawing.Size(670, 285);
             this.Controls.Add(this.ImageAndTree);
 >>>>>>> quadtree
+>>>>>>> master
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
@@ -217,10 +270,17 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
 <<<<<<< HEAD
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+=======
+<<<<<<< HEAD
 =======
             ((System.ComponentModel.ISupportInitialize)(this.ImageAndTree)).EndInit();
             this.ImageAndTree.ResumeLayout(false);
 >>>>>>> quadtree
+>>>>>>> master
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -245,9 +305,15 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem drawMapToolStripMenuItem;
+<<<<<<< HEAD
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
+=======
 =======
         private System.Windows.Forms.SplitContainer ImageAndTree;
 >>>>>>> quadtree
+>>>>>>> master
     }
 }
 
