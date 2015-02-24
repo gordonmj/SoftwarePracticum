@@ -230,7 +230,7 @@ namespace QTFormApp
             Pen border = new Pen(black, 1);
             if (fileName == null)
             {
-                MessageBox.Show("You must select an input file first. Use 'File>Load/Open'");
+                MessageBox.Show("You must select an input file first. Use 'Image>Load'");
                 return;
             }
             string[] lines = System.IO.File.ReadAllLines(@fileName);
