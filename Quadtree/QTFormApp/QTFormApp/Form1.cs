@@ -221,6 +221,11 @@ namespace QTFormApp
 
         private void displayImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
+           
+        }
+
+        private void displayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             Pen border = new Pen(black, 1);
             if (fileName == null)
             {
