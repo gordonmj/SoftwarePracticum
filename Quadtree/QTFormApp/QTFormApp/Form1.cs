@@ -278,6 +278,11 @@ namespace QTFormApp
             //            MessageBox.Show(mapToPrint);
         }
 
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panel1Graphics.Clear(Color.Gray);
+        }
+
 
     }
 }
