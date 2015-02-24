@@ -104,55 +104,7 @@ namespace QTFormApp
 
         private void drawMaptoComeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Pen border = new Pen(black, 1);
-            if (fileName == null)
-            {
-                MessageBox.Show("You must select an input file first. Use 'File>Load/Open'");
-                return;
-            }
-            string[] lines = System.IO.File.ReadAllLines(@fileName);
-            char[] delims = { ' ', '\n' };
-            string[] firstLine = lines[0].Split(delims);
-            int numRows = Convert.ToInt32(firstLine[0]);
-            int numCols = Convert.ToInt32(firstLine[1]);
-            int maxVal = Convert.ToInt32(firstLine[2]);
-            int minVal = Convert.ToInt32(firstLine[3]);
-            int[,] map = new int[numRows,numCols];
-            string mapToPrint = "";
-            for (int r = 0; r < numRows; r++)
-            {
-                string[] nextLine = lines[r + 1].Split(delims);
-                for (int c = 0; c < numCols; c++)
-                {
-                    map[r, c] = Convert.ToInt32(nextLine[c]);
-                    mapToPrint += nextLine[c];
-                }
-                mapToPrint += "\n";
-            }
-            int offset = 10;
-            int size;
-            if ((formWidth/numCols)/2 > (formHeight-offset)/numRows)
-                size = (formHeight-offset)/numRows;
-            else
-                size = (formWidth/numCols)/2;
-            panel1Graphics.Clear(Color.Gray);
-            //MessageBox.Show("Form: width " + formWidth + " and hieght " + formHeight + " and size " + size);
-            for (int r = 0; r < numRows; r++)
-            {
-                for (int c = 0; c < numCols; c++)
-                {
-                    if (map[r, c] == 1)
-                    {
-                        //MessageBox.Show("Postion "+r+" & "+c+": 1!");
-                        panel1Graphics.FillRectangle(black, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                    }
-                    else
-                    {
-                        //MessageBox.Show("Postion " + r + " & " + c + ": 0!");
-                        panel1Graphics.FillRectangle(white, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                    }
-                }
-            }
+            
 //            MessageBox.Show(mapToPrint);
         }
 
@@ -271,6 +223,59 @@ namespace QTFormApp
         private void displayImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void displayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Pen border = new Pen(black, 1);
+            if (fileName == null)
+            {
+                MessageBox.Show("You must select an input file first. Use 'File>Load/Open'");
+                return;
+            }
+            string[] lines = System.IO.File.ReadAllLines(@fileName);
+            char[] delims = { ' ', '\n' };
+            string[] firstLine = lines[0].Split(delims);
+            int numRows = Convert.ToInt32(firstLine[0]);
+            int numCols = Convert.ToInt32(firstLine[1]);
+            int maxVal = Convert.ToInt32(firstLine[2]);
+            int minVal = Convert.ToInt32(firstLine[3]);
+            int[,] map = new int[numRows, numCols];
+            string mapToPrint = "";
+            for (int r = 0; r < numRows; r++)
+            {
+                string[] nextLine = lines[r + 1].Split(delims);
+                for (int c = 0; c < numCols; c++)
+                {
+                    map[r, c] = Convert.ToInt32(nextLine[c]);
+                    mapToPrint += nextLine[c];
+                }
+                mapToPrint += "\n";
+            }
+            int offset = 10;
+            int size;
+            if ((formWidth / numCols) / 2 > (formHeight - offset) / numRows)
+                size = (formHeight - offset) / numRows;
+            else
+                size = (formWidth / numCols) / 2;
+            panel1Graphics.Clear(Color.Gray);
+            //MessageBox.Show("Form: width " + formWidth + " and hieght " + formHeight + " and size " + size);
+            for (int r = 0; r < numRows; r++)
+            {
+                for (int c = 0; c < numCols; c++)
+                {
+                    if (map[r, c] == 1)
+                    {
+                        //MessageBox.Show("Postion "+r+" & "+c+": 1!");
+                        panel1Graphics.FillRectangle(black, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                    }
+                    else
+                    {
+                        //MessageBox.Show("Postion " + r + " & " + c + ": 0!");
+                        panel1Graphics.FillRectangle(white, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                    }
+                }
+            }
         }
 
 
