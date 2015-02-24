@@ -110,7 +110,7 @@
             this.displayImageToolStripMenuItem.Name = "displayImageToolStripMenuItem";
             this.displayImageToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
             this.displayImageToolStripMenuItem.Text = "Quadtree";
-            this.displayImageToolStripMenuItem.Click += new System.EventHandler(this.displayImageToolStripMenuItem_Click);
+            //this.displayImageToolStripMenuItem.Click += new System.EventHandler(this.displayImageToolStripMenuItem_Click);
             // 
             // loadToolStripMenuItem
             // 
@@ -145,7 +145,7 @@
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+            //this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
             // 
             // splitContainer1
             // 
@@ -156,16 +156,16 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.panel1);
-            this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
+            //this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.panel2);
-            this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
+            //this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
             this.splitContainer1.Size = new System.Drawing.Size(676, 238);
             this.splitContainer1.SplitterDistance = 310;
             this.splitContainer1.TabIndex = 1;
-            this.splitContainer1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Paint);
+            //this.splitContainer1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Paint);
             // 
             // panel1
             // 
@@ -198,7 +198,6 @@
             this.Name = "Form1";
             this.Text = "QuadTree Painter";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDoubleClick);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);

@@ -79,52 +79,14 @@ namespace QTFormApp
             //formGraphic.FillEllipse(brushes[color], new Rectangle(new Point(x, y), new Size(nodeW, nodeH)));
             panel2Graphics.FillEllipse(brushes[color], new Rectangle(new Point(x, y), new Size(nodeW, nodeH)));
         }
-        /*
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            if (e.GetType() == typeof(MouseEventArgs))
-            {
-                MouseEventArgs mea = (MouseEventArgs)e;
-                coords = mea.Location;
-            }
-        }
-        */
+       
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
-
-        private void opentoComeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-
+        /*
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {        }
-
-        private void drawMaptoComeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-//            MessageBox.Show(mapToPrint);
-        }
-
-        private void Form1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            /*
-            MouseEventArgs mea = e;
-            Point whereClicked = mea.Location;
-            Graphics graphic_obj = ImageAndTree.CreateGraphics();
-            Brush black = new SolidBrush(Color.Black);
-            Pen border = new Pen(black, 1);
-             */
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-            //InitializeComponent();
-            //panel1Graphics = panel1.CreateGraphics();
-            //panel1Graphics = e.Graphics;
-        }
 
         private void panel1_MouseDoubleClick(object sender, MouseEventArgs e){}
 
@@ -133,7 +95,7 @@ namespace QTFormApp
         private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e){}
 
         private void splitContainer1_Paint(object sender, PaintEventArgs e){}
-
+        */
         private void panel1_Paint_1(object sender, PaintEventArgs e)
         {
             panel1Graphics = panel1.CreateGraphics();
@@ -188,10 +150,6 @@ namespace QTFormApp
             }
         }
 
-        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
         private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             DialogResult answer = MessageBox.Show("Are you sure you want to quit?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -218,11 +176,6 @@ namespace QTFormApp
             {
                 fileName = oFD.FileName;
             }
-        }
-
-        private void displayImageToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void displayToolStripMenuItem_Click(object sender, EventArgs e)
