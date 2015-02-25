@@ -32,6 +32,9 @@ namespace QTFormApp
         public Form1()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Normal;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Bounds = Screen.PrimaryScreen.Bounds;
             formGraphic = this.CreateGraphics();
             formWidth = this.Width;
             formHeight = this.Height;
@@ -180,7 +183,7 @@ namespace QTFormApp
 
         private void displayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Pen border = new Pen(black, 1);
+            Pen border = new Pen(gray, 1);
             if (fileName == null)
             {
                 MessageBox.Show("You must select an input file first. Use 'Image>Load'");
@@ -194,25 +197,26 @@ namespace QTFormApp
             int maxVal = Convert.ToInt32(firstLine[2]);
             int minVal = Convert.ToInt32(firstLine[3]);
             int[,] map = new int[numRows, numCols];
-            string mapToPrint = "";
+            //string mapToPrint = "";
             for (int r = 0; r < numRows; r++)
             {
                 string[] nextLine = lines[r + 1].Split(delims);
                 for (int c = 0; c < numCols; c++)
                 {
                     map[r, c] = Convert.ToInt32(nextLine[c]);
-                    mapToPrint += nextLine[c];
+                  //  mapToPrint += nextLine[c];
                 }
-                mapToPrint += "\n";
+                //mapToPrint += "\n";
             }
             int offset = 10;
             int size;
             if ((formWidth / numCols) / 2 > (formHeight - offset) / numRows)
-                size = (formHeight - offset) / numRows;
+                size = ((formHeight - offset) / numRows) - offset;
             else
-                size = (formWidth / numCols) / 2;
+                size = (((formWidth - offset) / numCols) / 2) - offset;
             panel1Graphics.Clear(Color.Gray);
             //MessageBox.Show("Form: width " + formWidth + " and hieght " + formHeight + " and size " + size);
+            
             for (int r = 0; r < numRows; r++)
             {
                 for (int c = 0; c < numCols; c++)
@@ -220,12 +224,16 @@ namespace QTFormApp
                     if (map[r, c] == 1)
                     {
                         //MessageBox.Show("Postion "+r+" & "+c+": 1!");
+ //                       panel1Graphics.DrawString("1", this.Font, black, new Point(offset + (c * size), offset + 10 + (r * size)));
                         panel1Graphics.FillRectangle(black, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                        panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                     }
                     else
                     {
                         //MessageBox.Show("Postion " + r + " & " + c + ": 0!");
+//                        panel1Graphics.DrawString("0", this.Font, white, new Point(offset + (c * size), offset + 10 + (r * size)));
                         panel1Graphics.FillRectangle(white, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                        panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                     }
                 }
             }
