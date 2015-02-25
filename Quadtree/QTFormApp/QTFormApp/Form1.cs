@@ -198,7 +198,6 @@ namespace QTFormApp
             int maxVal = Convert.ToInt32(firstLine[2]);
             int minVal = Convert.ToInt32(firstLine[3]);
             int[,] map = new int[numRows, numCols];
-            //string mapToPrint = "";
             for (int r = 0; r < numRows; r++)
             {
                 string[] nextLine = lines[r + 1].Split(delims);
@@ -238,7 +237,7 @@ namespace QTFormApp
                             //                        panel1Graphics.DrawString("0", this.Font, white, new Point(offset + (c * size), offset + 10 + (r * size)));
                             panel1Graphics.FillRectangle(white, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            bmpGraphic.FillRectangle(black, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            bmpGraphic.FillRectangle(white, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                         }
                     }
