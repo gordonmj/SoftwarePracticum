@@ -28,6 +28,7 @@ namespace QTFormApp
         public Brush gray = new SolidBrush(Color.Gray);
         public int formWidth;
         public int formHeight;
+        public Bitmap bmp;
 
         public Form1()
         {
@@ -215,27 +216,49 @@ namespace QTFormApp
             else
                 size = (((formWidth - offset) / numCols) / 2) - offset;
             panel1Graphics.Clear(Color.Gray);
-            //MessageBox.Show("Form: width " + formWidth + " and hieght " + formHeight + " and size " + size);
-            
-            for (int r = 0; r < numRows; r++)
+            bmp = new Bitmap(panel1.ClientSize.Width, panel1.ClientSize.Height);
+            using (Graphics bmpGraphic = Graphics.FromImage(bmp))
             {
-                for (int c = 0; c < numCols; c++)
+                for (int r = 0; r < numRows; r++)
                 {
-                    if (map[r, c] == 1)
+                    for (int c = 0; c < numCols; c++)
                     {
-                        //MessageBox.Show("Postion "+r+" & "+c+": 1!");
- //                       panel1Graphics.DrawString("1", this.Font, black, new Point(offset + (c * size), offset + 10 + (r * size)));
-                        panel1Graphics.FillRectangle(black, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                        panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                    }
-                    else
-                    {
-                        //MessageBox.Show("Postion " + r + " & " + c + ": 0!");
-//                        panel1Graphics.DrawString("0", this.Font, white, new Point(offset + (c * size), offset + 10 + (r * size)));
-                        panel1Graphics.FillRectangle(white, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                        panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                        if (map[r, c] == 1)
+                        {
+                            //MessageBox.Show("Postion "+r+" & "+c+": 1!");
+                            //                       panel1Graphics.DrawString("1", this.Font, black, new Point(offset + (c * size), offset + 10 + (r * size)));
+                            panel1Graphics.FillRectangle(black, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            bmpGraphic.FillRectangle(black, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                        }
+                        else
+                        {
+                            //MessageBox.Show("Postion " + r + " & " + c + ": 0!");
+                            //                        panel1Graphics.DrawString("0", this.Font, white, new Point(offset + (c * size), offset + 10 + (r * size)));
+                            panel1Graphics.FillRectangle(white, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            bmpGraphic.FillRectangle(black, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                        }
                     }
                 }
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "Bitmap Image|*.bmp";
+            save.Title = "Save the image";
+            System.Drawing.Imaging.ImageFormat format = System.Drawing.Imaging.ImageFormat.Bmp;
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                //using (Bitmap bm = new Bitmap(panel1.ClientSize.Width, panel1.ClientSize.Height))
+                //{
+                    //panel1.DrawToBitmap(bm, panel1.ClientRectangle);
+                    bmp.Save(save.FileName, format);
+                //}
             }
         }
 
