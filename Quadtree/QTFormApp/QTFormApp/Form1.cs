@@ -249,9 +249,9 @@ namespace QTFormApp
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog save = new SaveFileDialog();
-            save.Filter = "Bitmap Image|*.bmp";
+            save.Filter = "Images|*.png;*.bmp;*.jpg";
             save.Title = "Save the image";
-            System.Drawing.Imaging.ImageFormat format = System.Drawing.Imaging.ImageFormat.Bmp;
+            System.Drawing.Imaging.ImageFormat format = System.Drawing.Imaging.ImageFormat.Png;
             if (save.ShowDialog() == DialogResult.OK)
             {
                 //using (Bitmap bm = new Bitmap(panel1.ClientSize.Width, panel1.ClientSize.Height))
@@ -260,6 +260,11 @@ namespace QTFormApp
                     bmp.Save(save.FileName, format);
                 //}
             }
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panel1Graphics.Clear(Color.Gray);
         }
 
 
