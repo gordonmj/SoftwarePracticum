@@ -17,8 +17,8 @@ namespace QTFormApp
         public Point coords;
         public Point firstClick;
         public string fileName;
-        public int nodeW = 50;
-        public int nodeH = 25;
+        public static int nodeW = 50;
+        public static int nodeH = 25;
         public System.Drawing.Graphics panel1Graphics;
         public System.Drawing.Graphics panel2Graphics;
         public System.Drawing.Graphics formGraphic;
@@ -42,64 +42,12 @@ namespace QTFormApp
 
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void drawWhiteNodeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            clicked = "drawWhiteNode";
-            MessageBox.Show("Double click anywhere on the right panel to draw a white node.");
-        }
-
-        private void drawBlackNodeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            clicked = "drawBlackNode";
-            MessageBox.Show("Double click anywhere on the right panel to draw a black node.");
-        }
-
-        private void drawGreyNodeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            clicked = "drawGreyNode";
-            MessageBox.Show("Double click anywhere on the right panel to draw a grey node.");
-        }
-
-        private void drawArrowtoComeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            clicked = "drawArrow";
-            MessageBox.Show("Double click on two points on the right panel to draw an arrow.");
-        }
-
-        private void drawRandomNodetoComeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            clicked = "drawRandom";
-            Random rando = new Random();
-            
-            int y = rando.Next(10, splitContainer1.Height-nodeH);
-            int x = rando.Next(5, splitContainer1.Width-nodeW);
-            int color = rando.Next(0, 2);
-            Brush[] brushes = {black, white};
-            //formGraphic.FillEllipse(brushes[color], new Rectangle(new Point(x, y), new Size(nodeW, nodeH)));
-            panel2Graphics.FillEllipse(brushes[color], new Rectangle(new Point(x, y), new Size(nodeW, nodeH)));
-        }
-       
+        
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
-        /*
-        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
-        {        }
-
-        private void panel1_MouseDoubleClick(object sender, MouseEventArgs e){}
-
-        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e){}
-
-        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e){}
-
-        private void splitContainer1_Paint(object sender, PaintEventArgs e){}
-        */
+      
         private void panel1_Paint_1(object sender, PaintEventArgs e)
         {
             panel1Graphics = panel1.CreateGraphics();
@@ -118,10 +66,12 @@ namespace QTFormApp
             switch (clicked)
             {
                 case "drawWhiteNode":
-                    panel2Graphics.FillEllipse(white, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+                    //panel2Graphics.FillEllipse(white, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+                    Node whiteNode = Node.drawNode(panel2Graphics, whereClicked, Color.White);              
                     break;
                 case "drawBlackNode":
-                    panel2Graphics.FillEllipse(black, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+                    Node blackNode = Node.drawNode(panel2Graphics, whereClicked, Color.Black);              
+//                    panel2Graphics.FillEllipse(black, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
                     break;
                 case "drawGreyNode":
                     LinearGradientBrush lgb = new LinearGradientBrush(
@@ -135,9 +85,7 @@ namespace QTFormApp
                     blend.Factors = intensities;
                     blend.Positions = positions;
                     lgb.Blend = blend;
-                    Pen gradientPen = new Pen(lgb);
-                    //                    formGraphic.FillEllipse(lgb, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
-                    panel2Graphics.FillEllipse(lgb, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+                    Node grayNode = Node.drawNode(panel2Graphics, whereClicked, lgb);              
                     break;
                 case "drawArrow":
                     clicked = "finishArrow";
@@ -204,9 +152,7 @@ namespace QTFormApp
                 for (int c = 0; c < numCols; c++)
                 {
                     map[r, c] = Convert.ToInt32(nextLine[c]);
-                  //  mapToPrint += nextLine[c];
                 }
-                //mapToPrint += "\n";
             }
             int offset = 10;
             int size;
@@ -224,8 +170,6 @@ namespace QTFormApp
                     {
                         if (map[r, c] == 1)
                         {
-                            //MessageBox.Show("Postion "+r+" & "+c+": 1!");
-                            //                       panel1Graphics.DrawString("1", this.Font, black, new Point(offset + (c * size), offset + 10 + (r * size)));
                             panel1Graphics.FillRectangle(black, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             bmpGraphic.FillRectangle(black, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
@@ -233,8 +177,6 @@ namespace QTFormApp
                         }
                         else
                         {
-                            //MessageBox.Show("Postion " + r + " & " + c + ": 0!");
-                            //                        panel1Graphics.DrawString("0", this.Font, white, new Point(offset + (c * size), offset + 10 + (r * size)));
                             panel1Graphics.FillRectangle(white, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             bmpGraphic.FillRectangle(white, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
@@ -253,11 +195,7 @@ namespace QTFormApp
             System.Drawing.Imaging.ImageFormat format = System.Drawing.Imaging.ImageFormat.Png;
             if (save.ShowDialog() == DialogResult.OK)
             {
-                //using (Bitmap bm = new Bitmap(panel1.ClientSize.Width, panel1.ClientSize.Height))
-                //{
-                    //panel1.DrawToBitmap(bm, panel1.ClientRectangle);
-                    bmp.Save(save.FileName, format);
-                //}
+                bmp.Save(save.FileName, format);
             }
         }
 
@@ -266,6 +204,41 @@ namespace QTFormApp
             panel1Graphics.Clear(Color.Gray);
         }
 
+        private void blackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clicked = "drawBlackNode";
+            MessageBox.Show("Double click anywhere on the right panel to draw a black node.");
+        }
 
+        private void whiteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clicked = "drawWhiteNode";
+            MessageBox.Show("Double click anywhere on the right panel to draw a white node.");
+        }
+
+        private void grayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clicked = "drawGreyNode";
+            MessageBox.Show("Double click anywhere on the right panel to draw a grey node.");
+        }
+
+        private void drawArrowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clicked = "drawArrow";
+            MessageBox.Show("Double click on two points on the right panel to draw an arrow.");
+        }
+
+        private void drawRandomNodetoComeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clicked = "drawRandom";
+            Random rando = new Random();
+
+            int y = rando.Next(10, splitContainer1.Height - nodeH);
+            int x = rando.Next(5, splitContainer1.Width - nodeW);
+            int color = rando.Next(0, 2);
+            Brush[] brushes = { black, white };
+            panel2Graphics.FillEllipse(brushes[color], new Rectangle(new Point(x, y), new Size(nodeW, nodeH)));
+        }
+       
     }
 }
