@@ -17,8 +17,8 @@ namespace QTFormApp
         public Point coords;
         public Point firstClick;
         public string fileName;
-        public int nodeW = 50;
-        public int nodeH = 25;
+        public static int nodeW = 50;
+        public static int nodeH = 25;
         public System.Drawing.Graphics panel1Graphics;
         public System.Drawing.Graphics panel2Graphics;
         public System.Drawing.Graphics formGraphic;
@@ -106,10 +106,12 @@ namespace QTFormApp
             switch (clicked)
             {
                 case "drawWhiteNode":
-                    panel2Graphics.FillEllipse(white, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+                    //panel2Graphics.FillEllipse(white, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+                    Node whiteNode = Node.drawNode(panel2Graphics, whereClicked, Color.White);              
                     break;
                 case "drawBlackNode":
-                    panel2Graphics.FillEllipse(black, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+                    Node blackNode = Node.drawNode(panel2Graphics, whereClicked, Color.Black);              
+//                    panel2Graphics.FillEllipse(black, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
                     break;
                 case "drawGreyNode":
                     LinearGradientBrush lgb = new LinearGradientBrush(
@@ -123,9 +125,7 @@ namespace QTFormApp
                     blend.Factors = intensities;
                     blend.Positions = positions;
                     lgb.Blend = blend;
-                    Pen gradientPen = new Pen(lgb);
-                    //                    formGraphic.FillEllipse(lgb, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
-                    panel2Graphics.FillEllipse(lgb, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+                    Node grayNode = Node.drawNode(panel2Graphics, whereClicked, lgb);              
                     break;
                 case "drawArrow":
                     clicked = "finishArrow";
@@ -236,7 +236,7 @@ namespace QTFormApp
             System.Drawing.Imaging.ImageFormat format = System.Drawing.Imaging.ImageFormat.Png;
             if (save.ShowDialog() == DialogResult.OK)
             {
-                    bmp.Save(save.FileName, format);
+                bmp.Save(save.FileName, format);
             }
         }
 
@@ -245,6 +245,29 @@ namespace QTFormApp
             panel1Graphics.Clear(Color.Gray);
         }
 
+        private void blackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clicked = "drawBlackNode";
+            MessageBox.Show("Double click anywhere on the right panel to draw a black node.");
+        }
+
+        private void whiteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clicked = "drawWhiteNode";
+            MessageBox.Show("Double click anywhere on the right panel to draw a white node.");
+        }
+
+        private void grayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clicked = "drawGreyNode";
+            MessageBox.Show("Double click anywhere on the right panel to draw a grey node.");
+        }
+
+        private void drawArrowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clicked = "drawArrow";
+            MessageBox.Show("Double click on two points on the right panel to draw an arrow.");
+        }
 
     }
 }

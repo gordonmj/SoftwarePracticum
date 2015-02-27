@@ -172,24 +172,28 @@
             this.blackToolStripMenuItem.Name = "blackToolStripMenuItem";
             this.blackToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.blackToolStripMenuItem.Text = "Black";
+            this.blackToolStripMenuItem.Click += new System.EventHandler(this.blackToolStripMenuItem_Click);
             // 
             // whiteToolStripMenuItem
             // 
             this.whiteToolStripMenuItem.Name = "whiteToolStripMenuItem";
             this.whiteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.whiteToolStripMenuItem.Text = "White";
+            this.whiteToolStripMenuItem.Click += new System.EventHandler(this.whiteToolStripMenuItem_Click);
             // 
             // grayToolStripMenuItem
             // 
             this.grayToolStripMenuItem.Name = "grayToolStripMenuItem";
             this.grayToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.grayToolStripMenuItem.Text = "Gray";
+            this.grayToolStripMenuItem.Click += new System.EventHandler(this.grayToolStripMenuItem_Click);
             // 
             // drawArrowToolStripMenuItem
             // 
             this.drawArrowToolStripMenuItem.Name = "drawArrowToolStripMenuItem";
             this.drawArrowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.drawArrowToolStripMenuItem.Text = "Draw arrow";
+            this.drawArrowToolStripMenuItem.Click += new System.EventHandler(this.drawArrowToolStripMenuItem_Click);
             // 
             // automatedToolStripMenuItem
             // 
