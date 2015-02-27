@@ -16,29 +16,49 @@ namespace QTFormApp
         private Point coord;
         private Color color;
         private static Brush brush;
+        private Node NW;
+        private Node NE;
+        private Node SE;
+        private Node SW;
 
         public Node()
         {
             coord = new Point(20, 20);
             color = Color.White;
+            NW = null;
+            NE = null;
+            SE = null;
+            SW = null;
         }
 
         public Node(Point p)
         {
             coord = p;
             color = Color.White;
+            NW = null;
+            NE = null;
+            SE = null;
+            SW = null;
         }
 
         public Node(Color c)
         {
             coord = new Point(20, 20);
             color = c;
+            NW = null;
+            NE = null;
+            SE = null;
+            SW = null;
         }
 
         public Node(Point p, Color c)
         {
             coord = p;
             color = c;
+            NW = null;
+            NE = null;
+            SE = null;
+            SW = null;
         }
 
         public static Node drawNode(System.Drawing.Graphics pg, Point p, Color c)
@@ -54,5 +74,15 @@ namespace QTFormApp
             return new Node(pt, Color.Gray);
         }
 
+        public void setColor(Color c)
+        {
+            color = c;
+        }
+
+        private void validate(Node n){
+            if (color == Color.Gray && (NW.color==NE.color==SW.color==SE.color)){
+                throw new Exception("Bad node");
+            }
+        }
     }
 }
