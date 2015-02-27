@@ -128,6 +128,7 @@ namespace QTFormApp
             {
                 fileName = oFD.FileName;
             }
+            displayToolStripMenuItem_Click(sender, e);
         }
 
         private void displayToolStripMenuItem_Click(object sender, EventArgs e)
