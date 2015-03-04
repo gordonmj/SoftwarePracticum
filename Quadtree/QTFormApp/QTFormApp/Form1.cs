@@ -17,8 +17,8 @@ namespace QTFormApp
         public Point coords;
         public Point firstClick;
         public string fileName;
-        public static int nodeW = 50;
-        public static int nodeH = 25;
+        public static int nodeW = 40;
+        public static int nodeH = 30;
         public System.Drawing.Graphics panel1Graphics;
         public System.Drawing.Graphics panel2Graphics;
         public System.Drawing.Graphics formGraphic;
@@ -116,7 +116,7 @@ namespace QTFormApp
                 case "drawGreyNode":
                     LinearGradientBrush lgb = new LinearGradientBrush(
                     whereClicked,
-                    new Point(whereClicked.X + 50, whereClicked.Y),
+                    new Point(whereClicked.X + 40, whereClicked.Y),
                     Color.FromArgb(255, 255, 255),
                     Color.FromArgb(0, 0, 0));
                     float[] intensities = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
