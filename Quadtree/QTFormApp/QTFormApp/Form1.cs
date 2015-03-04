@@ -106,12 +106,12 @@ namespace QTFormApp
             switch (clicked)
             {
                 case "drawWhiteNode":
-                    //panel2Graphics.FillEllipse(white, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
-                    Node whiteNode = Node.drawNode(panel2Graphics, whereClicked, Color.White);              
+                    panel2Graphics.FillEllipse(white, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+                   // Node whiteNode = Node.drawNode(panel2Graphics, whereClicked, Color.White);              
                     break;
                 case "drawBlackNode":
-                    Node blackNode = Node.drawNode(panel2Graphics, whereClicked, Color.Black);              
-//                    panel2Graphics.FillEllipse(black, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+                    //Node blackNode = Node.drawNode(panel2Graphics, whereClicked, Color.Black);              
+                    panel2Graphics.FillEllipse(black, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
                     break;
                 case "drawGreyNode":
                     LinearGradientBrush lgb = new LinearGradientBrush(
@@ -125,7 +125,8 @@ namespace QTFormApp
                     blend.Factors = intensities;
                     blend.Positions = positions;
                     lgb.Blend = blend;
-                    Node grayNode = Node.drawNode(panel2Graphics, whereClicked, lgb);              
+                    panel2Graphics.FillEllipse(lgb, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+                    //Node grayNode = Node.drawNode(panel2Graphics, whereClicked, lgb);              
                     break;
                 case "drawArrow":
                     clicked = "finishArrow";
