@@ -84,5 +84,60 @@ namespace QTFormApp
                 throw new Exception("Bad node");
             }
         }
+        /*
+        enum NodeColor
+        {
+            Black,
+            White,
+            Gray
+        }
+        private Node whatColor(Node root, int[,] m, int rowStart, int rowStop, int colStart, int colStop)
+        {
+            if ((rowStop - rowStart != colStop - colStart))
+            {
+                MessageBox.Show("Exception!");
+                throw new Exception("Not a square!");
+            }
+            MessageBox.Show("rowStart: " + rowStart + " rowStop: " + rowStop + " colStart: " + colStart + " colStop: " + colStop);
+            if (rowStop - rowStart < 0)
+            {
+                throw new Exception("Invalid params");
+            }
+            else if (rowStop - rowStart == 0)
+            {
+                if (m[rowStart, colStart] == 1)
+                {
+                    MessageBox.Show("At coords " + rowStart + ", " + colStop + " the color is black.");
+                    root.setColor(Color.Black);
+                    return root;
+                }
+                else
+                    MessageBox.Show("At coords " + rowStart + ", " + colStop + " the color is white.");
+                root.setColor(Color.White);
+                return root;
+            }
+            else
+            {
+                int midPointRow = (rowStop - rowStart) / 2;
+                int midPointCol = (colStop - colStart) / 2;
+                root.NW = whatColor(root, m, rowStart, midPointRow, colStart, midPointCol);
+                root.SW = whatColor(root, m, midPointRow + 1, rowStop, colStart, midPointCol);
+                root.SE = whatColor(root, m, midPointRow + 1, rowStop, midPointCol + 1, colStop);
+                root.NE = whatColor(root, m, rowStart, midPointRow, midPointCol + 1, colStop);
+                if (root.NW.getColor() == root.SW.getColor() && root.SW.getColor() == root.SE.getColor() && root.SE.getColor() == root.NE.getColor())
+                {
+                    MessageBox.Show("In range x " + colStart + "-" + colStop + " and y " + rowStart + "-" + rowStop + " the color is " + root.NW.getColor());
+                    root.setColor(root.NW.getColor());
+                    return root;
+                }
+                else
+                {
+                    root.setColor(Color.Gray);
+                    return root;
+                }
+            }
+        }
+         */
     }
+
 }

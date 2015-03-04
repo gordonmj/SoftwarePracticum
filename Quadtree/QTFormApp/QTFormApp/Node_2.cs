@@ -16,10 +16,10 @@ namespace QTFormApp
         private Point coord;
         private Color color;
         private static Brush brush;
-        private Node NW;
-        private Node NE;
-        private Node SE;
-        private Node SW;
+        public Node NW;
+        public Node NE;
+        public Node SE;
+        public Node SW;
 
         public Node()
         {
@@ -77,6 +77,11 @@ namespace QTFormApp
         public void setColor(Color c)
         {
             color = c;
+        }
+
+        public Color getColor()
+        {
+            return color;
         }
 
         private void validate(Node n){
