@@ -29,6 +29,7 @@ namespace QTFormApp
         public int formWidth;
         public int formHeight;
         public Bitmap bmp;
+        public String message;
 
         public Form1()
         {
@@ -198,6 +199,8 @@ namespace QTFormApp
             }
             Node root = new Node();
             root = whatColor(root, map, 0, numRows - 1, 0, numCols - 1, "root");
+            MessageBox.Show(message);
+            message = "";
             int offset = 10;
             int size;
             if ((formWidth / numCols) / 2 > (formHeight - offset) / numRows)
@@ -318,7 +321,7 @@ namespace QTFormApp
                 root.SW = whatColor(new Node(), m, midPointRow + 1, rowStop, colStart, midPointCol, desc + "->SW");
                 root.SE = whatColor(new Node(), m, midPointRow + 1, rowStop, midPointCol + 1, colStop, desc + "->SE");
                 root.NE = whatColor(new Node(), m, rowStart, midPointRow, midPointCol + 1, colStop, desc + "->NE");
-                MessageBox.Show("NW: "+root.NW.getColor()+" SW: "+root.SW.getColor()+" SE: "+root.SE.getColor()+" NE: "+root.NE.getColor());
+                //MessageBox.Show("NW: "+root.NW.getColor()+" SW: "+root.SW.getColor()+" SE: "+root.SE.getColor()+" NE: "+root.NE.getColor());
                 if (root.NW.getColor() == root.SW.getColor() && root.SW.getColor() == root.SE.getColor() && root.SE.getColor() == root.NE.getColor())
                 {
             //        MessageBox.Show("In range x " + colStart + "-" + colStop + " and y " + rowStart + "-" + rowStop + " the color is " + root.NW.getColor());
@@ -331,7 +334,9 @@ namespace QTFormApp
                     returnRoot = root;
                 }
             }
-            MessageBox.Show(desc+" "+root.getColor());
+
+            message += desc + " " + root.getColor().ToString()+"\n";
+            //MessageBox.Show(desc+" "+root.getColor());
             return returnRoot;
         }
     }
