@@ -197,7 +197,7 @@ namespace QTFormApp
                 }
             }
             Node root = new Node();
-            root = whatColor(root, map, 0, numRows - 1, 0, numCols - 1);
+            root = whatColor(root, map, 0, numRows - 1, 0, numCols - 1, "root");
             int offset = 10;
             int size;
             if ((formWidth / numCols) / 2 > (formHeight - offset) / numRows)
@@ -279,57 +279,60 @@ namespace QTFormApp
             Gray
         }
 
-        private Node whatColor(Node root, int[,] m, int rowStart, int rowStop, int colStart, int colStop)
+        private Node whatColor(Node root, int[,] m, int rowStart, int rowStop, int colStart, int colStop, String desc)
         {
+            Node returnRoot;
             if ((rowStop - rowStart != colStop - colStart))
             {
                 MessageBox.Show("Error! rowStart: "+rowStart+" rowStop "+rowStop+" colStart: "+colStart+" and colStop: "+colStop);
                 //throw new Exception("Not a square!");
                 this.Close();
-                return null;
+                returnRoot = null;
             }
-            MessageBox.Show("rowStart: " + rowStart + " rowStop: " + rowStop + " colStart: " + colStart + " colStop: " + colStop);
+//            MessageBox.Show("rowStart: " + rowStart + " rowStop: " + rowStop + " colStart: " + colStart + " colStop: " + colStop);
             if (rowStop - rowStart < 0)
             {
-                MessageBox.Show("rowStart: " + rowStart + " and rowStop: " + rowStop + " colStart: " + colStart + " and colStop: " + colStop);
+                MessageBox.Show("rowStart: " + rowStart + " is greater than rowStop: " + rowStop);
                 //throw new Exception("Invalid params");
                 this.Close();
-                return null;
+                returnRoot = null;
             }
             else if (rowStop - rowStart == 0)
             {
                 if (m[rowStart, colStart] == 1)
                 {
-                    //MessageBox.Show("At coords " + rowStart + ", " + colStop + " the color is black.");
                     root.setColor(Color.Black);
-                    return root;
+                    //MessageBox.Show(desc + " " + root.getColor());
+                    returnRoot = root;
                 }
                 else
-                    //MessageBox.Show("At coords " + rowStart + ", " + colStop + " the color is white.");
                     root.setColor(Color.White);
-                    return root;
+                    //MessageBox.Show(desc + " " + root.getColor());
+                    returnRoot = root;
             }
             else
             {
-                int midPointRow = (rowStop - rowStart) / 2;
-                int midPointCol = (colStop - colStart) / 2;
-                root.NW = whatColor(root, m, rowStart, midPointRow, colStart, midPointCol);
-                root.SW = whatColor(root, m, midPointRow + 1, rowStop, colStart, midPointCol);
-                root.SE = whatColor(root, m, midPointRow + 1, rowStop, midPointCol + 1, colStop);
-                root.NE = whatColor(root, m, rowStart, midPointRow, midPointCol + 1, colStop);
+                int midPointRow = (rowStop + rowStart) / 2;
+                int midPointCol = (colStop + colStart) / 2;
+                root.NW = whatColor(new Node(), m, rowStart, midPointRow, colStart, midPointCol,desc+"->NW");
+                root.SW = whatColor(new Node(), m, midPointRow + 1, rowStop, colStart, midPointCol, desc + "->SW");
+                root.SE = whatColor(new Node(), m, midPointRow + 1, rowStop, midPointCol + 1, colStop, desc + "->SE");
+                root.NE = whatColor(new Node(), m, rowStart, midPointRow, midPointCol + 1, colStop, desc + "->NE");
+                MessageBox.Show("NW: "+root.NW.getColor()+" SW: "+root.SW.getColor()+" SE: "+root.SE.getColor()+" NE: "+root.NE.getColor());
                 if (root.NW.getColor() == root.SW.getColor() && root.SW.getColor() == root.SE.getColor() && root.SE.getColor() == root.NE.getColor())
                 {
-                    MessageBox.Show("In range x " + colStart + "-" + colStop + " and y " + rowStart + "-" + rowStop + " the color is " + root.NW.getColor());
+            //        MessageBox.Show("In range x " + colStart + "-" + colStop + " and y " + rowStart + "-" + rowStop + " the color is " + root.NW.getColor());
                     root.setColor(root.NW.getColor());
-                    return root;
+                    returnRoot = root;
                 }
                 else
                 {
                     root.setColor(Color.Gray);
-                    return root;
+                    returnRoot = root;
                 }
             }
+            MessageBox.Show(desc+" "+root.getColor());
+            return returnRoot;
         }
-
     }
 }
