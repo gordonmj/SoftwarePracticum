@@ -107,7 +107,13 @@ namespace QTFormApp
             switch (clicked)
             {
                 case "drawWhiteNode":
-                    panel2Graphics.FillEllipse(white, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+                    Panel p = new Panel();
+                    p.Location = whereClicked;
+                    p.Size = new Size(nodeW, nodeH);
+                    System.Drawing.Graphics pGraphics = p.CreateGraphics();
+                    this.Controls.Add(p);
+                    pGraphics.FillEllipse(white, new Rectangle(new Point(0,0), new Size(nodeW, nodeH)));
+                    //panel2Graphics.FillEllipse(white, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
                    // Node whiteNode = Node.drawNode(panel2Graphics, whereClicked, Color.White);              
                     break;
                 case "drawBlackNode":
@@ -232,6 +238,9 @@ namespace QTFormApp
             root = whatColor(root, map, 0, numRows - 1, 0, numCols - 1, "root");
             MessageBox.Show(message);
             message = "";
+            nodeList(root, " ");
+            MessageBox.Show(message);
+            message = "";
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -326,6 +335,7 @@ namespace QTFormApp
                 {
             //        MessageBox.Show("In range x " + colStart + "-" + colStop + " and y " + rowStart + "-" + rowStop + " the color is " + root.NW.getColor());
                     root.setColor(root.NW.getColor());
+                   // root.prune();
                     returnRoot = root;
                 }
                 else
@@ -339,5 +349,21 @@ namespace QTFormApp
             //MessageBox.Show(desc+" "+root.getColor());
             return returnRoot;
         }
-    }
-}
+
+        private void nodeList(Node n, String indent)
+        {
+            if (!n.hasChildren)
+            {
+                message = indent + n.getColor().ToString()+"\n"+ message;
+            }
+            else
+            {
+                nodeList(n.NW, indent + 1);
+                nodeList(n.SW, indent + 1);
+                nodeList(n.SE, indent + 1);
+                nodeList(n.NE, indent + 1);
+                message = indent + n.getColor().ToString() + "\n" + message;                
+            }
+        }
+    }//class
+}//namespace

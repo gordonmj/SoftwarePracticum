@@ -16,10 +16,11 @@ namespace QTFormApp
         private Point coord;
         private Color color;
         private static Brush brush;
-        public Node NW;
-        public Node NE;
-        public Node SE;
-        public Node SW;
+        public Node NW = null;
+        public Node NE = null;
+        public Node SE = null;
+        public Node SW = null;
+        public bool hasChildren = false;
 
         public Node()
         {
@@ -88,6 +89,66 @@ namespace QTFormApp
             if (color == Color.Gray && (NW.color == NE.color && NE.color == SW.color && SW.color == SE.color))
             {
                 throw new Exception("Bad node");
+            }
+        }
+
+        public void addChild(String s)
+        {
+            hasChildren = true;
+            switch (s)
+            {
+                case "NW":
+                    NW = new Node();
+                    break;
+                case "SW":
+                    SW = new Node();
+                    break;
+                case "SE":
+                    SE = new Node();
+                    break;
+                case "NE":
+                    NE = new Node();
+                    break;
+                default:
+                    //add exception
+                    break;
+            }
+        }
+
+        public void addChildren()
+        {
+            hasChildren = true;
+
+            addChild("NW");
+            addChild("SW");
+            addChild("SE");
+            addChild("NE");
+        }
+
+        public void removeChildren()
+        {
+            NW = null;
+            NE = null;
+            SE = null;
+            SW = null;
+            hasChildren = false;
+        }
+
+        public void prune()
+        {
+            if (hasChildren)
+            {
+                if (NW.getColor() == SW.getColor() && NW.getColor() == NE.getColor() && NW.getColor() == SE.getColor())
+                {
+                    removeChildren();
+                }
+                else
+                {
+                    NW.prune();
+                    SW.prune();
+                    SE.prune();
+                    NE.prune();
+                }
             }
         }
     }
