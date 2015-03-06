@@ -115,6 +115,29 @@ namespace QTFormApp
             }
         }
 
+        public void addChild(String s, Node n)
+        {
+            hasChildren = true;
+            switch (s)
+            {
+                case "NW":
+                    NW = n;
+                    break;
+                case "SW":
+                    SW = n;
+                    break;
+                case "SE":
+                    SE = n;
+                    break;
+                case "NE":
+                    NE = n;
+                    break;
+                default:
+                    //add exception
+                    break;
+            }
+        }
+
         public void addChildren()
         {
             hasChildren = true;

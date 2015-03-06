@@ -236,9 +236,9 @@ namespace QTFormApp
             }
             Node root = new Node();
             root = whatColor(root, map, 0, numRows - 1, 0, numCols - 1, "root");
-            MessageBox.Show(message);
+            //MessageBox.Show(message);
             message = "";
-            nodeList(root, " ");
+            nodeList(root, "root", " ");
             MessageBox.Show(message);
             message = "";
         }
@@ -326,16 +326,20 @@ namespace QTFormApp
             {
                 int midPointRow = (rowStop + rowStart) / 2;
                 int midPointCol = (colStop + colStart) / 2;
-                root.NW = whatColor(new Node(), m, rowStart, midPointRow, colStart, midPointCol,desc+"->NW");
-                root.SW = whatColor(new Node(), m, midPointRow + 1, rowStop, colStart, midPointCol, desc + "->SW");
-                root.SE = whatColor(new Node(), m, midPointRow + 1, rowStop, midPointCol + 1, colStop, desc + "->SE");
-                root.NE = whatColor(new Node(), m, rowStart, midPointRow, midPointCol + 1, colStop, desc + "->NE");
+                root.addChild("NW",whatColor(new Node(), m, rowStart, midPointRow, colStart, midPointCol,desc+"->NW"));
+                root.addChild("SW",whatColor(new Node(), m, midPointRow + 1, rowStop, colStart, midPointCol, desc + "->SW"));
+                root.addChild("SE",whatColor(new Node(), m, midPointRow + 1, rowStop, midPointCol + 1, colStop, desc + "->SE"));
+                root.addChild("NE", whatColor(new Node(), m, rowStart, midPointRow, midPointCol + 1, colStop, desc + "->NE"));
+                if (!root.hasChildren)
+                {
+                    MessageBox.Show(desc+" hey!");
+                }
                 //MessageBox.Show("NW: "+root.NW.getColor()+" SW: "+root.SW.getColor()+" SE: "+root.SE.getColor()+" NE: "+root.NE.getColor());
                 if (root.NW.getColor() == root.SW.getColor() && root.SW.getColor() == root.SE.getColor() && root.SE.getColor() == root.NE.getColor())
                 {
             //        MessageBox.Show("In range x " + colStart + "-" + colStop + " and y " + rowStart + "-" + rowStop + " the color is " + root.NW.getColor());
                     root.setColor(root.NW.getColor());
-                   // root.prune();
+                    root.prune();
                     returnRoot = root;
                 }
                 else
@@ -350,19 +354,19 @@ namespace QTFormApp
             return returnRoot;
         }
 
-        private void nodeList(Node n, String indent)
+        private void nodeList(Node n, String desc, String indent)
         {
             if (!n.hasChildren)
             {
-                message = indent + n.getColor().ToString()+"\n"+ message;
+                message = indent + " " + desc + " (leaf) " + n.getColor().ToString()+"\n"+ message;
             }
             else
             {
-                nodeList(n.NW, indent + 1);
-                nodeList(n.SW, indent + 1);
-                nodeList(n.SE, indent + 1);
-                nodeList(n.NE, indent + 1);
-                message = indent + n.getColor().ToString() + "\n" + message;                
+                nodeList(n.NW, desc + "->NW", indent + " ");
+                nodeList(n.SW, desc + "->SW", indent + " ");
+                nodeList(n.SE, desc + "->SE", indent + " ");
+                nodeList(n.NE, desc + "->NE", indent + " ");
+                message = indent + desc + " " + n.getColor().ToString() + "\n" + message;
             }
         }
     }//class
