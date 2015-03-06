@@ -197,10 +197,6 @@ namespace QTFormApp
                     map[r, c] = Convert.ToInt32(nextLine[c]);
                 }
             }
-            Node root = new Node();
-            root = whatColor(root, map, 0, numRows - 1, 0, numCols - 1, "root");
-            MessageBox.Show(message);
-            message = "";
             int offset = 10;
             int size;
             if ((formWidth / numCols) / 2 > (formHeight - offset) / numRows)
@@ -232,6 +228,10 @@ namespace QTFormApp
                     }
                 }
             }
+            Node root = new Node();
+            root = whatColor(root, map, 0, numRows - 1, 0, numCols - 1, "root");
+            MessageBox.Show(message);
+            message = "";
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -335,7 +335,7 @@ namespace QTFormApp
                 }
             }
 
-            message += desc + " " + root.getColor().ToString()+"\n";
+            message = desc + " " + root.getColor().ToString()+"\n"+message;
             //MessageBox.Show(desc+" "+root.getColor());
             return returnRoot;
         }
