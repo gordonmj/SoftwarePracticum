@@ -101,17 +101,21 @@ namespace QTFormApp
 
         private void panel2_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            MouseEventArgs mea = e;
-            Point whereClicked = mea.Location;
+            Point whereClicked = e.Location;
 
             switch (clicked)
             {
                 case "drawWhiteNode":
                     Panel p = new Panel();
+                    //p.DoDragDrop();
+                    //panel2.Location.Offset(whereClicked);
+                    //whereClicked.Offset(panel2.Location);
                     p.Location = whereClicked;
                     p.Size = new Size(nodeW, nodeH);
                     System.Drawing.Graphics pGraphics = p.CreateGraphics();
-                    this.Controls.Add(p);
+                    panel2.Controls.Add(p);
+                    //this.Controls.Add(p);
+                    p.BringToFront();
                     pGraphics.FillEllipse(white, new Rectangle(new Point(0,0), new Size(nodeW, nodeH)));
                     //panel2Graphics.FillEllipse(white, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
                    // Node whiteNode = Node.drawNode(panel2Graphics, whereClicked, Color.White);              
