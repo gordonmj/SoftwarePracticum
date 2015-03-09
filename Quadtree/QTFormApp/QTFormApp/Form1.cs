@@ -116,6 +116,7 @@ namespace QTFormApp
                     panel2.Controls.Add(p);
                     //this.Controls.Add(p);
                     p.BringToFront();
+
                     pGraphics.FillEllipse(white, new Rectangle(new Point(0,0), new Size(nodeW, nodeH)));
                     //panel2Graphics.FillEllipse(white, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
                    // Node whiteNode = Node.drawNode(panel2Graphics, whereClicked, Color.White);              
@@ -334,16 +335,13 @@ namespace QTFormApp
                 root.addChild("SW",whatColor(new Node(), m, midPointRow + 1, rowStop, colStart, midPointCol, desc + "->SW"));
                 root.addChild("SE",whatColor(new Node(), m, midPointRow + 1, rowStop, midPointCol + 1, colStop, desc + "->SE"));
                 root.addChild("NE", whatColor(new Node(), m, rowStart, midPointRow, midPointCol + 1, colStop, desc + "->NE"));
-                if (!root.hasChildren)
-                {
-                    MessageBox.Show(desc+" hey!");
-                }
                 //MessageBox.Show("NW: "+root.NW.getColor()+" SW: "+root.SW.getColor()+" SE: "+root.SE.getColor()+" NE: "+root.NE.getColor());
                 if (root.NW.getColor() == root.SW.getColor() && root.SW.getColor() == root.SE.getColor() && root.SE.getColor() == root.NE.getColor())
                 {
             //        MessageBox.Show("In range x " + colStart + "-" + colStop + " and y " + rowStart + "-" + rowStop + " the color is " + root.NW.getColor());
                     root.setColor(root.NW.getColor());
-                    root.prune();
+                    if (root.NW.getColor()!=Color.Gray)
+                        root.prune();
                     returnRoot = root;
                 }
                 else
@@ -366,6 +364,7 @@ namespace QTFormApp
             }
             else
             {
+                //TODO: refactor indent to int and build string at level
                 nodeList(n.NW, desc + "->NW", indent + " ");
                 nodeList(n.SW, desc + "->SW", indent + " ");
                 nodeList(n.SE, desc + "->SE", indent + " ");
