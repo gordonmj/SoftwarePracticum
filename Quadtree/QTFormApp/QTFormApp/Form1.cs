@@ -371,6 +371,25 @@ namespace QTFormApp
                 nodeList(n.NE, desc + "->NE", indent + " ");
                 message = indent + desc + " " + n.getColor().ToString() + "\n" + message;
             }
+        }//nodeList
+
+        private int findClosestNode(Point down)
+        {
+            int index = -1;
+            for (int i=0;i<)
+            return index;
         }
+ 
+        /*
+private void panel2_MouseDown(object sender, MouseEventArgs e)
+{
+    Point whereClicked = e.Location;
+    int whichNode = findClosestNode(whereClicked);
+}
+private void panel2_MouseUp(object sender, MouseEventArgs e)
+{
+}
+
+ */
     }//class
 }//namespace
