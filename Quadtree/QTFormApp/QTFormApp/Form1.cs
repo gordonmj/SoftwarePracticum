@@ -30,6 +30,8 @@ namespace QTFormApp
         public int formHeight;
         public Bitmap bmp;
         public String message;
+        public Node[] positions= new Node[100];
+        public int pos = 0;
 
         public Form1()
         {
@@ -106,6 +108,7 @@ namespace QTFormApp
             switch (clicked)
             {
                 case "drawWhiteNode":
+                    /*
                     Panel p = new Panel();
                     //p.DoDragDrop();
                     //panel2.Location.Offset(whereClicked);
@@ -118,11 +121,14 @@ namespace QTFormApp
                     p.BringToFront();
 
                     pGraphics.FillEllipse(white, new Rectangle(new Point(0,0), new Size(nodeW, nodeH)));
-                    //panel2Graphics.FillEllipse(white, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+                     */
+                    this.positions[pos++] = Node.drawNode(panel2Graphics, whereClicked, Color.White);
+                    panel2Graphics.FillEllipse(white, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
                    // Node whiteNode = Node.drawNode(panel2Graphics, whereClicked, Color.White);              
                     break;
                 case "drawBlackNode":
-                    //Node blackNode = Node.drawNode(panel2Graphics, whereClicked, Color.Black);              
+                    //Node blackNode = Node.drawNode(panel2Graphics, whereClicked, Color.Black);
+                    this.positions[pos++] = Node.drawNode(panel2Graphics, whereClicked, Color.Black);
                     panel2Graphics.FillEllipse(black, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
                     break;
                 case "drawGreyNode":
@@ -138,6 +144,7 @@ namespace QTFormApp
                     blend.Positions = positions;
                     lgb.Blend = blend;
                     panel2Graphics.FillEllipse(lgb, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+                    this.positions[pos++] = Node.drawNode(panel2Graphics, whereClicked, lgb);
                     //Node grayNode = Node.drawNode(panel2Graphics, whereClicked, lgb);              
                     break;
                 case "drawArrow":
@@ -146,7 +153,9 @@ namespace QTFormApp
                     break;
                 case "finishArrow":
                     Pen arrow = new Pen(black, 3);
-                    arrow.EndCap = LineCap.ArrowAnchor;
+                    AdjustableArrowCap bigArrow = new AdjustableArrowCap(20, 10);
+                    //arrow.CustomEndCap = bigArrow;
+                    //arrow.EndCap = LineCap.ArrowAnchor;
                     panel2Graphics.DrawLine(arrow, firstClick, whereClicked);
                     clicked = "drawArrow";
                     break;
@@ -372,5 +381,25 @@ namespace QTFormApp
                 message = indent + desc + " " + n.getColor().ToString() + "\n" + message;
             }
         }
+        /*
+        private void panel2_MouseDown(object sender, MouseEventArgs e)
+        {
+            Point whereClicked = e.Location;
+            int whichNode = findClosestNode(whereClicked);
+
+        }
+
+        private void panel2_MouseUp(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private int findClosestNode(Point down)
+        {
+            int index = -1;
+            for (int i=0;)
+            return index;
+        }
+         */
     }//class
 }//namespace
