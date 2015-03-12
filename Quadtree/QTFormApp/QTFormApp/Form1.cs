@@ -16,6 +16,7 @@ namespace QTFormApp
         private String clicked;
         public Point coords;
         public Point firstClick;
+        public int lastClicked;
         public string fileName;
         public static int nodeW = 40;
         public static int nodeH = 30;
@@ -381,25 +382,74 @@ namespace QTFormApp
                 message = indent + desc + " " + n.getColor().ToString() + "\n" + message;
             }
         }
-        /*
+
+                private int findTouchingNode(Point down)
+        {
+            for (int i = 0; i < pos; i++)
+            {
+                if (pointInNode(down, positions[i].getPoint()))
+                {
+                    return i;
+                }   
+            }
+                return -1;
+        }
+
+        private void clearNode(int origin)
+        {
+            panel2Graphics.FillEllipse(gray, new Rectangle(positions[origin].getPoint(), new Size(nodeW, nodeH)));
+        }
+        private void drawNode(int origin, Point destination)
+        {
+            positions[origin].setPoint(destination);
+            if (positions[origin].getColor() != Color.Gray)
+            {
+                Brush brush = new SolidBrush(positions[origin].getColor());
+                panel2Graphics.FillEllipse(brush, new Rectangle(positions[origin].getPoint(), new Size(nodeW, nodeH)));
+            }
+            else
+            {
+                LinearGradientBrush lgb = new LinearGradientBrush(
+                    destination,
+                    new Point(destination.X + 40, destination.Y),
+                    Color.FromArgb(255, 255, 255),
+                    Color.FromArgb(0, 0, 0));
+                float[] intensities = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+                float[] posit = { 0.0f, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f };
+                Blend blend = new Blend();
+                blend.Factors = intensities;
+                blend.Positions = posit;
+                lgb.Blend = blend;
+                panel2Graphics.FillEllipse(lgb, new Rectangle(positions[origin].getPoint(), new Size(nodeW, nodeH)));
+            }
+        }
+        private void redrawNode(int origin, Point destination)
+        {
+            clearNode(origin);
+            drawNode(origin, destination);
+         }
+
         private void panel2_MouseDown(object sender, MouseEventArgs e)
         {
             Point whereClicked = e.Location;
-            int whichNode = findClosestNode(whereClicked);
-
+            int whichNode = findTouchingNode(whereClicked);
+            lastClicked = whichNode;
         }
 
         private void panel2_MouseUp(object sender, MouseEventArgs e)
         {
+            Point whereClicked = e.Location;
+            if (lastClicked != -1){
+                redrawNode(lastClicked, whereClicked);
+            }
 
         }
 
-        private int findClosestNode(Point down)
+        private bool pointInNode(Point click, Point node)
         {
-            int index = -1;
-            for (int i=0;)
-            return index;
+            return click.X < node.X + nodeW && click.X > node.X - nodeW && click.Y < node.Y + nodeH && click.Y > node.Y - nodeH;
         }
-         */
+
+
     }//class
 }//namespace
