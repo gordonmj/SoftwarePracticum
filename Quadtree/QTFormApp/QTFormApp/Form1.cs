@@ -422,8 +422,11 @@ namespace QTFormApp
             {
                 deleteNode(origin);
             }
-            clearNode(origin);
-            drawNode(origin, destination);
+            else
+            {
+                clearNode(origin);
+                drawNode(origin, destination);
+            }
          }
 
         private void align(int start, int stop)
@@ -465,6 +468,16 @@ namespace QTFormApp
         private bool pointInNode(Point click, Point node)
         {
             return click.X < node.X + nodeW && click.X > node.X - nodeW && click.Y < node.Y + nodeH && click.Y > node.Y - nodeH;
+        }
+
+        private void closeToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < pos; i++)
+            {
+                positions[i] = null;
+            }
+                panel2Graphics.Clear(Color.Gray);
+
         }
 
 
