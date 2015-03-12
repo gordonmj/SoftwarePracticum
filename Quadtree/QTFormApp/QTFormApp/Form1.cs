@@ -376,6 +376,7 @@ namespace QTFormApp
 
         private void deleteNode(int origin)
         {
+            clearNode(origin);
             nodes[origin] = null;
         }
         private void drawNewNode(int origin, Point destination, Color color)
@@ -452,6 +453,11 @@ namespace QTFormApp
         {
             Point whereClicked = e.Location;
             int whichNode = findTouchingNode(whereClicked);
+            if (whereClicked.X < 0 || whereClicked.Y < 0)
+            {
+                deleteNode(lastClicked);
+                return;
+            }
             if (lastClicked == -1)
             {
                 return;
