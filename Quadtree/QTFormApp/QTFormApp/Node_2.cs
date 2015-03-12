@@ -85,6 +85,21 @@ namespace QTFormApp
             return color;
         }
 
+        public String getColorString()
+        {
+            if (color == Color.White)
+            {
+                return "white";
+            }
+            else if (color == Color.Black)
+            {
+                return "black";
+            }
+            else
+            {
+                return "gray";
+            }
+        }
         public void setPoint(Point p)
         {
             coord = p;

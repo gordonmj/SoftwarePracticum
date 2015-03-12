@@ -13,26 +13,26 @@ namespace QTFormApp
 {
     public partial class Form1 : Form
     {
-        private String clicked;
-        public Point coords;
+        private String menuChoice;
+        //public Point coords;
         public Point firstClick;
         public int lastClicked;
         public string fileName; 
-        public static int nodeW = 40;
-        public static int nodeH = 30;
+        public static int nodeWidth = 40;
+        public static int nodeHeight = 30;
         public System.Drawing.Graphics panel1Graphics;
         public System.Drawing.Graphics panel2Graphics;
         public System.Drawing.Graphics formGraphic;
         public System.Drawing.Graphics canvasGraphics;
-        public Brush black = new SolidBrush(Color.Black);
-        public Brush white = new SolidBrush(Color.White);
-        public Brush gray = new SolidBrush(Color.Gray);
+        public Brush blackBrush = new SolidBrush(Color.Black);
+        public Brush whiteBrush = new SolidBrush(Color.White);
+        public Brush grayBrush = new SolidBrush(Color.Gray);
         public int formWidth;
         public int formHeight;
-        public Bitmap bmp;
-        public String message;
-        public Node[] positions= new Node[100];
-        public int pos = 0;
+        public Bitmap bmpToSave;
+        public String messageToDisplay;
+        public Node[] nodes= new Node[100];
+        public int currentPosition = 0;
 
         public Form1()
         {
@@ -53,38 +53,38 @@ namespace QTFormApp
 
         private void drawWhiteNodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            clicked = "drawWhiteNode";
+            menuChoice = "drawWhiteNode";
             MessageBox.Show("Double click anywhere on the right panel to draw a white node.");
         }
 
         private void drawBlackNodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            clicked = "drawBlackNode";
+            menuChoice = "drawBlackNode";
             MessageBox.Show("Double click anywhere on the right panel to draw a black node.");
         }
 
         private void drawGreyNodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            clicked = "drawGreyNode";
+            menuChoice = "drawGreyNode";
             MessageBox.Show("Double click anywhere on the right panel to draw a grey node.");
         }
 
         private void drawArrowtoComeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            clicked = "drawArrow";
+            menuChoice = "drawArrow";
             MessageBox.Show("Double click on two points on the right panel to draw an arrow.");
         }
 
         private void drawRandomNodetoComeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            clicked = "drawRandom";
+            menuChoice = "drawRandom";
             Random rando = new Random();
             
-            int y = rando.Next(10, splitContainer1.Height-nodeH);
-            int x = rando.Next(5, splitContainer1.Width-nodeW);
+            int y = rando.Next(10, splitContainer1.Height-nodeHeight);
+            int x = rando.Next(5, splitContainer1.Width-nodeWidth);
             int color = rando.Next(0, 2);
-            Brush[] brushes = {black, white};
-            panel2Graphics.FillEllipse(brushes[color], new Rectangle(new Point(x, y), new Size(nodeW, nodeH)));
+            Brush[] brushes = {blackBrush, whiteBrush};
+            panel2Graphics.FillEllipse(brushes[color], new Rectangle(new Point(x, y), new Size(nodeWidth, nodeHeight)));
         }
        
         private void Form1_Load(object sender, EventArgs e)
@@ -106,33 +106,33 @@ namespace QTFormApp
         {
             Point whereClicked = e.Location;
 
-            switch (clicked)
+            switch (menuChoice)
             {
                 case "drawWhiteNode":
-                    drawNewNode(pos++, whereClicked, Color.White);              
+                    drawNewNode(currentPosition++, whereClicked, Color.White);              
                     break;
                 case "drawBlackNode":
-                    drawNewNode(pos++, whereClicked, Color.Black);              
+                    drawNewNode(currentPosition++, whereClicked, Color.Black);              
                     break;
                 case "drawGreyNode":
-                     drawNewNode(pos++, whereClicked, Color.Gray);              
+                     drawNewNode(currentPosition++, whereClicked, Color.Gray);              
                    break;
                 case "drawArrow":
-                    clicked = "finishArrow";
+                    menuChoice = "finishArrow";
                     firstClick = whereClicked;
                     break;
                 case "finishArrow":
-                    Pen arrow = new Pen(black, 3);
+                    Pen arrow = new Pen(blackBrush, 3);
                     AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
                     arrow.CustomEndCap = bigArrow;
                     //arrow.EndCap = LineCap.ArrowAnchor;
                     panel2Graphics.DrawLine(arrow, firstClick, whereClicked);
-                    clicked = "drawArrow";
+                    menuChoice = "drawArrow";
                     break;
                 default:
                     if (findTouchingNode(whereClicked) != -1)
                     {
-                        String color = positions[findTouchingNode(whereClicked)].getColor().ToString();
+                        String color = nodes[findTouchingNode(whereClicked)].getColorString();
                         MessageBox.Show("Hey! You clicked a "+color+" node!");
                     }
                     break;
@@ -170,7 +170,7 @@ namespace QTFormApp
 
         private void displayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Pen border = new Pen(gray, 1);
+            Pen border = new Pen(grayBrush, 1);
             if (fileName == null)
             {
                 MessageBox.Show("You must select an input file first. Use 'Image>Load'");
@@ -199,8 +199,8 @@ namespace QTFormApp
             else
                 size = (((formWidth - offset) / numCols) / 2) - offset;
             panel1Graphics.Clear(Color.Gray);
-            bmp = new Bitmap(panel1.ClientSize.Width, panel1.ClientSize.Height);
-            using (Graphics bmpGraphic = Graphics.FromImage(bmp))
+            bmpToSave = new Bitmap(panel1.ClientSize.Width, panel1.ClientSize.Height);
+            using (Graphics bmpGraphic = Graphics.FromImage(bmpToSave))
             {
                 for (int r = 0; r < numRows; r++)
                 {
@@ -208,16 +208,16 @@ namespace QTFormApp
                     {
                         if (map[r, c] == 1)
                         {
-                            panel1Graphics.FillRectangle(black, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            panel1Graphics.FillRectangle(blackBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            bmpGraphic.FillRectangle(black, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            bmpGraphic.FillRectangle(blackBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                         }
                         else
                         {
-                            panel1Graphics.FillRectangle(white, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            panel1Graphics.FillRectangle(whiteBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            bmpGraphic.FillRectangle(white, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            bmpGraphic.FillRectangle(whiteBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                         }
                     }
@@ -226,10 +226,10 @@ namespace QTFormApp
             Node root = new Node();
             root = whatColor(root, map, 0, numRows - 1, 0, numCols - 1, "root");
             //MessageBox.Show(message);
-            message = "";
+            messageToDisplay = "";
             nodeList(root, "root", " ");
-            MessageBox.Show(message);
-            message = "";
+            MessageBox.Show(messageToDisplay);
+            messageToDisplay = "";
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -240,7 +240,7 @@ namespace QTFormApp
             System.Drawing.Imaging.ImageFormat format = System.Drawing.Imaging.ImageFormat.Png;
             if (save.ShowDialog() == DialogResult.OK)
             {
-                bmp.Save(save.FileName, format);
+                bmpToSave.Save(save.FileName, format);
             }
         }
 
@@ -251,25 +251,25 @@ namespace QTFormApp
 
         private void blackToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            clicked = "drawBlackNode";
+            menuChoice = "drawBlackNode";
             MessageBox.Show("Double click anywhere on the right panel to draw a black node.");
         }
 
         private void whiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            clicked = "drawWhiteNode";
+            menuChoice = "drawWhiteNode";
             MessageBox.Show("Double click anywhere on the right panel to draw a white node.");
         }
 
         private void grayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            clicked = "drawGreyNode";
+            menuChoice = "drawGreyNode";
             MessageBox.Show("Double click anywhere on the right panel to draw a grey node.");
         }
 
         private void drawArrowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            clicked = "drawArrow";
+            menuChoice = "drawArrow";
             MessageBox.Show("Double click on two points on the right panel to draw an arrow.");
         }
 
@@ -335,7 +335,7 @@ namespace QTFormApp
                 }
             }
 
-            message = desc + " " + root.getColor().ToString()+"\n"+message;
+            messageToDisplay = desc + " " + root.getColorString()+"\n"+messageToDisplay;
             //MessageBox.Show(desc+" "+root.getColor());
             return returnRoot;
         }
@@ -344,7 +344,7 @@ namespace QTFormApp
         {
             if (!n.hasChildren)
             {
-                message = indent + " " + desc + " (leaf) " + n.getColor().ToString()+"\n"+ message;
+                messageToDisplay = indent + " " + desc + " (leaf) " + n.getColorString()+"\n"+ messageToDisplay;
             }
             else
             {
@@ -353,15 +353,15 @@ namespace QTFormApp
                 nodeList(n.SW, desc + "->SW", indent + " ");
                 nodeList(n.SE, desc + "->SE", indent + " ");
                 nodeList(n.NE, desc + "->NE", indent + " ");
-                message = indent + desc + " " + n.getColor().ToString() + "\n" + message;
+                messageToDisplay = indent + desc + " " + n.getColorString() + "\n" + messageToDisplay;
             }
         }
 
         private int findTouchingNode(Point down)
         {
-            for (int i = 0; i < pos; i++)
+            for (int i = 0; i < currentPosition; i++)
             {
-                if (pointInNode(down, positions[i].getPoint()))
+                if (pointInNode(down, nodes[i].getPoint()))
                 {
                     return i;
                 }   
@@ -371,29 +371,29 @@ namespace QTFormApp
 
         private void clearNode(int origin)
         {
-            panel2Graphics.FillEllipse(gray, new Rectangle(positions[origin].getPoint(), new Size(nodeW, nodeH)));
+            panel2Graphics.FillEllipse(grayBrush, new Rectangle(nodes[origin].getPoint(), new Size(nodeWidth, nodeHeight)));
         }
 
         private void deleteNode(int origin)
         {
-            positions[origin] = null;
+            nodes[origin] = null;
         }
         private void drawNewNode(int origin, Point destination, Color color)
         {
-            positions[origin] = new Node(destination, color);
+            nodes[origin] = new Node(destination, color);
             drawNode(origin, destination);
-            if (pos == 4)
+            if (currentPosition == 4)
             {
                 align(0, 3);
             }
         }
         private void drawNode(int origin, Point destination)
         {
-            positions[origin].setPoint(destination);
-            if (positions[origin].getColor() != Color.Gray)
+            nodes[origin].setPoint(destination);
+            if (nodes[origin].getColor() != Color.Gray)
             {
-                Brush brush = new SolidBrush(positions[origin].getColor());
-                panel2Graphics.FillEllipse(brush, new Rectangle(positions[origin].getPoint(), new Size(nodeW, nodeH)));
+                Brush brush = new SolidBrush(nodes[origin].getColor());
+                panel2Graphics.FillEllipse(brush, new Rectangle(nodes[origin].getPoint(), new Size(nodeWidth, nodeHeight)));
             }
             else
             {
@@ -408,7 +408,7 @@ namespace QTFormApp
                 blend.Factors = intensities;
                 blend.Positions = posit;
                 lgb.Blend = blend;
-                panel2Graphics.FillEllipse(lgb, new Rectangle(positions[origin].getPoint(), new Size(nodeW, nodeH)));
+                panel2Graphics.FillEllipse(lgb, new Rectangle(nodes[origin].getPoint(), new Size(nodeWidth, nodeHeight)));
             }
         }
         private void redrawNode(int origin, Point destination)
@@ -431,7 +431,7 @@ namespace QTFormApp
 
         private void align(int start, int stop)
         {
-            int line = positions[start].getPoint().Y;
+            int line = nodes[start].getPoint().Y;
             int numNodes = (stop - start)+1;
             int spacing = panel2.Width / numNodes;
             for (int i = 0; i < numNodes; i++)
@@ -457,7 +457,12 @@ namespace QTFormApp
                 return;
             }
             if (lastClicked == whichNode){
+                Node thisNode = nodes[whichNode];
+                //String color = thisNode.getColorString();
+                //String coordinates = thisNode.getPoint().ToString();
+                //MessageBox.Show("You clicked a "+color+" node at "+coordinates+"!\nWhat do you want to do?\nJust click and drag the node to move it.\nWant to create children? Click __");
                 MessageBox.Show("You clicked a node!\nWhat do you want to do?\nJust click and drag the node to move it.\nWant to create children? Click __");
+
             }
             else
             {
@@ -467,14 +472,14 @@ namespace QTFormApp
 
         private bool pointInNode(Point click, Point node)
         {
-            return click.X < node.X + nodeW && click.X > node.X - nodeW && click.Y < node.Y + nodeH && click.Y > node.Y - nodeH;
+            return click.X < node.X + nodeWidth && click.X > node.X - nodeWidth && click.Y < node.Y + nodeHeight && click.Y > node.Y - nodeHeight;
         }
 
         private void closeToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < pos; i++)
+            for (int i = 0; i < currentPosition; i++)
             {
-                positions[i] = null;
+                nodes[i] = null;
             }
                 panel2Graphics.Clear(Color.Gray);
 
