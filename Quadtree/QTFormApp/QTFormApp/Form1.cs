@@ -373,6 +373,10 @@ namespace QTFormApp
         {
             positions[origin] = new Node(destination, color);
             drawNode(origin, destination);
+            if (pos == 4)
+            {
+                align(0, 3);
+            }
         }
         private void drawNode(int origin, Point destination)
         {
@@ -408,6 +412,18 @@ namespace QTFormApp
             clearNode(origin);
             drawNode(origin, destination);
          }
+
+        private void align(int start, int stop)
+        {
+            int line = positions[start].getPoint().Y;
+            int numNodes = (stop - start)+1;
+            int spacing = panel2.Width / numNodes;
+            for (int i = 0; i < numNodes; i++)
+            {
+                redrawNode(start+i, new Point(i*spacing, line));
+                //favors click order over positional arrangement!
+            }
+        }
 
         private void panel2_MouseDown(object sender, MouseEventArgs e)
         {
