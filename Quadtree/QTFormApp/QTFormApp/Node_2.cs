@@ -61,7 +61,7 @@ namespace QTFormApp
             SE = null;
             SW = null;
         }
-
+        /*
         public static Node drawNode(System.Drawing.Graphics pg, Point p, Color c)
         {
             brush = new SolidBrush(c);
@@ -74,7 +74,7 @@ namespace QTFormApp
             pg.FillEllipse(lgb, new Rectangle(pt, new Size(Form1.nodeW, Form1.nodeH)));
             return new Node(pt, Color.Gray);
         }
-
+        */
         public void setColor(Color c)
         {
             color = c;

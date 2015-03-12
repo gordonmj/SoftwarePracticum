@@ -17,7 +17,7 @@ namespace QTFormApp
         public Point coords;
         public Point firstClick;
         public int lastClicked;
-        public string fileName;
+        public string fileName; 
         public static int nodeW = 40;
         public static int nodeH = 30;
         public System.Drawing.Graphics panel1Graphics;
@@ -130,6 +130,11 @@ namespace QTFormApp
                     clicked = "drawArrow";
                     break;
                 default:
+                    if (findTouchingNode(whereClicked) != -1)
+                    {
+                        String color = positions[findTouchingNode(whereClicked)].getColor().ToString();
+                        MessageBox.Show("Hey! You clicked a "+color+" node!");
+                    }
                     break;
             }
         }
@@ -369,6 +374,10 @@ namespace QTFormApp
             panel2Graphics.FillEllipse(gray, new Rectangle(positions[origin].getPoint(), new Size(nodeW, nodeH)));
         }
 
+        private void deleteNode(int origin)
+        {
+            positions[origin] = null;
+        }
         private void drawNewNode(int origin, Point destination, Color color)
         {
             positions[origin] = new Node(destination, color);
@@ -408,7 +417,11 @@ namespace QTFormApp
             {
                 MessageBox.Show("Sorry, there is already a node here!");
                 return;
-            }    
+            }
+            if (destination.X < 0 || destination.Y < 0)
+            {
+                deleteNode(origin);
+            }
             clearNode(origin);
             drawNode(origin, destination);
          }
@@ -435,10 +448,18 @@ namespace QTFormApp
         private void panel2_MouseUp(object sender, MouseEventArgs e)
         {
             Point whereClicked = e.Location;
-            if (lastClicked != -1){
+            int whichNode = findTouchingNode(whereClicked);
+            if (lastClicked == -1)
+            {
+                return;
+            }
+            if (lastClicked == whichNode){
+                MessageBox.Show("You clicked a node!\nWhat do you want to do?\nJust click and drag the node to move it.\nWant to create children? Click __");
+            }
+            else
+            {
                 redrawNode(lastClicked, whereClicked);
             }
-
         }
 
         private bool pointInNode(Point click, Point node)
