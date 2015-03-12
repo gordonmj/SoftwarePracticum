@@ -109,45 +109,14 @@ namespace QTFormApp
             switch (clicked)
             {
                 case "drawWhiteNode":
-                    /*
-                    Panel p = new Panel();
-                    //p.DoDragDrop();
-                    //panel2.Location.Offset(whereClicked);
-                    //whereClicked.Offset(panel2.Location);
-                    p.Location = whereClicked;
-                    p.Size = new Size(nodeW, nodeH);
-                    System.Drawing.Graphics pGraphics = p.CreateGraphics();
-                    panel2.Controls.Add(p);
-                    //this.Controls.Add(p);
-                    p.BringToFront();
-
-                    pGraphics.FillEllipse(white, new Rectangle(new Point(0,0), new Size(nodeW, nodeH)));
-                     */
-                    this.positions[pos++] = Node.drawNode(panel2Graphics, whereClicked, Color.White);
-                    panel2Graphics.FillEllipse(white, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
-                   // Node whiteNode = Node.drawNode(panel2Graphics, whereClicked, Color.White);              
+                    drawNewNode(pos++, whereClicked, Color.White);              
                     break;
                 case "drawBlackNode":
-                    //Node blackNode = Node.drawNode(panel2Graphics, whereClicked, Color.Black);
-                    this.positions[pos++] = Node.drawNode(panel2Graphics, whereClicked, Color.Black);
-                    panel2Graphics.FillEllipse(black, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
+                    drawNewNode(pos++, whereClicked, Color.Black);              
                     break;
                 case "drawGreyNode":
-                    LinearGradientBrush lgb = new LinearGradientBrush(
-                    whereClicked,
-                    new Point(whereClicked.X + 40, whereClicked.Y),
-                    Color.FromArgb(255, 255, 255),
-                    Color.FromArgb(0, 0, 0));
-                    float[] intensities = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
-                    float[] positions = { 0.0f, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f };
-                    Blend blend = new Blend();
-                    blend.Factors = intensities;
-                    blend.Positions = positions;
-                    lgb.Blend = blend;
-                    panel2Graphics.FillEllipse(lgb, new Rectangle(whereClicked, new Size(nodeW, nodeH)));
-                    this.positions[pos++] = Node.drawNode(panel2Graphics, whereClicked, lgb);
-                    //Node grayNode = Node.drawNode(panel2Graphics, whereClicked, lgb);              
-                    break;
+                     drawNewNode(pos++, whereClicked, Color.Gray);              
+                   break;
                 case "drawArrow":
                     clicked = "finishArrow";
                     firstClick = whereClicked;
@@ -398,6 +367,12 @@ namespace QTFormApp
         private void clearNode(int origin)
         {
             panel2Graphics.FillEllipse(gray, new Rectangle(positions[origin].getPoint(), new Size(nodeW, nodeH)));
+        }
+
+        private void drawNewNode(int origin, Point destination, Color color)
+        {
+            positions[origin] = new Node(destination, color);
+            drawNode(origin, destination);
         }
         private void drawNode(int origin, Point destination)
         {

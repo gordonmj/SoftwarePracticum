@@ -11,7 +11,7 @@ using System.Drawing.Drawing2D;
 
 namespace QTFormApp
 {
-    class Node
+    public class Node
     {
         private Point coord;
         private Color color;
@@ -83,6 +83,16 @@ namespace QTFormApp
         public Color getColor()
         {
             return color;
+        }
+
+        public void setPoint(Point p)
+        {
+            coord = p;
+        }
+
+        public Point getPoint()
+        {
+            return coord;
         }
 
         private void validate(Node n){

@@ -10,3 +10,9 @@ C:\Users\mgordon\Source\Repos\SoftwarePracticum\Quadtree\QTFormApp\QTFormApp\obj
 C:\Users\Michael\Dropbox\School\Practicum\SoftwarePracticum\Quadtree\QTFormApp\QTFormApp\bin\Debug\QTFormApp.exe.config
 C:\Users\Michael\Dropbox\School\Practicum\SoftwarePracticum\Quadtree\QTFormApp\QTFormApp\obj\Debug\QTFormApp.exe
 C:\Users\Michael\Dropbox\School\Practicum\SoftwarePracticum\Quadtree\QTFormApp\QTFormApp\obj\Debug\QTFormApp.pdb
+C:\Users\Michael\Dropbox\School\Practicum\SoftwarePracticum\Quadtree\QTFormApp\QTFormApp\obj\Debug\QTFormApp.csprojResolveAssemblyReference.cache
+C:\Users\Michael\Dropbox\School\Practicum\SoftwarePracticum\Quadtree\QTFormApp\QTFormApp\obj\Debug\QTFormApp.Form1.resources
+C:\Users\Michael\Dropbox\School\Practicum\SoftwarePracticum\Quadtree\QTFormApp\QTFormApp\obj\Debug\QTFormApp.Properties.Resources.resources
+C:\Users\Michael\Dropbox\School\Practicum\SoftwarePracticum\Quadtree\QTFormApp\QTFormApp\obj\Debug\QTFormApp.csproj.GenerateResource.Cache
+C:\Users\Michael\Dropbox\School\Practicum\SoftwarePracticum\Quadtree\QTFormApp\QTFormApp\bin\Debug\QTFormApp.exe
+C:\Users\Michael\Dropbox\School\Practicum\SoftwarePracticum\Quadtree\QTFormApp\QTFormApp\bin\Debug\QTFormApp.pdb
