@@ -123,8 +123,8 @@ namespace QTFormApp
                     break;
                 case "finishArrow":
                     Pen arrow = new Pen(black, 3);
-                    AdjustableArrowCap bigArrow = new AdjustableArrowCap(20, 10);
-                    //arrow.CustomEndCap = bigArrow;
+                    AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
+                    arrow.CustomEndCap = bigArrow;
                     //arrow.EndCap = LineCap.ArrowAnchor;
                     panel2Graphics.DrawLine(arrow, firstClick, whereClicked);
                     clicked = "drawArrow";
