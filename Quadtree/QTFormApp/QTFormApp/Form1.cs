@@ -352,7 +352,7 @@ namespace QTFormApp
             }
         }
 
-                private int findTouchingNode(Point down)
+        private int findTouchingNode(Point down)
         {
             for (int i = 0; i < pos; i++)
             {
@@ -400,6 +400,11 @@ namespace QTFormApp
         }
         private void redrawNode(int origin, Point destination)
         {
+            if (findTouchingNode(destination) != -1 && findTouchingNode(destination) != origin)
+            {
+                MessageBox.Show("Sorry, there is already a node here!");
+                return;
+            }    
             clearNode(origin);
             drawNode(origin, destination);
          }
