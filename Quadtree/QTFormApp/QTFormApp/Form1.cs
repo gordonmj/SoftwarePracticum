@@ -115,7 +115,8 @@ namespace QTFormApp
                     drawNewNode(currentPosition++, whereClicked, Color.Black);              
                     break;
                 case "drawGreyNode":
-                     drawNewNode(currentPosition++, whereClicked, Color.Gray);              
+                     Node newGray = drawNewNode(currentPosition++, whereClicked, Color.Gray);
+                     if (newGray != null) addChildren(newGray);
                    break;
                 case "drawArrow":
                     menuChoice = "finishArrow";
@@ -317,8 +318,8 @@ namespace QTFormApp
                 int midPointCol = (colStop + colStart) / 2;
                 root.addChild("NW",whatColor(new Node(), m, rowStart, midPointRow, colStart, midPointCol,desc+"->NW"));
                 root.addChild("SW",whatColor(new Node(), m, midPointRow + 1, rowStop, colStart, midPointCol, desc + "->SW"));
-                root.addChild("SE",whatColor(new Node(), m, midPointRow + 1, rowStop, midPointCol + 1, colStop, desc + "->SE"));
                 root.addChild("NE", whatColor(new Node(), m, rowStart, midPointRow, midPointCol + 1, colStop, desc + "->NE"));
+                root.addChild("SE", whatColor(new Node(), m, midPointRow + 1, rowStop, midPointCol + 1, colStop, desc + "->SE"));
                 //MessageBox.Show("NW: "+root.NW.getColor()+" SW: "+root.SW.getColor()+" SE: "+root.SE.getColor()+" NE: "+root.NE.getColor());
                 if (root.NW.getColor() == root.SW.getColor() && root.SW.getColor() == root.SE.getColor() && root.SE.getColor() == root.NE.getColor())
                 {
@@ -351,8 +352,8 @@ namespace QTFormApp
                 //TODO: refactor indent to int and build string at level
                 nodeList(n.NW, desc + "->NW", indent + " ");
                 nodeList(n.SW, desc + "->SW", indent + " ");
-                nodeList(n.SE, desc + "->SE", indent + " ");
                 nodeList(n.NE, desc + "->NE", indent + " ");
+                nodeList(n.SE, desc + "->SE", indent + " ");
                 messageToDisplay = indent + desc + " " + n.getColorString() + "\n" + messageToDisplay;
             }
         }
@@ -379,16 +380,13 @@ namespace QTFormApp
             clearNode(origin);
             nodes[origin] = null;
         }
-        private void drawNewNode(int origin, Point destination, Color color)
+        private Node drawNewNode(int origin, Point destination, Color color)
         {
             nodes[origin] = new Node(destination, color);
             drawNode(origin, destination);
-            if (currentPosition == 4)
-            {
-                align(0, 3);
-            }
+            return nodes[origin];
         }
-        private void drawNode(int origin, Point destination)
+        private Node drawNode(int origin, Point destination)
         {
             nodes[origin].setPoint(destination);
             if (nodes[origin].getColor() != Color.Gray)
@@ -411,22 +409,76 @@ namespace QTFormApp
                 lgb.Blend = blend;
                 panel2Graphics.FillEllipse(lgb, new Rectangle(nodes[origin].getPoint(), new Size(nodeWidth, nodeHeight)));
             }
+            return nodes[origin];
         }
-        private void redrawNode(int origin, Point destination)
+        private void addChildren(Node n)
+        {
+            if (n.getColorString() == "black" || n.getColorString() == "white")
+            {
+                MessageBox.Show("Black or White nodes are leaf nodes!");
+                return;
+            }
+            else {
+                n.addChildren();
+                int spacing = panel2.Width / 4;
+                Point p;
+                Color c;
+                Node[] children = new Node[] {n.NW, n.SW, n.NE, n.SE};
+                int i = 0;
+                int nextLevelSpace = 20;
+                foreach (Node child in children)
+                {
+                    p = new Point(i * spacing, n.getPoint().Y + nextLevelSpace);
+                    DialogResult dialogResult = MessageBox.Show("Yes for black, No for white, Cancel for gray", "Black or white?", MessageBoxButtons.YesNoCancel);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        c = Color.Black;
+                    }
+                    else if (dialogResult == DialogResult.No)
+                    {
+                        c = Color.White;
+                    }
+                    else
+                    {
+                        c = Color.Gray;
+                    }
+                    drawNewNode(currentPosition++, p, c);
+                    child.setColor(c);
+                    child.setPoint(p);
+                    connectTwoNodes(n, child);
+                    i++;
+                }//for
+            }//else
+        }//addChildren
+
+        private void connectTwoNodes(Node a, Node b)
+        {
+            Point start = a.getPoint();
+            Point end = b.getPoint();
+            Pen arrow = new Pen(blackBrush, 3);
+            AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
+            arrow.CustomEndCap = bigArrow;
+            //arrow.EndCap = LineCap.ArrowAnchor;
+            panel2Graphics.DrawLine(arrow, start, end);
+        }
+
+        private Node redrawNode(int origin, Point destination)
         {
             if (findTouchingNode(destination) != -1 && findTouchingNode(destination) != origin)
             {
                 MessageBox.Show("Sorry, there is already a node here!");
-                return;
+                return nodes[origin];
             }
             if (destination.X < 0 || destination.Y < 0)
             {
                 deleteNode(origin);
+                return null;
             }
             else
             {
                 clearNode(origin);
                 drawNode(origin, destination);
+                return nodes[origin];
             }
          }
 
@@ -464,10 +516,15 @@ namespace QTFormApp
             }
             if (lastClicked == whichNode){
                 Node thisNode = nodes[whichNode];
-                //String color = thisNode.getColorString();
-                //String coordinates = thisNode.getPoint().ToString();
-                //MessageBox.Show("You clicked a "+color+" node at "+coordinates+"!\nWhat do you want to do?\nJust click and drag the node to move it.\nWant to create children? Click __");
-                MessageBox.Show("You clicked a node!\nWhat do you want to do?\nJust click and drag the node to move it.\nWant to create children? Click __");
+                String color = thisNode.getColorString();
+                String coordinates = thisNode.getPoint().ToString();
+                MessageBox.Show("You clicked a "+color+" node at "+coordinates+"!\nWhat do you want to do?\nJust click and drag the node to move it.\n");
+                if (color == "gray")
+                {
+//                    MessageBox.Show("");
+
+                }
+                //MessageBox.Show("You clicked a node!\nWhat do you want to do?\nJust click and drag the node to move it.\nWant to create children? Click __");
 
             }
             else

@@ -17,9 +17,9 @@ namespace QTFormApp
         private Color color;
         private static Brush brush;
         public Node NW = null;
+        public Node SW = null;
         public Node NE = null;
         public Node SE = null;
-        public Node SW = null;
         public bool hasChildren = false;
         public int numRows;
         public int numCols;
@@ -29,9 +29,9 @@ namespace QTFormApp
             coord = new Point(20, 20);
             color = Color.White;
             NW = null;
+            SW = null;
             NE = null;
             SE = null;
-            SW = null;
         }
 
         public Node(Point p)
@@ -39,9 +39,9 @@ namespace QTFormApp
             coord = p;
             color = Color.White;
             NW = null;
+            SW = null;
             NE = null;
             SE = null;
-            SW = null;
         }
 
         public Node(Color c)
@@ -49,9 +49,9 @@ namespace QTFormApp
             coord = new Point(20, 20);
             color = c;
             NW = null;
+            SW = null;
             NE = null;
             SE = null;
-            SW = null;
         }
 
         public Node(Point p, Color c)
@@ -59,9 +59,9 @@ namespace QTFormApp
             coord = p;
             color = c;
             NW = null;
+            SW = null;
             NE = null;
             SE = null;
-            SW = null;
         }
         /*
         public static Node drawNode(System.Drawing.Graphics pg, Point p, Color c)
@@ -171,16 +171,16 @@ namespace QTFormApp
 
             addChild("NW");
             addChild("SW");
-            addChild("SE");
             addChild("NE");
+            addChild("SE");
         }
 
         public void removeChildren()
         {
             NW = null;
+            SW = null;
             NE = null;
             SE = null;
-            SW = null;
             hasChildren = false;
         }
 
@@ -196,8 +196,8 @@ namespace QTFormApp
                 {
                     NW.prune();
                     SW.prune();
-                    SE.prune();
                     NE.prune();
+                    SE.prune();
                 }
             }
         }
