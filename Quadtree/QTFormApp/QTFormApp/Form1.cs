@@ -384,6 +384,11 @@ namespace QTFormApp
         {
             nodes[origin] = new Node(destination, color);
             drawNode(origin, destination);
+            DialogResult doAlign = MessageBox.Show("Align?", "Align?", MessageBoxButtons.YesNo);
+            if (doAlign == DialogResult.Yes)
+            {
+                align(origin);
+            }
             return nodes[origin];
         }
         private Node drawNode(int origin, Point destination)
@@ -481,7 +486,43 @@ namespace QTFormApp
                 return nodes[origin];
             }
          }
+        private void align(int origin)
+        {
+            Node n = nodes[origin];
+            if (n == null) return;
+            int center = panel2.Width/2;
+            Point alignedPoint = new Point(center,n.getPoint().Y);
+            if (n.isRoot || n.level == 0)
+            {
+                redrawNode(origin, alignedPoint);
+            }
+            else
+            {
+                Node parent = n.parent;
+                int level = parent.getPoint().Y;
+                int centerLine = parent.getPoint().X;
+                int spacing = centerLine + (panel2.Width/parent.level + 1);
+                switch (n.getDirectionString())
+                {
+                    case "NW":
+                        spacing = 0;
+                        break;
+                    case "SW":
+                        break;
+                    case "SE":
+                        spacing = spacing * 2;
+                        break;
+                    case "NE":
+                        spacing = spacing * 3;
+                        break;
+                    default:
+                        //add exception
+                        break;
 
+                }
+                redrawNode(origin,new Point(level+20,spacing));
+            }
+        }
         private void align(int start, int stop)
         {
             int line = nodes[start].getPoint().Y;

@@ -20,9 +20,12 @@ namespace QTFormApp
         public Node SW = null;
         public Node NE = null;
         public Node SE = null;
+        public Node parent = null;
         public bool hasChildren = false;
+        public bool isRoot = true;
         public int numRows;
         public int numCols;
+        public int level = 0;
 
         public Node()
         {
@@ -32,6 +35,19 @@ namespace QTFormApp
             SW = null;
             NE = null;
             SE = null;
+            parent = null;
+        }
+
+        public Node(bool isItRoot)
+        {
+            isRoot = isItRoot;
+            coord = new Point(20, 20);
+            color = Color.White;
+            NW = null;
+            SW = null;
+            NE = null;
+            SE = null;
+            parent = null;
         }
 
         public Node(Point p)
@@ -42,6 +58,7 @@ namespace QTFormApp
             SW = null;
             NE = null;
             SE = null;
+            parent = null;
         }
 
         public Node(Color c)
@@ -52,6 +69,7 @@ namespace QTFormApp
             SW = null;
             NE = null;
             SE = null;
+            parent = null;
         }
 
         public Node(Point p, Color c)
@@ -62,21 +80,9 @@ namespace QTFormApp
             SW = null;
             NE = null;
             SE = null;
-        }
-        /*
-        public static Node drawNode(System.Drawing.Graphics pg, Point p, Color c)
-        {
-            brush = new SolidBrush(c);
-            pg.FillEllipse(brush, new Rectangle(p, new Size(Form1.nodeW, Form1.nodeH)));
-            return new Node(p, c);
+            parent = null;
         }
 
-        public static Node drawNode(System.Drawing.Graphics pg, Point pt, LinearGradientBrush lgb)
-        {
-            pg.FillEllipse(lgb, new Rectangle(pt, new Size(Form1.nodeW, Form1.nodeH)));
-            return new Node(pt, Color.Gray);
-        }
-        */
         public void setColor(Color c)
         {
             color = c;
@@ -125,16 +131,24 @@ namespace QTFormApp
             switch (s)
             {
                 case "NW":
-                    NW = new Node();
+                    NW = new Node(false);
+                    NW.parent = this;
+                    NW.level = level++;
                     break;
                 case "SW":
-                    SW = new Node();
+                    SW = new Node(false);
+                    SW.parent = this;
+                    SW.level = level++;
                     break;
                 case "SE":
-                    SE = new Node();
+                    SE = new Node(false);
+                    SE.parent = this;
+                    SE.level = level++;
                     break;
                 case "NE":
-                    NE = new Node();
+                    NE = new Node(false);
+                    NE.parent = this;
+                    NE.level = level++;
                     break;
                 default:
                     //add exception
@@ -142,9 +156,36 @@ namespace QTFormApp
             }
         }
 
+        public String getDirectionString()
+        {
+            if (this == this.parent.NW)
+            {
+                return "NW";
+            }
+            else if (this == this.parent.SW)
+            {
+                return "SW";
+            }
+            else if (this == this.parent.NE)
+            {
+                return "NE";
+            }
+            else if (this == this.parent.SE)
+            {
+                return "SE";
+            }
+            else if (this.isRoot)
+            {
+                return "root";
+            }
+            return "";
+        }
         public void addChild(String s, Node n)
         {
             hasChildren = true;
+            n.isRoot = false;
+            n.parent = this;
+            n.level = level++;
             switch (s)
             {
                 case "NW":
