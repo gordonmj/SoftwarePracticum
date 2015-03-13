@@ -33,6 +33,7 @@ namespace QTFormApp
         public String messageToDisplay;
         public Node[] nodes= new Node[100];
         public int currentPosition = 0;
+        public int nextLevelSpace = 30;
 
         public Form1()
         {
@@ -109,14 +110,14 @@ namespace QTFormApp
             switch (menuChoice)
             {
                 case "drawWhiteNode":
-                    drawNewNode(currentPosition++, whereClicked, Color.White);              
+                    drawNewNode(currentPosition, whereClicked, Color.White);              
                     break;
                 case "drawBlackNode":
-                    drawNewNode(currentPosition++, whereClicked, Color.Black);              
+                    drawNewNode(currentPosition, whereClicked, Color.Black);              
                     break;
                 case "drawGreyNode":
-                     Node newGray = drawNewNode(currentPosition++, whereClicked, Color.Gray);
-                     if (newGray != null) addChildren(newGray);
+                     Node newGray = drawNewNode(currentPosition, whereClicked, Color.Gray);
+                     if (newGray != null) addChildren(currentPosition-1);
                    break;
                 case "drawArrow":
                     menuChoice = "finishArrow";
@@ -383,12 +384,8 @@ namespace QTFormApp
         private Node drawNewNode(int origin, Point destination, Color color)
         {
             nodes[origin] = new Node(destination, color);
+            currentPosition++;
             drawNode(origin, destination);
-            DialogResult doAlign = MessageBox.Show("Align?", "Align?", MessageBoxButtons.YesNo);
-            if (doAlign == DialogResult.Yes)
-            {
-                align(origin);
-            }
             return nodes[origin];
         }
         private Node drawNode(int origin, Point destination)
@@ -416,8 +413,14 @@ namespace QTFormApp
             }
             return nodes[origin];
         }
-        private void addChildren(Node n)
+        private void addChildren(int origin)
         {
+            Node n = nodes[origin];
+            DialogResult doAlign = MessageBox.Show("Align?", "Align?", MessageBoxButtons.YesNo);
+            if (doAlign == DialogResult.Yes)
+            {
+                align(origin);
+            }
             if (n.getColorString() == "black" || n.getColorString() == "white")
             {
                 MessageBox.Show("Black or White nodes are leaf nodes!");
@@ -430,7 +433,6 @@ namespace QTFormApp
                 Color c;
                 Node[] children = new Node[] {n.NW, n.SW, n.NE, n.SE};
                 int i = 0;
-                int nextLevelSpace = 20;
                 foreach (Node child in children)
                 {
                     p = new Point(i * spacing, n.getPoint().Y + nextLevelSpace);
@@ -447,12 +449,17 @@ namespace QTFormApp
                     {
                         c = Color.Gray;
                     }
-                    drawNewNode(currentPosition++, p, c);
+                    drawNewNode(currentPosition, p, c);
                     child.setColor(c);
                     child.setPoint(p);
                     connectTwoNodes(n, child);
                     i++;
                 }//for
+                doAlign = MessageBox.Show("Align children?", "Align children?", MessageBoxButtons.YesNo);
+                if (doAlign == DialogResult.Yes)
+                {
+                    //align(origin);
+                }
             }//else
         }//addChildren
 
@@ -501,7 +508,7 @@ namespace QTFormApp
                 Node parent = n.parent;
                 int level = parent.getPoint().Y;
                 int centerLine = parent.getPoint().X;
-                int spacing = centerLine + (panel2.Width/parent.level + 1);
+                int spacing = centerLine + (panel2.Width/parent.level + 2);
                 switch (n.getDirectionString())
                 {
                     case "NW":
@@ -520,7 +527,7 @@ namespace QTFormApp
                         break;
 
                 }
-                redrawNode(origin,new Point(level+20,spacing));
+                redrawNode(origin,new Point(level+nextLevelSpace,spacing));
             }
         }
         private void align(int start, int stop)
