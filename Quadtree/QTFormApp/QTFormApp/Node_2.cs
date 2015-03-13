@@ -21,6 +21,8 @@ namespace QTFormApp
         public Node SE = null;
         public Node SW = null;
         public bool hasChildren = false;
+        public int numRows;
+        public int numCols;
 
         public Node()
         {
