@@ -27,6 +27,7 @@ namespace QTFormApp
         public Brush blackBrush = new SolidBrush(Color.Black);
         public Brush whiteBrush = new SolidBrush(Color.White);
         public Brush grayBrush = new SolidBrush(Color.Gray);
+        public Brush slateGrayBrush = new SolidBrush(Color.SlateGray);        
         public int formWidth;
         public int formHeight;
         public Bitmap bmpToSave;
@@ -124,7 +125,7 @@ namespace QTFormApp
                     firstClick = whereClicked;
                     break;
                 case "finishArrow":
-                    Pen arrow = new Pen(blackBrush, 3);
+                    Pen arrow = new Pen(slateGrayBrush, 3);
                     AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
                     arrow.CustomEndCap = bigArrow;
                     //arrow.EndCap = LineCap.ArrowAnchor;
@@ -388,19 +389,20 @@ namespace QTFormApp
             drawNode(origin, destination);
             return nodes[origin];
         }
-        private Node drawNode(int origin, Point destination)
+        private Node drawNode(int origin, Point clicked)
         {
-            nodes[origin].setPoint(destination);
+            Point centerPoint = new Point(clicked.X - nodeWidth / 2, clicked.Y - nodeHeight / 2);
+            nodes[origin].setPoint(clicked);
             if (nodes[origin].getColor() != Color.Gray)
             {
                 Brush brush = new SolidBrush(nodes[origin].getColor());
-                panel2Graphics.FillEllipse(brush, new Rectangle(nodes[origin].getPoint(), new Size(nodeWidth, nodeHeight)));
+                panel2Graphics.FillEllipse(brush, new Rectangle(centerPoint, new Size(nodeWidth, nodeHeight)));
             }
             else
             {
                 LinearGradientBrush lgb = new LinearGradientBrush(
-                    destination,
-                    new Point(destination.X + 40, destination.Y),
+                    clicked,
+                    new Point(clicked.X + 40, clicked.Y),
                     Color.FromArgb(255, 255, 255),
                     Color.FromArgb(0, 0, 0));
                 float[] intensities = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
@@ -468,6 +470,10 @@ namespace QTFormApp
             Point start = a.getPoint();
             Point end = b.getPoint();
             Pen arrow = new Pen(blackBrush, 3);
+            if (b.getColor() == Color.Black)
+            {
+                arrow = new Pen(whiteBrush, 3);
+            }
             AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
             arrow.CustomEndCap = bigArrow;
             //arrow.EndCap = LineCap.ArrowAnchor;
