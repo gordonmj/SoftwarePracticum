@@ -34,7 +34,7 @@ namespace QTFormApp
         public String messageToDisplay;
         public Node[] nodes= new Node[100];
         public int currentPosition = 0;
-        public int nextLevelSpace = 30;
+        public int nextLevelSpace = 40;
 
         public Form1()
         {
@@ -430,11 +430,11 @@ namespace QTFormApp
             }
             else {
                 n.addChildren();
-                int spacing = panel2.Width / 4;
+                int spacing = panel2.Width / 5;
                 Point p;
                 Color c;
                 Node[] children = new Node[] {n.NW, n.SW, n.NE, n.SE};
-                int i = 0;
+                int i = 1;
                 foreach (Node child in children)
                 {
                     p = new Point(i * spacing, n.getPoint().Y + nextLevelSpace);
@@ -465,9 +465,14 @@ namespace QTFormApp
             }//else
         }//addChildren
 
+        private Point adjustPointToCenterofNode(Point p)
+        {
+            return new Point(p.X + nodeWidth / 2, p.Y + nodeHeight / 2);
+        }
+
         private void connectTwoNodes(Node a, Node b)
         {
-            Point start = a.getPoint();
+            Point start = adjustPointToCenterofNode(a.getPoint());
             Point end = b.getPoint();
             Pen arrow = new Pen(blackBrush, 3);
             if (b.getColor() == Color.Black)
