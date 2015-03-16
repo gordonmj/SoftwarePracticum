@@ -34,7 +34,7 @@ namespace QTFormApp
         public String messageToDisplay;
         public Node[] nodes= new Node[100];
         public int currentPosition = 0;
-        public int nextLevelSpace = 40;
+        public int nextLevelSpace = 50;
 
         public Form1()
         {
@@ -106,7 +106,7 @@ namespace QTFormApp
 
         private void panel2_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Point whereClicked = e.Location;
+            Point whereClicked = adjustPointToCenterofNode(e.Location);
 
             switch (menuChoice)
             {
@@ -231,6 +231,7 @@ namespace QTFormApp
             //MessageBox.Show(message);
             messageToDisplay = "";
             nodeList(root, "root", " ");
+            messageToDisplay = "Tree as string: "+numRows+" "+numCols+" "+treeToString(root);
             MessageBox.Show(messageToDisplay);
             messageToDisplay = "";
         }
@@ -374,7 +375,7 @@ namespace QTFormApp
 
         private void clearNode(int origin)
         {
-            panel2Graphics.FillEllipse(grayBrush, new Rectangle(nodes[origin].getPoint(), new Size(nodeWidth, nodeHeight)));
+            panel2Graphics.FillEllipse(grayBrush, new Rectangle(adjustPointOtherWay(nodes[origin].getPoint()), new Size(nodeWidth, nodeHeight)));
         }
 
         private void deleteNode(int origin)
@@ -418,11 +419,13 @@ namespace QTFormApp
         private void addChildren(int origin)
         {
             Node n = nodes[origin];
+            /*
             DialogResult doAlign = MessageBox.Show("Align?", "Align?", MessageBoxButtons.YesNo);
             if (doAlign == DialogResult.Yes)
             {
                 align(origin);
             }
+             */
             if (n.getColorString() == "black" || n.getColorString() == "white")
             {
                 MessageBox.Show("Black or White nodes are leaf nodes!");
@@ -437,6 +440,7 @@ namespace QTFormApp
                 int i = 1;
                 foreach (Node child in children)
                 {
+                    bool isGray = false;
                     p = new Point(i * spacing, n.getPoint().Y + nextLevelSpace);
                     DialogResult dialogResult = MessageBox.Show("Yes for black, No for white, Cancel for gray", "Black or white?", MessageBoxButtons.YesNoCancel);
                     if (dialogResult == DialogResult.Yes)
@@ -450,24 +454,35 @@ namespace QTFormApp
                     else
                     {
                         c = Color.Gray;
+                        isGray = true;
                     }
                     drawNewNode(currentPosition, p, c);
                     child.setColor(c);
                     child.setPoint(p);
                     connectTwoNodes(n, child);
+                    if (isGray && nodes[currentPosition-1] != null)
+                    {
+                        addChildren(currentPosition-1);
+                    }
                     i++;
                 }//for
-                doAlign = MessageBox.Show("Align children?", "Align children?", MessageBoxButtons.YesNo);
+                /* doAlign = MessageBox.Show("Align children?", "Align children?", MessageBoxButtons.YesNo);
                 if (doAlign == DialogResult.Yes)
                 {
                     //align(origin);
                 }
+                 * */
             }//else
         }//addChildren
 
         private Point adjustPointToCenterofNode(Point p)
         {
             return new Point(p.X + nodeWidth / 2, p.Y + nodeHeight / 2);
+        }
+
+        private Point adjustPointOtherWay(Point p)
+        {
+            return new Point(p.X - nodeWidth / 2, p.Y - nodeHeight / 2);
         }
 
         private void connectTwoNodes(Node a, Node b)
@@ -504,6 +519,7 @@ namespace QTFormApp
                 return nodes[origin];
             }
          }
+
         private void align(int origin)
         {
             Node n = nodes[origin];
@@ -607,6 +623,26 @@ namespace QTFormApp
 
         }
 
+        private String treeToString(Node n)
+        {
+            if (n.getColor() == Color.Black)
+            {
+                return "1";
+            }
+            else if (n.getColor() == Color.White)
+            {
+                return "0";
+            }
+            else
+            {
+                String children = "";
+                children += " "+treeToString(n.NW);
+                children += " " + treeToString(n.SW);
+                children += " " + treeToString(n.NE);
+                children += " " + treeToString(n.SE); 
+                return "2" + children;
+            }
+        }
 
     }//class
 }//namespace
