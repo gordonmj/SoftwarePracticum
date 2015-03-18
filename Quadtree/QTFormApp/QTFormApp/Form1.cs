@@ -31,10 +31,13 @@ namespace QTFormApp
         public int formWidth;
         public int formHeight;
         public Bitmap bmpToSave;
+        public Bitmap bmpToSaveForQT;
         public String messageToDisplay;
         public Node[] nodes= new Node[100];
         public int currentPosition = 0;
         public int nextLevelSpace = 50;
+        public int[,] map;
+
 
         public Form1()
         {
@@ -102,6 +105,7 @@ namespace QTFormApp
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
             panel2Graphics = panel2.CreateGraphics();
+            bmpToSaveForQT = new Bitmap(panel2.ClientSize.Width, panel2.ClientSize.Height);
         }
 
         private void panel2_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -186,7 +190,7 @@ namespace QTFormApp
             int numCols = Convert.ToInt32(firstLine[1]);
             int maxVal = Convert.ToInt32(firstLine[2]);
             int minVal = Convert.ToInt32(firstLine[3]);
-            int[,] map = new int[numRows, numCols];
+            map = new int[numRows, numCols];
             for (int r = 0; r < numRows; r++)
             {
                 string[] nextLine = lines[r + 1].Split(delims);
@@ -238,14 +242,7 @@ namespace QTFormApp
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveFileDialog save = new SaveFileDialog();
-            save.Filter = "Images|*.png;*.bmp;*.jpg";
-            save.Title = "Save the image";
-            System.Drawing.Imaging.ImageFormat format = System.Drawing.Imaging.ImageFormat.Png;
-            if (save.ShowDialog() == DialogResult.OK)
-            {
-                bmpToSave.Save(save.FileName, format);
-            }
+
         }
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -365,6 +362,7 @@ namespace QTFormApp
         {
             for (int i = 0; i < currentPosition; i++)
             {
+                if (nodes[i] == null) break;
                 if (pointInNode(down, nodes[i].getPoint()))
                 {
                     return i;
@@ -398,6 +396,11 @@ namespace QTFormApp
             {
                 Brush brush = new SolidBrush(nodes[origin].getColor());
                 panel2Graphics.FillEllipse(brush, new Rectangle(centerPoint, new Size(nodeWidth, nodeHeight)));
+                using (Graphics bmpGraphicForQT = Graphics.FromImage(bmpToSaveForQT))
+                {
+                    bmpGraphicForQT.FillEllipse(brush, new Rectangle(centerPoint, new Size(nodeWidth, nodeHeight)));
+                }
+
             }
             else
             {
@@ -413,6 +416,10 @@ namespace QTFormApp
                 blend.Positions = posit;
                 lgb.Blend = blend;
                 panel2Graphics.FillEllipse(lgb, new Rectangle(nodes[origin].getPoint(), new Size(nodeWidth, nodeHeight)));
+                using (Graphics bmpGraphicForQT = Graphics.FromImage(bmpToSaveForQT))
+                {
+                    bmpGraphicForQT.FillEllipse(lgb, new Rectangle(centerPoint, new Size(nodeWidth, nodeHeight)));
+                }
             }
             return nodes[origin];
         }
@@ -498,6 +505,10 @@ namespace QTFormApp
             arrow.CustomEndCap = bigArrow;
             //arrow.EndCap = LineCap.ArrowAnchor;
             panel2Graphics.DrawLine(arrow, start, end);
+            using (Graphics bmpGraphicForQT = Graphics.FromImage(bmpToSaveForQT))
+            {
+                bmpGraphicForQT.DrawLine(arrow, start, end);
+            }
         }
 
         private Node redrawNode(int origin, Point destination)
@@ -619,12 +630,18 @@ namespace QTFormApp
             {
                 nodes[i] = null;
             }
-                panel2Graphics.Clear(Color.Gray);
+            currentPosition = 0;
+            bmpToSaveForQT = new Bitmap(panel2.ClientSize.Width, panel2.ClientSize.Height);
+            panel2Graphics.Clear(Color.Gray);
 
         }
 
         private String treeToString(Node n)
         {
+            if (n == null)
+            {
+                return "";
+            }
             if (n.getColor() == Color.Black)
             {
                 return "1";
@@ -642,7 +659,110 @@ namespace QTFormApp
                 children += " " + treeToString(n.SE); 
                 return "2" + children;
             }
+        }//treeToString
+        
+        private int stringToTree(ref String str, int start, Node n)
+        {
+            String[] directions = { "NW", "SW", "NE", "SE" };
+            int nodeNum = 0;
+            int end = start;
+            while (nodeNum < 4)
+            {
+                if (str[start] == '1')
+                {
+                    Node child = n.addChild(directions[nodeNum]);
+                    child.setColor(Color.Black);
+                    nodeNum++;
+                    end++;
+                }
+                else if (str[start] == '0')
+                {
+                    Node child = n.addChild(directions[nodeNum]);
+                    child.setColor(Color.White);
+                    nodeNum++;     
+                    end++;
+                }
+                else if (str[start] == '2')
+                {
+                    Node child = n.addChild(directions[nodeNum]);
+                    child.setColor(Color.Gray);      
+                    end = stringToTree(ref str, end, child);
+                    nodeNum++; 
+                }
+            }//while
+            return end; //what number to return?
         }
 
+        private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void asImageFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "Images|*.png;*.bmp;*.jpg";
+            save.Title = "Save the image";
+            System.Drawing.Imaging.ImageFormat format = System.Drawing.Imaging.ImageFormat.Png;
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                bmpToSave.Save(save.FileName, format);
+            }
+        }
+
+        private void asImageFileToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "Images|*.png;*.bmp;*.jpg";
+            save.Title = "Save the image";
+            System.Drawing.Imaging.ImageFormat format = System.Drawing.Imaging.ImageFormat.Png;
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                bmpToSaveForQT.Save(save.FileName, format);
+            }
+        }
+
+        private String mapToString(int[,] matrix)
+        {
+            String s = "";
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+            s += rows.ToString()+" "+cols.ToString()+" ";
+            s += Environment.NewLine;
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < cols; c++)
+                {
+                    s += matrix[r, c].ToString() + " ";
+                }//columns
+                s += Environment.NewLine;
+            }//rows
+            return s;
+        }
+
+        private void asTextFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "Text|*.txt";
+            save.Title = "Save the image";
+            String textToSave = mapToString(map);
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                System.IO.File.WriteAllText(save.FileName, textToSave);
+            }
+        }
+
+        private void asTextFileToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "Text|*.txt";
+            save.Title = "Save the image";
+            String textToSave = treeToString(nodes[0]);
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                System.IO.File.WriteAllText(save.FileName, textToSave);
+            }
+        }
+        
     }//class
 }//namespace

@@ -15,7 +15,6 @@ namespace QTFormApp
     {
         private Point coord;
         private Color color;
-        private static Brush brush;
         public Node NW = null;
         public Node SW = null;
         public Node NE = null;
@@ -125,7 +124,7 @@ namespace QTFormApp
             }
         }
 
-        public void addChild(String s)
+        public Node addChild(String s)
         {
             hasChildren = true;
             switch (s)
@@ -134,25 +133,24 @@ namespace QTFormApp
                     NW = new Node(false);
                     NW.parent = this;
                     NW.level = level++;
-                    break;
+                    return NW;
                 case "SW":
                     SW = new Node(false);
                     SW.parent = this;
                     SW.level = level++;
-                    break;
+                    return SW;
                 case "SE":
                     SE = new Node(false);
                     SE.parent = this;
                     SE.level = level++;
-                    break;
+                    return SE;
                 case "NE":
                     NE = new Node(false);
                     NE.parent = this;
                     NE.level = level++;
-                    break;
+                    return NE;
                 default:
-                    //add exception
-                    break;
+                    return null;
             }
         }
 
