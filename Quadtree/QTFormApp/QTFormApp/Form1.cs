@@ -14,7 +14,6 @@ namespace QTFormApp
     public partial class Form1 : Form
     {
         private String menuChoice;
-        //public Point coords;
         private Point firstClick;
         private int lastClicked;
         private int prevClicked;
@@ -39,6 +38,8 @@ namespace QTFormApp
         private int nextLevelSpace = 50;
         private int[,] map;
         private Node root;
+        private int numRows;
+        private int numCols;
 
         public Form1()
         {
@@ -187,8 +188,8 @@ namespace QTFormApp
             string[] lines = System.IO.File.ReadAllLines(@fileName);
             char[] delims = { ' ', '\n' };
             string[] firstLine = lines[0].Split(delims);
-            int numRows = Convert.ToInt32(firstLine[0]);
-            int numCols = Convert.ToInt32(firstLine[1]);
+            numRows = Convert.ToInt32(firstLine[0]);
+            numCols = Convert.ToInt32(firstLine[1]);
             int maxVal = Convert.ToInt32(firstLine[2]);
             int minVal = Convert.ToInt32(firstLine[3]);
             map = new int[numRows, numCols];
@@ -493,6 +494,20 @@ namespace QTFormApp
             return new Point(p.X - nodeWidth / 2, p.Y - nodeHeight / 2);
         }
 
+        private void redrawTree(Node n)
+        {
+
+        }
+
+        private Node drawTree(Node n)
+        {
+            if (!n.isRoot)
+            {
+
+            }
+            return n;
+        }
+
         private void connectTwoNodes(Node a, Node b)
         {
             Point start = a.getPoint();
@@ -599,7 +614,10 @@ namespace QTFormApp
             }
             if (menuChoice == "connectNodes")
             {
-                connectTwoNodes(nodes[prevClicked], nodes[whichNode]);
+                if (nodes[prevClicked] != null && nodes[whichNode] != null)
+                {
+                    connectTwoNodes(nodes[prevClicked], nodes[whichNode]);
+                }
             }
             if (lastClicked == -1)
             {
@@ -609,9 +627,10 @@ namespace QTFormApp
                 Node thisNode = nodes[whichNode];
                 String color = thisNode.getColorString();
                 String coordinates = thisNode.getPoint().ToString();
-                //MessageBox.Show("You clicked a "+color+" node at "+coordinates+"!\nWhat do you want to do?\nJust click and drag the node to move it.\n");
-                DialogResult answer = MessageBox.Show("You clicked a " + color + " node at " + coordinates + "!\nDo you want to create an arrow?", "Options", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                MessageBox.Show("You clicked a "+color+" node at "+coordinates+"!\nWhat do you want to do?\nJust click and drag the node to move it.\n");
+                //DialogResult answer = MessageBox.Show("You clicked a " + color + " node at " + coordinates + "!\nDo you want to create an arrow?", "Options", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 prevClicked = lastClicked;
+                /*
                 if (answer == DialogResult.Yes)
                 {
                     MessageBox.Show("Click on the node you want to connect to!");
@@ -620,9 +639,9 @@ namespace QTFormApp
 
                 else if (answer == DialogResult.No)
                 {
-                    return;
+                    MessageBox.Show("If you want to move the node, just drag and drop!");
                 }
-
+                */
                 if (color == "gray")
                 {
 //                    MessageBox.Show("");
@@ -787,11 +806,16 @@ namespace QTFormApp
             SaveFileDialog save = new SaveFileDialog();
             save.Filter = "Text|*.txt";
             save.Title = "Save the image";
-            String textToSave = treeToString(root);
+            String textToSave = numRows.ToString()+" "+numCols.ToString()+" "+treeToString(root);
             if (save.ShowDialog() == DialogResult.OK)
             {
                 System.IO.File.WriteAllText(save.FileName, textToSave);
             }
+        }
+
+        private void resizeTreeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
         
     }//class

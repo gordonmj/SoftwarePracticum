@@ -33,14 +33,13 @@
             this.loadToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.displayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.asImageFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asTextFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.asQuadtreeTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.displayImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.displayToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.asImageFileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.asTextFileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.manualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,7 +57,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.asQuadtreeTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resizeTreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -107,7 +106,6 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.asImageFileToolStripMenuItem,
             this.asTextFileToolStripMenuItem,
             this.asQuadtreeTextToolStripMenuItem});
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
@@ -115,19 +113,19 @@
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
-            // asImageFileToolStripMenuItem
-            // 
-            this.asImageFileToolStripMenuItem.Name = "asImageFileToolStripMenuItem";
-            this.asImageFileToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            this.asImageFileToolStripMenuItem.Text = "As Image File";
-            this.asImageFileToolStripMenuItem.Click += new System.EventHandler(this.asImageFileToolStripMenuItem_Click);
-            // 
             // asTextFileToolStripMenuItem
             // 
             this.asTextFileToolStripMenuItem.Name = "asTextFileToolStripMenuItem";
             this.asTextFileToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.asTextFileToolStripMenuItem.Text = "As Text File";
             this.asTextFileToolStripMenuItem.Click += new System.EventHandler(this.asTextFileToolStripMenuItem_Click);
+            // 
+            // asQuadtreeTextToolStripMenuItem
+            // 
+            this.asQuadtreeTextToolStripMenuItem.Name = "asQuadtreeTextToolStripMenuItem";
+            this.asQuadtreeTextToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.asQuadtreeTextToolStripMenuItem.Text = "As quadtree text";
+            this.asQuadtreeTextToolStripMenuItem.Click += new System.EventHandler(this.asQuadtreeTextToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
             // 
@@ -142,6 +140,7 @@
             this.loadToolStripMenuItem,
             this.displayToolStripMenuItem1,
             this.saveToolStripMenuItem1,
+            this.resizeTreeToolStripMenuItem,
             this.closeToolStripMenuItem1});
             this.displayImageToolStripMenuItem.Name = "displayImageToolStripMenuItem";
             this.displayImageToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
@@ -150,31 +149,23 @@
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadToolStripMenuItem.Text = "Load";
             // 
             // displayToolStripMenuItem1
             // 
             this.displayToolStripMenuItem1.Name = "displayToolStripMenuItem1";
-            this.displayToolStripMenuItem1.Size = new System.Drawing.Size(112, 22);
+            this.displayToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.displayToolStripMenuItem1.Text = "Display";
             // 
             // saveToolStripMenuItem1
             // 
             this.saveToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.asImageFileToolStripMenuItem1,
             this.asTextFileToolStripMenuItem1});
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(112, 22);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem1.Text = "Save";
             this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
-            // 
-            // asImageFileToolStripMenuItem1
-            // 
-            this.asImageFileToolStripMenuItem1.Name = "asImageFileToolStripMenuItem1";
-            this.asImageFileToolStripMenuItem1.Size = new System.Drawing.Size(144, 22);
-            this.asImageFileToolStripMenuItem1.Text = "As Image File";
-            this.asImageFileToolStripMenuItem1.Click += new System.EventHandler(this.asImageFileToolStripMenuItem1_Click);
             // 
             // asTextFileToolStripMenuItem1
             // 
@@ -186,7 +177,7 @@
             // closeToolStripMenuItem1
             // 
             this.closeToolStripMenuItem1.Name = "closeToolStripMenuItem1";
-            this.closeToolStripMenuItem1.Size = new System.Drawing.Size(112, 22);
+            this.closeToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.closeToolStripMenuItem1.Text = "Close";
             this.closeToolStripMenuItem1.Click += new System.EventHandler(this.closeToolStripMenuItem1_Click);
             // 
@@ -206,7 +197,7 @@
             this.whiteToolStripMenuItem,
             this.grayToolStripMenuItem});
             this.drawNodeToolStripMenuItem.Name = "drawNodeToolStripMenuItem";
-            this.drawNodeToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.drawNodeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.drawNodeToolStripMenuItem.Text = "Draw node";
             // 
             // blackToolStripMenuItem
@@ -233,7 +224,7 @@
             // drawArrowToolStripMenuItem
             // 
             this.drawArrowToolStripMenuItem.Name = "drawArrowToolStripMenuItem";
-            this.drawArrowToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.drawArrowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.drawArrowToolStripMenuItem.Text = "Draw arrow";
             this.drawArrowToolStripMenuItem.Click += new System.EventHandler(this.drawArrowToolStripMenuItem_Click);
             // 
@@ -303,12 +294,12 @@
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDown);
             this.panel2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseUp);
             // 
-            // asQuadtreeTextToolStripMenuItem
+            // resizeTreeToolStripMenuItem
             // 
-            this.asQuadtreeTextToolStripMenuItem.Name = "asQuadtreeTextToolStripMenuItem";
-            this.asQuadtreeTextToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            this.asQuadtreeTextToolStripMenuItem.Text = "As quadtree text";
-            this.asQuadtreeTextToolStripMenuItem.Click += new System.EventHandler(this.asQuadtreeTextToolStripMenuItem_Click);
+            this.resizeTreeToolStripMenuItem.Name = "resizeTreeToolStripMenuItem";
+            this.resizeTreeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.resizeTreeToolStripMenuItem.Text = "Resize tree";
+            this.resizeTreeToolStripMenuItem.Click += new System.EventHandler(this.resizeTreeToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -361,11 +352,10 @@
         private System.Windows.Forms.ToolStripMenuItem automatedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem imageToQuadtreeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem quadtreeToImageToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem asImageFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem asTextFileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem asImageFileToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem asTextFileToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem asQuadtreeTextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resizeTreeToolStripMenuItem;
     }
 }
 
