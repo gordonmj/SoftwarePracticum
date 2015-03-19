@@ -15,29 +15,30 @@ namespace QTFormApp
     {
         private String menuChoice;
         //public Point coords;
-        public Point firstClick;
-        public int lastClicked;
-        public string fileName; 
-        public static int nodeWidth = 40;
-        public static int nodeHeight = 30;
-        public System.Drawing.Graphics panel1Graphics;
-        public System.Drawing.Graphics panel2Graphics;
-        public System.Drawing.Graphics formGraphic;
-        public System.Drawing.Graphics canvasGraphics;
-        public Brush blackBrush = new SolidBrush(Color.Black);
-        public Brush whiteBrush = new SolidBrush(Color.White);
-        public Brush grayBrush = new SolidBrush(Color.Gray);
-        public Brush slateGrayBrush = new SolidBrush(Color.SlateGray);        
-        public int formWidth;
-        public int formHeight;
-        public Bitmap bmpToSave;
-        public Bitmap bmpToSaveForQT;
-        public String messageToDisplay;
-        public Node[] nodes= new Node[100];
-        public int currentPosition = 0;
-        public int nextLevelSpace = 50;
-        public int[,] map;
-
+        private Point firstClick;
+        private int lastClicked;
+        private int prevClicked;
+        private string fileName; 
+        private static int nodeWidth = 40;
+        private static int nodeHeight = 30;
+        private System.Drawing.Graphics panel1Graphics;
+        private System.Drawing.Graphics panel2Graphics;
+        private System.Drawing.Graphics formGraphic;
+        private System.Drawing.Graphics canvasGraphics;
+        private Brush blackBrush = new SolidBrush(Color.Black);
+        private Brush whiteBrush = new SolidBrush(Color.White);
+        private Brush grayBrush = new SolidBrush(Color.Gray);
+        private Brush slateGrayBrush = new SolidBrush(Color.SlateGray);        
+        private int formWidth;
+        private int formHeight;
+        private Bitmap bmpToSave;
+        private Bitmap bmpToSaveForQT;
+        private String messageToDisplay;
+        private Node[] nodes= new Node[100];
+        private int currentPosition = 0;
+        private int nextLevelSpace = 50;
+        private int[,] map;
+        private Node root;
 
         public Form1()
         {
@@ -230,7 +231,7 @@ namespace QTFormApp
                     }
                 }
             }
-            Node root = new Node();
+            root = new Node();
             root = whatColor(root, map, 0, numRows - 1, 0, numCols - 1, "root");
             //MessageBox.Show(message);
             messageToDisplay = "";
@@ -494,7 +495,7 @@ namespace QTFormApp
 
         private void connectTwoNodes(Node a, Node b)
         {
-            Point start = adjustPointToCenterofNode(a.getPoint());
+            Point start = a.getPoint();
             Point end = b.getPoint();
             Pen arrow = new Pen(blackBrush, 3);
             if (b.getColor() == Color.Black)
@@ -596,6 +597,10 @@ namespace QTFormApp
                 deleteNode(lastClicked);
                 return;
             }
+            if (menuChoice == "connectNodes")
+            {
+                connectTwoNodes(nodes[prevClicked], nodes[whichNode]);
+            }
             if (lastClicked == -1)
             {
                 return;
@@ -604,7 +609,20 @@ namespace QTFormApp
                 Node thisNode = nodes[whichNode];
                 String color = thisNode.getColorString();
                 String coordinates = thisNode.getPoint().ToString();
-                MessageBox.Show("You clicked a "+color+" node at "+coordinates+"!\nWhat do you want to do?\nJust click and drag the node to move it.\n");
+                //MessageBox.Show("You clicked a "+color+" node at "+coordinates+"!\nWhat do you want to do?\nJust click and drag the node to move it.\n");
+                DialogResult answer = MessageBox.Show("You clicked a " + color + " node at " + coordinates + "!\nDo you want to create an arrow?", "Options", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                prevClicked = lastClicked;
+                if (answer == DialogResult.Yes)
+                {
+                    MessageBox.Show("Click on the node you want to connect to!");
+                    menuChoice = "connectNodes";
+                }
+
+                else if (answer == DialogResult.No)
+                {
+                    return;
+                }
+
                 if (color == "gray")
                 {
 //                    MessageBox.Show("");
@@ -758,6 +776,18 @@ namespace QTFormApp
             save.Filter = "Text|*.txt";
             save.Title = "Save the image";
             String textToSave = treeToString(nodes[0]);
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                System.IO.File.WriteAllText(save.FileName, textToSave);
+            }
+        }
+
+        private void asQuadtreeTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "Text|*.txt";
+            save.Title = "Save the image";
+            String textToSave = treeToString(root);
             if (save.ShowDialog() == DialogResult.OK)
             {
                 System.IO.File.WriteAllText(save.FileName, textToSave);
