@@ -320,8 +320,8 @@ namespace QTFormApp
                 int midPointCol = (colStop + colStart) / 2;
                 root.addChild("NW",whatColor(new Node(), m, rowStart, midPointRow, colStart, midPointCol,desc+"->NW"));
                 root.addChild("SW",whatColor(new Node(), m, midPointRow + 1, rowStop, colStart, midPointCol, desc + "->SW"));
-                root.addChild("NE", whatColor(new Node(), m, rowStart, midPointRow, midPointCol + 1, colStop, desc + "->NE"));
                 root.addChild("SE", whatColor(new Node(), m, midPointRow + 1, rowStop, midPointCol + 1, colStop, desc + "->SE"));
+                root.addChild("NE", whatColor(new Node(), m, rowStart, midPointRow, midPointCol + 1, colStop, desc + "->NE"));
                 //MessageBox.Show("NW: "+root.NW.getColor()+" SW: "+root.SW.getColor()+" SE: "+root.SE.getColor()+" NE: "+root.NE.getColor());
                 if (root.NW.getColor() == root.SW.getColor() && root.SW.getColor() == root.SE.getColor() && root.SE.getColor() == root.NE.getColor())
                 {
@@ -354,8 +354,8 @@ namespace QTFormApp
                 //TODO: refactor indent to int and build string at level
                 nodeList(n.NW, desc + "->NW", indent + " ");
                 nodeList(n.SW, desc + "->SW", indent + " ");
-                nodeList(n.NE, desc + "->NE", indent + " ");
                 nodeList(n.SE, desc + "->SE", indent + " ");
+                nodeList(n.NE, desc + "->NE", indent + " ");
                 messageToDisplay = indent + desc + " " + n.getColorString() + "\n" + messageToDisplay;
             }
         }
@@ -692,8 +692,9 @@ namespace QTFormApp
                 String children = "";
                 children += " "+treeToString(n.NW);
                 children += " " + treeToString(n.SW);
-                children += " " + treeToString(n.NE);
+                children += " " + treeToString(n.NE); 
                 children += " " + treeToString(n.SE); 
+
                 return "2" + children;
             }
         }//treeToString

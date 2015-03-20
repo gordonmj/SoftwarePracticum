@@ -210,8 +210,8 @@ namespace QTFormApp
 
             addChild("NW");
             addChild("SW");
-            addChild("NE");
             addChild("SE");
+            addChild("NE");
         }
 
         public void removeChildren()
@@ -235,8 +235,8 @@ namespace QTFormApp
                 {
                     NW.prune();
                     SW.prune();
-                    NE.prune();
                     SE.prune();
+                    NE.prune();
                 }
             }
         }
