@@ -132,22 +132,30 @@ namespace QTFormApp
                 case "NW":
                     NW = new Node(false);
                     NW.parent = this;
-                    NW.level = level++;
+                    NW.level = level+1;
+                    NW.numRows = numRows / 2;
+                    NW.numCols = numCols / 2;
                     return NW;
                 case "SW":
                     SW = new Node(false);
                     SW.parent = this;
-                    SW.level = level++;
+                    SW.level = level+1;
+                    SW.numRows = numRows / 2;
+                    SW.numCols = numCols / 2;
                     return SW;
                 case "SE":
                     SE = new Node(false);
                     SE.parent = this;
-                    SE.level = level++;
+                    SE.level = level+1;
+                    SE.numRows = numRows / 2;
+                    SE.numCols = numCols / 2;
                     return SE;
                 case "NE":
                     NE = new Node(false);
                     NE.parent = this;
-                    NE.level = level++;
+                    NE.level = level+1;
+                    NE.numRows = numRows / 2;
+                    NE.numCols = numCols / 2;
                     return NE;
                 default:
                     return null;
@@ -183,7 +191,9 @@ namespace QTFormApp
             hasChildren = true;
             n.isRoot = false;
             n.parent = this;
-            n.level = level++;
+            n.level = level+1;
+            n.numCols = numCols / 2;
+            n.numRows = numRows / 2;
             switch (s)
             {
                 case "NW":

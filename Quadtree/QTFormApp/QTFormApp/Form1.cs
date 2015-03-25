@@ -19,7 +19,7 @@ namespace QTFormApp
         private int prevClicked;
         private string fileName; 
         private static int nodeWidth = 40;
-        private static int nodeHeight = 30;
+        private static int nodeHeight = 40;
         private System.Drawing.Graphics panel1Graphics;
         private System.Drawing.Graphics panel2Graphics;
         private System.Drawing.Graphics formGraphic;
@@ -207,7 +207,7 @@ namespace QTFormApp
                 size = ((formHeight - offset) / numRows) - offset;
             else
                 size = (((formWidth - offset) / numCols) / 2) - offset;
-            panel1Graphics.Clear(Color.Gray);
+            panel1Graphics.Clear(Color.DarkCyan);
             bmpToSave = new Bitmap(panel1.ClientSize.Width, panel1.ClientSize.Height);
             using (Graphics bmpGraphic = Graphics.FromImage(bmpToSave))
             {
@@ -233,8 +233,10 @@ namespace QTFormApp
                 }
             }
             root = new Node();
+            root.numCols = numCols;
+            root.numRows = numRows;
+            root.level = 0;
             root = whatColor(root, map, 0, numRows - 1, 0, numCols - 1, "root");
-            //MessageBox.Show(message);
             messageToDisplay = "";
             nodeList(root, "root", " ");
             messageToDisplay = "Tree as string: "+numRows+" "+numCols+" "+treeToString(root);
@@ -249,7 +251,7 @@ namespace QTFormApp
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            panel1Graphics.Clear(Color.Gray);
+            panel1Graphics.Clear(Color.DarkCyan);
         }
 
         private void blackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -289,15 +291,12 @@ namespace QTFormApp
             if ((rowStop - rowStart != colStop - colStart))
             {
                 MessageBox.Show("Error! rowStart: "+rowStart+" rowStop "+rowStop+" colStart: "+colStart+" and colStop: "+colStop);
-                //throw new Exception("Not a square!");
                 this.Close();
                 returnRoot = null;
             }
-//            MessageBox.Show("rowStart: " + rowStart + " rowStop: " + rowStop + " colStart: " + colStart + " colStop: " + colStop);
             if (rowStop - rowStart < 0)
             {
                 MessageBox.Show("rowStart: " + rowStart + " is greater than rowStop: " + rowStop);
-                //throw new Exception("Invalid params");
                 this.Close();
                 returnRoot = null;
             }
@@ -306,12 +305,10 @@ namespace QTFormApp
                 if (m[rowStart, colStart] == 1)
                 {
                     root.setColor(Color.Black);
-                    //MessageBox.Show(desc + " " + root.getColor());
                     returnRoot = root;
                 }
                 else
                     root.setColor(Color.White);
-                    //MessageBox.Show(desc + " " + root.getColor());
                     returnRoot = root;
             }
             else
@@ -375,7 +372,7 @@ namespace QTFormApp
 
         private void clearNode(int origin)
         {
-            panel2Graphics.FillEllipse(grayBrush, new Rectangle(adjustPointOtherWay(nodes[origin].getPoint()), new Size(nodeWidth, nodeHeight)));
+            panel2Graphics.FillEllipse(new SolidBrush(Color.PowderBlue), new Rectangle(adjustPointOtherWay(nodes[origin].getPoint()), new Size(nodeWidth, nodeHeight)));
         }
 
         private void deleteNode(int origin)
@@ -408,7 +405,7 @@ namespace QTFormApp
             {
                 LinearGradientBrush lgb = new LinearGradientBrush(
                     clicked,
-                    new Point(clicked.X + 40, clicked.Y),
+                    new Point(clicked.X + nodeWidth, clicked.Y),
                     Color.FromArgb(255, 255, 255),
                     Color.FromArgb(0, 0, 0));
                 float[] intensities = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
@@ -428,13 +425,6 @@ namespace QTFormApp
         private void addChildren(int origin)
         {
             Node n = nodes[origin];
-            /*
-            DialogResult doAlign = MessageBox.Show("Align?", "Align?", MessageBoxButtons.YesNo);
-            if (doAlign == DialogResult.Yes)
-            {
-                align(origin);
-            }
-             */
             if (n.getColorString() == "black" || n.getColorString() == "white")
             {
                 MessageBox.Show("Black or White nodes are leaf nodes!");
@@ -446,11 +436,10 @@ namespace QTFormApp
                 Point p;
                 Color c;
                 Node[] children = new Node[] {n.NW, n.SW, n.NE, n.SE};
-                int i = 1;
-                foreach (Node child in children)
+                for (int childNum = 0; childNum < 4; childNum++ )
                 {
                     bool isGray = false;
-                    p = new Point(i * spacing, n.getPoint().Y + nextLevelSpace);
+                    p = new Point((childNum+1) * spacing, n.getPoint().Y + nextLevelSpace);
                     DialogResult dialogResult = MessageBox.Show("Yes for black, No for white, Cancel for gray", "Black or white?", MessageBoxButtons.YesNoCancel);
                     if (dialogResult == DialogResult.Yes)
                     {
@@ -465,22 +454,17 @@ namespace QTFormApp
                         c = Color.Gray;
                         isGray = true;
                     }
-                    drawNewNode(currentPosition, p, c);
-                    child.setColor(c);
-                    child.setPoint(p);
-                    connectTwoNodes(n, child);
-                    if (isGray && nodes[currentPosition-1] != null)
+                    children[childNum] = drawNewNode(currentPosition, p, c);
+                    children[childNum].setColor(c);
+                    children[childNum].setPoint(p);
+                    connectTwoNodes(n, children[childNum]);
+                    //MessageBox.Show("isGray?" + isGray + " currentPosition=" + currentPosition);
+                    MessageBox.Show("Correct node? " + (children[childNum] == nodes[currentPosition - 1]) + " and color?" + children[childNum].getColorString()+" and number "+childNum);
+                    if (isGray && nodes[currentPosition - 1] != null)
                     {
-                        addChildren(currentPosition-1);
+                        addChildren(currentPosition - 1);
                     }
-                    i++;
                 }//for
-                /* doAlign = MessageBox.Show("Align children?", "Align children?", MessageBoxButtons.YesNo);
-                if (doAlign == DialogResult.Yes)
-                {
-                    //align(origin);
-                }
-                 * */
             }//else
         }//addChildren
 
@@ -669,16 +653,28 @@ namespace QTFormApp
             }
             currentPosition = 0;
             bmpToSaveForQT = new Bitmap(panel2.ClientSize.Width, panel2.ClientSize.Height);
-            panel2Graphics.Clear(Color.Gray);
+            panel2Graphics.Clear(Color.PowderBlue);
 
+        }
+
+        private void redrawAllNodes()
+        {
+            bmpToSaveForQT = new Bitmap(panel2.ClientSize.Width, panel2.ClientSize.Height);
+            panel2Graphics.Clear(Color.PowderBlue);
+            for (int i = 0; i < currentPosition; i++)
+            {
+                redrawNode(i, nodes[i].getPoint());
+            }
         }
 
         private String treeToString(Node n)
         {
             if (n == null)
             {
+                MessageBox.Show("NULL!");
                 return "";
             }
+            MessageBox.Show(n.getColorString()+" "+n.level+" "+n.numRows);
             if (n.getColor() == Color.Black)
             {
                 return "1";
@@ -815,6 +811,44 @@ namespace QTFormApp
         }
 
         private void resizeTreeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pixelsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pixelsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void smallToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            nodeHeight = 10;
+            nodeWidth = 10;
+            redrawAllNodes();
+        }
+
+        private void mediumToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            nodeHeight = 20;
+            nodeWidth = 20;
+            redrawAllNodes();
+
+        }
+
+        private void largeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            nodeHeight = 40;
+            nodeWidth = 40;
+            redrawAllNodes();
+
+        }
+
+        private void displayTree(Node n)
         {
 
         }
