@@ -5,3 +5,7 @@ It will contain a mix of languages (so far Java, C++, C#).
 Assignments so far:
 InsertionSort (implement in Java and C++)
 Quadtree drawing (C# with Visual Studio)
+
+PLEASE NOTE:
+My professor takes a rather extreme approach to eXtreme Programming and wants us to prioritize frequent releases and story completion over coding best practices. 
+I hope to get some time soon to refactor and reorganize the Quadtree code.
