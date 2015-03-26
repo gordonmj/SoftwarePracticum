@@ -747,12 +747,13 @@ namespace QTFormApp
             String[] directions = { "NW", "SW", "SE", "NE" };
             int nodeNum = 0;
             int end = start;
-            if (end >= str.Length)
-            {
-                return 0;
-            }
+
             while (nodeNum < 4)
             {
+                if (end >= str.Length)
+                {
+                    return 0;
+                } 
                 MessageBox.Show("Size of str: " + str.Length + ", end: " + end + ", nodeNum: " + nodeNum);
                 MessageBox.Show("Number " + str[end] + " point in string: " + end + " current node direction: " + directions[nodeNum]);
                 if (str[end] == "1")
@@ -786,6 +787,11 @@ namespace QTFormApp
 
         private void treeToImage(Node n, ref int[,] image, int rStart, int cStart)
         {
+            if (n == null)
+            {
+                return;
+            }
+
             if (!n.hasChildren)
             {
                 int rows = n.numRows - 1;
@@ -833,17 +839,33 @@ namespace QTFormApp
             }
         }
 
-        private void asImageFileToolStripMenuItem1_Click(object sender, EventArgs e)
+
+        private void asTextFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog save = new SaveFileDialog();
-            save.Filter = "Images|*.png;*.bmp;*.jpg";
+            save.Filter = "Text|*.txt";
             save.Title = "Save the image";
-            System.Drawing.Imaging.ImageFormat format = System.Drawing.Imaging.ImageFormat.Png;
+            String textToSave = mapToString(map);
             if (save.ShowDialog() == DialogResult.OK)
             {
-                bmpToSaveForQT.Save(save.FileName, format);
+                System.IO.File.WriteAllText(save.FileName, textToSave);
             }
         }
+
+
+        private void asQuadtreeTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "Text|*.txt";
+            save.Title = "Save the image";
+            String textToSave = numRows.ToString()+" "+numCols.ToString()+" "+treeToString(root);
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                System.IO.File.WriteAllText(save.FileName, textToSave);
+            }
+        }
+
+
 
         private String mapToString(int[,] matrix)
         {
@@ -863,17 +885,6 @@ namespace QTFormApp
             return s;
         }
 
-        private void asTextFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog save = new SaveFileDialog();
-            save.Filter = "Text|*.txt";
-            save.Title = "Save the image";
-            String textToSave = mapToString(map);
-            if (save.ShowDialog() == DialogResult.OK)
-            {
-                System.IO.File.WriteAllText(save.FileName, textToSave);
-            }
-        }
 
         private void asTextFileToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -881,18 +892,6 @@ namespace QTFormApp
             save.Filter = "Text|*.txt";
             save.Title = "Save the image";
             String textToSave = treeToString(nodes[0]);
-            if (save.ShowDialog() == DialogResult.OK)
-            {
-                System.IO.File.WriteAllText(save.FileName, textToSave);
-            }
-        }
-
-        private void asQuadtreeTextToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog save = new SaveFileDialog();
-            save.Filter = "Text|*.txt";
-            save.Title = "Save the image";
-            String textToSave = numRows.ToString()+" "+numCols.ToString()+" "+treeToString(root);
             if (save.ShowDialog() == DialogResult.OK)
             {
                 System.IO.File.WriteAllText(save.FileName, textToSave);
