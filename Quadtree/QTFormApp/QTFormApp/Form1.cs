@@ -14,27 +14,32 @@ namespace QTFormApp
     public partial class Form1 : Form
     {
         private String menuChoice;
-        //public Point coords;
-        public Point firstClick;
-        public int lastClicked;
-        public string fileName; 
-        public static int nodeWidth = 40;
-        public static int nodeHeight = 30;
-        public System.Drawing.Graphics panel1Graphics;
-        public System.Drawing.Graphics panel2Graphics;
-        public System.Drawing.Graphics formGraphic;
-        public System.Drawing.Graphics canvasGraphics;
-        public Brush blackBrush = new SolidBrush(Color.Black);
-        public Brush whiteBrush = new SolidBrush(Color.White);
-        public Brush grayBrush = new SolidBrush(Color.Gray);
-        public Brush slateGrayBrush = new SolidBrush(Color.SlateGray);        
-        public int formWidth;
-        public int formHeight;
-        public Bitmap bmpToSave;
-        public String messageToDisplay;
-        public Node[] nodes= new Node[100];
-        public int currentPosition = 0;
-        public int nextLevelSpace = 50;
+        private Point firstClick;
+        private int lastClicked;
+        private int prevClicked;
+        private string fileName; 
+        private static int nodeWidth = 40;
+        private static int nodeHeight = 40;
+        private System.Drawing.Graphics panel1Graphics;
+        private System.Drawing.Graphics panel2Graphics;
+        private System.Drawing.Graphics formGraphic;
+        private System.Drawing.Graphics canvasGraphics;
+        private Brush blackBrush = new SolidBrush(Color.Black);
+        private Brush whiteBrush = new SolidBrush(Color.White);
+        private Brush grayBrush = new SolidBrush(Color.Gray);
+        private Brush slateGrayBrush = new SolidBrush(Color.SlateGray);        
+        private int formWidth;
+        private int formHeight;
+        private Bitmap bmpToSave;
+        private Bitmap bmpToSaveForQT;
+        private String messageToDisplay;
+        private Node[] nodes= new Node[100];
+        private int currentPosition = 0;
+        private int nextLevelSpace = 50;
+        private int[,] map;
+        private Node root;
+        private int numRows;
+        private int numCols;
 
         public Form1()
         {
@@ -102,6 +107,7 @@ namespace QTFormApp
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
             panel2Graphics = panel2.CreateGraphics();
+            bmpToSaveForQT = new Bitmap(panel2.ClientSize.Width, panel2.ClientSize.Height);
         }
 
         private void panel2_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -160,6 +166,7 @@ namespace QTFormApp
 
         private void loadToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            /*
             OpenFileDialog oFD = new OpenFileDialog();
             oFD.Filter = "Plaintext Files|*.txt";
             oFD.Title = "Select a Plaintext File";
@@ -169,11 +176,27 @@ namespace QTFormApp
                 fileName = oFD.FileName;
             }
             displayToolStripMenuItem_Click(sender, e);
+             */
         }
 
         private void displayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Pen border = new Pen(grayBrush, 1);
+            parseMatrixInputFile();
+            drawImage();
+            Node newRoot = imageToTree();
+            MessageBox.Show("New root node for image of " + newRoot.numRows + " rows and " + newRoot.numCols + " columns");
+            map = new int[newRoot.numRows, newRoot.numCols];
+            treeToImage(newRoot, ref map, 0, 0);
+            drawImage();
+        }
+
+        private void clearMap()
+        {
+            
+        }
+
+        private void parseMatrixInputFile()
+        {
             if (fileName == null)
             {
                 MessageBox.Show("You must select an input file first. Use 'Image>Load'");
@@ -182,11 +205,11 @@ namespace QTFormApp
             string[] lines = System.IO.File.ReadAllLines(@fileName);
             char[] delims = { ' ', '\n' };
             string[] firstLine = lines[0].Split(delims);
-            int numRows = Convert.ToInt32(firstLine[0]);
-            int numCols = Convert.ToInt32(firstLine[1]);
+            numRows = Convert.ToInt32(firstLine[0]);
+            numCols = Convert.ToInt32(firstLine[1]);
             int maxVal = Convert.ToInt32(firstLine[2]);
             int minVal = Convert.ToInt32(firstLine[3]);
-            int[,] map = new int[numRows, numCols];
+            map = new int[numRows, numCols];
             for (int r = 0; r < numRows; r++)
             {
                 string[] nextLine = lines[r + 1].Split(delims);
@@ -195,13 +218,37 @@ namespace QTFormApp
                     map[r, c] = Convert.ToInt32(nextLine[c]);
                 }
             }
+        }
+
+        private void parsePreorderInputFile()
+        {
+            if (fileName == null)
+            {
+                MessageBox.Show("You must select an input file first. Use 'Image>Load'");
+                return;
+            }
+            string[] input = System.IO.File.ReadAllLines(@fileName);
+            char[] delims = { ' ', '\n' };
+            string[] parsedInput = input[0].Split(delims);
+            numRows = Convert.ToInt32(parsedInput[0]);
+            numCols = Convert.ToInt32(parsedInput[1]);
+            map = new int[numRows, numCols];
+            Node newRoot = new Node();
+            stringToTree(ref parsedInput,2,newRoot);
+            treeToImage(newRoot, ref map, 0, 0);
+        }
+
+
+        private void drawImage()
+        {
+            Pen border = new Pen(grayBrush, 1);
             int offset = 10;
             int size;
             if ((formWidth / numCols) / 2 > (formHeight - offset) / numRows)
                 size = ((formHeight - offset) / numRows) - offset;
             else
                 size = (((formWidth - offset) / numCols) / 2) - offset;
-            panel1Graphics.Clear(Color.Gray);
+            panel1Graphics.Clear(Color.DarkCyan);
             bmpToSave = new Bitmap(panel1.ClientSize.Width, panel1.ClientSize.Height);
             using (Graphics bmpGraphic = Graphics.FromImage(bmpToSave))
             {
@@ -226,31 +273,32 @@ namespace QTFormApp
                     }
                 }
             }
-            Node root = new Node();
-            root = whatColor(root, map, 0, numRows - 1, 0, numCols - 1, "root");
-            //MessageBox.Show(message);
-            messageToDisplay = "";
-            nodeList(root, "root", " ");
-            messageToDisplay = "Tree as string: "+numRows+" "+numCols+" "+treeToString(root);
-            MessageBox.Show(messageToDisplay);
-            messageToDisplay = "";
+
         }
 
+        private Node imageToTree()
+        {
+            root = new Node();
+            root.numCols = numCols;
+            root.numRows = numRows;
+            root.level = 0;
+            root = whatColor(root, map, 0, numRows - 1, 0, numCols - 1, "root");
+            messageToDisplay = "";
+            nodeList(root, "root", " ");
+            String treeAsString = numRows + " " + numCols + " " + treeToString(root);
+            messageToDisplay = "Tree as string: " + treeAsString;
+            MessageBox.Show(messageToDisplay);
+            messageToDisplay = "";
+            return root;
+        }
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveFileDialog save = new SaveFileDialog();
-            save.Filter = "Images|*.png;*.bmp;*.jpg";
-            save.Title = "Save the image";
-            System.Drawing.Imaging.ImageFormat format = System.Drawing.Imaging.ImageFormat.Png;
-            if (save.ShowDialog() == DialogResult.OK)
-            {
-                bmpToSave.Save(save.FileName, format);
-            }
+
         }
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            panel1Graphics.Clear(Color.Gray);
+            panel1Graphics.Clear(Color.DarkCyan);
         }
 
         private void blackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -290,15 +338,12 @@ namespace QTFormApp
             if ((rowStop - rowStart != colStop - colStart))
             {
                 MessageBox.Show("Error! rowStart: "+rowStart+" rowStop "+rowStop+" colStart: "+colStart+" and colStop: "+colStop);
-                //throw new Exception("Not a square!");
                 this.Close();
                 returnRoot = null;
             }
-//            MessageBox.Show("rowStart: " + rowStart + " rowStop: " + rowStop + " colStart: " + colStart + " colStop: " + colStop);
             if (rowStop - rowStart < 0)
             {
                 MessageBox.Show("rowStart: " + rowStart + " is greater than rowStop: " + rowStop);
-                //throw new Exception("Invalid params");
                 this.Close();
                 returnRoot = null;
             }
@@ -307,12 +352,10 @@ namespace QTFormApp
                 if (m[rowStart, colStart] == 1)
                 {
                     root.setColor(Color.Black);
-                    //MessageBox.Show(desc + " " + root.getColor());
                     returnRoot = root;
                 }
                 else
                     root.setColor(Color.White);
-                    //MessageBox.Show(desc + " " + root.getColor());
                     returnRoot = root;
             }
             else
@@ -321,8 +364,8 @@ namespace QTFormApp
                 int midPointCol = (colStop + colStart) / 2;
                 root.addChild("NW",whatColor(new Node(), m, rowStart, midPointRow, colStart, midPointCol,desc+"->NW"));
                 root.addChild("SW",whatColor(new Node(), m, midPointRow + 1, rowStop, colStart, midPointCol, desc + "->SW"));
-                root.addChild("NE", whatColor(new Node(), m, rowStart, midPointRow, midPointCol + 1, colStop, desc + "->NE"));
                 root.addChild("SE", whatColor(new Node(), m, midPointRow + 1, rowStop, midPointCol + 1, colStop, desc + "->SE"));
+                root.addChild("NE", whatColor(new Node(), m, rowStart, midPointRow, midPointCol + 1, colStop, desc + "->NE"));
                 //MessageBox.Show("NW: "+root.NW.getColor()+" SW: "+root.SW.getColor()+" SE: "+root.SE.getColor()+" NE: "+root.NE.getColor());
                 if (root.NW.getColor() == root.SW.getColor() && root.SW.getColor() == root.SE.getColor() && root.SE.getColor() == root.NE.getColor())
                 {
@@ -355,8 +398,8 @@ namespace QTFormApp
                 //TODO: refactor indent to int and build string at level
                 nodeList(n.NW, desc + "->NW", indent + " ");
                 nodeList(n.SW, desc + "->SW", indent + " ");
-                nodeList(n.NE, desc + "->NE", indent + " ");
                 nodeList(n.SE, desc + "->SE", indent + " ");
+                nodeList(n.NE, desc + "->NE", indent + " ");
                 messageToDisplay = indent + desc + " " + n.getColorString() + "\n" + messageToDisplay;
             }
         }
@@ -365,6 +408,7 @@ namespace QTFormApp
         {
             for (int i = 0; i < currentPosition; i++)
             {
+                if (nodes[i] == null) break;
                 if (pointInNode(down, nodes[i].getPoint()))
                 {
                     return i;
@@ -375,7 +419,7 @@ namespace QTFormApp
 
         private void clearNode(int origin)
         {
-            panel2Graphics.FillEllipse(grayBrush, new Rectangle(adjustPointOtherWay(nodes[origin].getPoint()), new Size(nodeWidth, nodeHeight)));
+            panel2Graphics.FillEllipse(new SolidBrush(Color.PowderBlue), new Rectangle(adjustPointOtherWay(nodes[origin].getPoint()), new Size(nodeWidth, nodeHeight)));
         }
 
         private void deleteNode(int origin)
@@ -398,12 +442,17 @@ namespace QTFormApp
             {
                 Brush brush = new SolidBrush(nodes[origin].getColor());
                 panel2Graphics.FillEllipse(brush, new Rectangle(centerPoint, new Size(nodeWidth, nodeHeight)));
+                using (Graphics bmpGraphicForQT = Graphics.FromImage(bmpToSaveForQT))
+                {
+                    bmpGraphicForQT.FillEllipse(brush, new Rectangle(centerPoint, new Size(nodeWidth, nodeHeight)));
+                }
+
             }
             else
             {
                 LinearGradientBrush lgb = new LinearGradientBrush(
                     clicked,
-                    new Point(clicked.X + 40, clicked.Y),
+                    new Point(clicked.X + nodeWidth, clicked.Y),
                     Color.FromArgb(255, 255, 255),
                     Color.FromArgb(0, 0, 0));
                 float[] intensities = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
@@ -413,19 +462,16 @@ namespace QTFormApp
                 blend.Positions = posit;
                 lgb.Blend = blend;
                 panel2Graphics.FillEllipse(lgb, new Rectangle(nodes[origin].getPoint(), new Size(nodeWidth, nodeHeight)));
+                using (Graphics bmpGraphicForQT = Graphics.FromImage(bmpToSaveForQT))
+                {
+                    bmpGraphicForQT.FillEllipse(lgb, new Rectangle(centerPoint, new Size(nodeWidth, nodeHeight)));
+                }
             }
             return nodes[origin];
         }
         private void addChildren(int origin)
         {
             Node n = nodes[origin];
-            /*
-            DialogResult doAlign = MessageBox.Show("Align?", "Align?", MessageBoxButtons.YesNo);
-            if (doAlign == DialogResult.Yes)
-            {
-                align(origin);
-            }
-             */
             if (n.getColorString() == "black" || n.getColorString() == "white")
             {
                 MessageBox.Show("Black or White nodes are leaf nodes!");
@@ -437,11 +483,10 @@ namespace QTFormApp
                 Point p;
                 Color c;
                 Node[] children = new Node[] {n.NW, n.SW, n.NE, n.SE};
-                int i = 1;
-                foreach (Node child in children)
+                for (int childNum = 0; childNum < 4; childNum++ )
                 {
                     bool isGray = false;
-                    p = new Point(i * spacing, n.getPoint().Y + nextLevelSpace);
+                    p = new Point((childNum+1) * spacing, n.getPoint().Y + nextLevelSpace);
                     DialogResult dialogResult = MessageBox.Show("Yes for black, No for white, Cancel for gray", "Black or white?", MessageBoxButtons.YesNoCancel);
                     if (dialogResult == DialogResult.Yes)
                     {
@@ -456,22 +501,17 @@ namespace QTFormApp
                         c = Color.Gray;
                         isGray = true;
                     }
-                    drawNewNode(currentPosition, p, c);
-                    child.setColor(c);
-                    child.setPoint(p);
-                    connectTwoNodes(n, child);
-                    if (isGray && nodes[currentPosition-1] != null)
+                    children[childNum] = drawNewNode(currentPosition, p, c);
+                    children[childNum].setColor(c);
+                    children[childNum].setPoint(p);
+                    connectTwoNodes(n, children[childNum]);
+                    //MessageBox.Show("isGray?" + isGray + " currentPosition=" + currentPosition);
+                    MessageBox.Show("Correct node? " + (children[childNum] == nodes[currentPosition - 1]) + " and color?" + children[childNum].getColorString()+" and number "+childNum);
+                    if (isGray && nodes[currentPosition - 1] != null)
                     {
-                        addChildren(currentPosition-1);
+                        addChildren(currentPosition - 1);
                     }
-                    i++;
                 }//for
-                /* doAlign = MessageBox.Show("Align children?", "Align children?", MessageBoxButtons.YesNo);
-                if (doAlign == DialogResult.Yes)
-                {
-                    //align(origin);
-                }
-                 * */
             }//else
         }//addChildren
 
@@ -485,9 +525,23 @@ namespace QTFormApp
             return new Point(p.X - nodeWidth / 2, p.Y - nodeHeight / 2);
         }
 
+        private void redrawTree(Node n)
+        {
+
+        }
+
+        private Node drawTree(Node n)
+        {
+            if (!n.isRoot)
+            {
+
+            }
+            return n;
+        }
+
         private void connectTwoNodes(Node a, Node b)
         {
-            Point start = adjustPointToCenterofNode(a.getPoint());
+            Point start = a.getPoint();
             Point end = b.getPoint();
             Pen arrow = new Pen(blackBrush, 3);
             if (b.getColor() == Color.Black)
@@ -498,6 +552,10 @@ namespace QTFormApp
             arrow.CustomEndCap = bigArrow;
             //arrow.EndCap = LineCap.ArrowAnchor;
             panel2Graphics.DrawLine(arrow, start, end);
+            using (Graphics bmpGraphicForQT = Graphics.FromImage(bmpToSaveForQT))
+            {
+                bmpGraphicForQT.DrawLine(arrow, start, end);
+            }
         }
 
         private Node redrawNode(int origin, Point destination)
@@ -585,6 +643,13 @@ namespace QTFormApp
                 deleteNode(lastClicked);
                 return;
             }
+            if (menuChoice == "connectNodes")
+            {
+                if (nodes[prevClicked] != null && nodes[whichNode] != null)
+                {
+                    connectTwoNodes(nodes[prevClicked], nodes[whichNode]);
+                }
+            }
             if (lastClicked == -1)
             {
                 return;
@@ -594,6 +659,20 @@ namespace QTFormApp
                 String color = thisNode.getColorString();
                 String coordinates = thisNode.getPoint().ToString();
                 MessageBox.Show("You clicked a "+color+" node at "+coordinates+"!\nWhat do you want to do?\nJust click and drag the node to move it.\n");
+                //DialogResult answer = MessageBox.Show("You clicked a " + color + " node at " + coordinates + "!\nDo you want to create an arrow?", "Options", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                prevClicked = lastClicked;
+                /*
+                if (answer == DialogResult.Yes)
+                {
+                    MessageBox.Show("Click on the node you want to connect to!");
+                    menuChoice = "connectNodes";
+                }
+
+                else if (answer == DialogResult.No)
+                {
+                    MessageBox.Show("If you want to move the node, just drag and drop!");
+                }
+                */
                 if (color == "gray")
                 {
 //                    MessageBox.Show("");
@@ -619,12 +698,30 @@ namespace QTFormApp
             {
                 nodes[i] = null;
             }
-                panel2Graphics.Clear(Color.Gray);
+            currentPosition = 0;
+            bmpToSaveForQT = new Bitmap(panel2.ClientSize.Width, panel2.ClientSize.Height);
+            panel2Graphics.Clear(Color.PowderBlue);
 
+        }
+
+        private void redrawAllNodes()
+        {
+            bmpToSaveForQT = new Bitmap(panel2.ClientSize.Width, panel2.ClientSize.Height);
+            panel2Graphics.Clear(Color.PowderBlue);
+            for (int i = 0; i < currentPosition; i++)
+            {
+                redrawNode(i, nodes[i].getPoint());
+            }
         }
 
         private String treeToString(Node n)
         {
+            if (n == null)
+            {
+                MessageBox.Show("NULL!");
+                return "";
+            }
+            MessageBox.Show(n.getColorString()+" "+n.level+" "+n.numRows);
             if (n.getColor() == Color.Black)
             {
                 return "1";
@@ -638,11 +735,254 @@ namespace QTFormApp
                 String children = "";
                 children += " "+treeToString(n.NW);
                 children += " " + treeToString(n.SW);
-                children += " " + treeToString(n.NE);
+                children += " " + treeToString(n.NE); 
                 children += " " + treeToString(n.SE); 
+
                 return "2" + children;
+            }
+        }//treeToString
+        
+        private int stringToTree(ref String[] str, int start, Node n)
+        {
+            String[] directions = { "NW", "SW", "SE", "NE" };
+            int nodeNum = 0;
+            int end = start;
+            if (end >= str.Length)
+            {
+                return 0;
+            }
+            while (nodeNum < 4)
+            {
+                MessageBox.Show("Size of str: " + str.Length + ", end: " + end + ", nodeNum: " + nodeNum);
+                MessageBox.Show("Number " + str[end] + " point in string: " + end + " current node direction: " + directions[nodeNum]);
+                if (str[end] == "1")
+                {
+                    Node child = n.addChild(directions[nodeNum]);
+                    child.setColor(Color.Black);
+                    nodeNum++;
+                    end++;
+                }
+                else if (str[end] == "0")
+                {
+                    Node child = n.addChild(directions[nodeNum]);
+                    child.setColor(Color.White);
+                    nodeNum++;     
+                    end++;
+                }
+                else if (str[end] == "2")
+                {
+                    Node child = n.addChild(directions[nodeNum]);
+                    child.setColor(Color.Gray);      
+                    end = stringToTree(ref str, end+1, child);
+                    nodeNum++; 
+                }
+                else
+                {
+                    nodeNum++;
+                }
+            }//while
+            return end; //what number to return?
+        }
+
+        private void treeToImage(Node n, ref int[,] image, int rStart, int cStart)
+        {
+            if (!n.hasChildren)
+            {
+                int rows = n.numRows - 1;
+                int cols = n.numCols - 1;
+                int fill;
+                if (n.getColorString() == "black")
+                {
+                    fill = 1;
+                }
+                else
+                {
+                    fill = 0;
+                }
+                for (int r = rStart; r < rStart + n.numRows; r++)
+                {
+                    for (int c = cStart; c < cStart + n.numCols; c++)
+                    {
+                        //MessageBox.Show("rStart="+rStart+", cStart="+cStart+", r=" + r + ", c=" + c);
+                        image[r, c] = fill;
+                    }
+                }
+            }
+            else
+            {
+                treeToImage(n.NW, ref image, rStart, cStart);
+                treeToImage(n.SW, ref image, rStart + (n.numRows/2), cStart); 
+                treeToImage(n.SE, ref image, rStart + (n.numRows/2), cStart + (n.numCols/2));
+                treeToImage(n.NE, ref image, rStart, cStart + (n.numCols/2));
+            }
+        }
+        private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void asImageFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "Images|*.png;*.bmp;*.jpg";
+            save.Title = "Save the image";
+            System.Drawing.Imaging.ImageFormat format = System.Drawing.Imaging.ImageFormat.Png;
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                bmpToSave.Save(save.FileName, format);
             }
         }
 
+        private void asImageFileToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "Images|*.png;*.bmp;*.jpg";
+            save.Title = "Save the image";
+            System.Drawing.Imaging.ImageFormat format = System.Drawing.Imaging.ImageFormat.Png;
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                bmpToSaveForQT.Save(save.FileName, format);
+            }
+        }
+
+        private String mapToString(int[,] matrix)
+        {
+            String s = "";
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+            s += rows.ToString()+" "+cols.ToString()+" ";
+            s += Environment.NewLine;
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < cols; c++)
+                {
+                    s += matrix[r, c].ToString() + " ";
+                }//columns
+                s += Environment.NewLine;
+            }//rows
+            return s;
+        }
+
+        private void asTextFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "Text|*.txt";
+            save.Title = "Save the image";
+            String textToSave = mapToString(map);
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                System.IO.File.WriteAllText(save.FileName, textToSave);
+            }
+        }
+
+        private void asTextFileToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "Text|*.txt";
+            save.Title = "Save the image";
+            String textToSave = treeToString(nodes[0]);
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                System.IO.File.WriteAllText(save.FileName, textToSave);
+            }
+        }
+
+        private void asQuadtreeTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "Text|*.txt";
+            save.Title = "Save the image";
+            String textToSave = numRows.ToString()+" "+numCols.ToString()+" "+treeToString(root);
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                System.IO.File.WriteAllText(save.FileName, textToSave);
+            }
+        }
+
+        private void resizeTreeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pixelsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pixelsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void smallToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            nodeHeight = 10;
+            nodeWidth = 10;
+            redrawAllNodes();
+        }
+
+        private void mediumToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            nodeHeight = 20;
+            nodeWidth = 20;
+            redrawAllNodes();
+
+        }
+
+        private void largeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            nodeHeight = 40;
+            nodeWidth = 40;
+            redrawAllNodes();
+
+        }
+
+        private void displayTree(Node n)
+        {
+
+        }
+
+        private void stringToMap(ref String s)
+        {
+            char[] delims = { ' ', '\n' };
+            string[] text = s.Split(delims);
+            int newNumRows = Convert.ToInt32(text[0]);
+            int newNumCols = Convert.ToInt32(text[1]);
+            int [,] newMap = new int[newNumRows, newNumCols];
+
+        }
+
+        private void matrixFormatToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog oFD = new OpenFileDialog();
+            oFD.Filter = "Plaintext Files|*.txt";
+            oFD.Title = "Select a Plaintext File";
+
+            if (oFD.ShowDialog() == DialogResult.OK)
+            {
+                fileName = oFD.FileName;
+            }
+            displayToolStripMenuItem_Click(sender, e);
+            parseMatrixInputFile();
+            drawImage();
+            Node newRoot = imageToTree();
+        }
+
+        private void preorderFormatToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog oFD = new OpenFileDialog();
+            oFD.Filter = "Plaintext Files|*.txt";
+            oFD.Title = "Select a Plaintext File";
+
+            if (oFD.ShowDialog() == DialogResult.OK)
+            {
+                fileName = oFD.FileName;
+            }
+            //displayToolStripMenuItem_Click(sender, e);
+            parsePreorderInputFile();
+            drawImage();
+            //Node newRoot = imageToTree();
+        }
+        
     }//class
 }//namespace
