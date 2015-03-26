@@ -82,6 +82,10 @@ namespace QTFormApp
             parent = null;
         }
 
+        public String toString()
+        {
+            return "Has children: " + hasChildren + ", color: " + getColorString() + ", is root: " + isRoot + ", level: " + level;
+        }
         public void setColor(Color c)
         {
             color = c;

@@ -186,7 +186,7 @@ namespace QTFormApp
             Node newRoot = imageToTree();
             MessageBox.Show("New root node for image of " + newRoot.numRows + " rows and " + newRoot.numCols + " columns");
             map = new int[newRoot.numRows, newRoot.numCols];
-            treeToImage(newRoot, ref map, 0, 0);
+            treeToImage(newRoot, 0, 0);
             drawImage();
         }
 
@@ -234,8 +234,10 @@ namespace QTFormApp
             numCols = Convert.ToInt32(parsedInput[1]);
             map = new int[numRows, numCols];
             Node newRoot = new Node();
+            newRoot.numCols = numCols;
+            newRoot.numRows = numRows;
             stringToTree(ref parsedInput,2,newRoot);
-            treeToImage(newRoot, ref map, 0, 0);
+            treeToImage(newRoot, 0, 0);
         }
 
 
@@ -263,11 +265,18 @@ namespace QTFormApp
                             bmpGraphic.FillRectangle(blackBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                         }
-                        else
+                        else if (map[r,c] == 0)
                         {
                             panel1Graphics.FillRectangle(whiteBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             bmpGraphic.FillRectangle(whiteBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                        }
+                        else
+                        {
+                            panel1Graphics.FillRectangle(grayBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            bmpGraphic.FillRectangle(grayBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                         }
                     }
@@ -285,9 +294,10 @@ namespace QTFormApp
             root = whatColor(root, map, 0, numRows - 1, 0, numCols - 1, "root");
             messageToDisplay = "";
             nodeList(root, "root", " ");
+            //MessageBox.Show(messageToDisplay);
             String treeAsString = numRows + " " + numCols + " " + treeToString(root);
             messageToDisplay = "Tree as string: " + treeAsString;
-            MessageBox.Show(messageToDisplay);
+           // MessageBox.Show(messageToDisplay);
             messageToDisplay = "";
             return root;
         }
@@ -721,7 +731,7 @@ namespace QTFormApp
                 MessageBox.Show("NULL!");
                 return "";
             }
-            MessageBox.Show(n.getColorString()+" "+n.level+" "+n.numRows);
+            //MessageBox.Show(n.getColorString()+" "+n.level+" "+n.numRows);
             if (n.getColor() == Color.Black)
             {
                 return "1";
@@ -742,56 +752,87 @@ namespace QTFormApp
             }
         }//treeToString
         
-        private int stringToTree(ref String[] str, int start, Node n)
+        private void stringToTree(ref String[] str, int start, Node n)
         {
-            String[] directions = { "NW", "SW", "SE", "NE" };
-            int nodeNum = 0;
+            if (str[start] == "1")
+            {
+                n.setColor(Color.Black);
+            }
+            else if (str[start] == "0")
+            {
+                n.setColor(Color.White);
+
+            }
+            else if (str[start] == "2")
+            {
+                n.setColor(Color.Gray);
+                Node NW = n.addChild("NW");
+                int end = stringToTreeHelper(ref str, start + 1, NW, "NW");
+                Node SW = n.addChild("SW");
+                end = stringToTreeHelper(ref str, end, SW, "SW");
+                Node SE = n.addChild("SE");
+                end = stringToTreeHelper(ref str, end, SE, "SE");
+                Node NE = n.addChild("NE");
+                end = stringToTreeHelper(ref str, end, NE, "NE");
+            }
+            else {
+                return;
+            }
+       
+         }
+
+        private int stringToTreeHelper(ref String[] str, int start, Node n, String direction)
+        {
+            //String[] directions = { "NW", "SW", "SE", "NE" };
+            //int nodeNum = 0;
             int end = start;
 
-            while (nodeNum < 4)
-            {
                 if (end >= str.Length)
                 {
                     return 0;
-                } 
-                MessageBox.Show("Size of str: " + str.Length + ", end: " + end + ", nodeNum: " + nodeNum);
-                MessageBox.Show("Number " + str[end] + " point in string: " + end + " current node direction: " + directions[nodeNum]);
+                }
+                //MessageBox.Show("Size of str: " + str.Length + ", end: " + end + ", nodeNum: " + nodeNum);
+                //MessageBox.Show("Number " + str[end] + " point in string: " + end + " current node direction: " + direction);
                 if (str[end] == "1")
                 {
-                    Node child = n.addChild(directions[nodeNum]);
-                    child.setColor(Color.Black);
-                    nodeNum++;
+                    //MessageBox.Show(direction + " should be black");
+                    n.setColor(Color.Black);
                     end++;
                 }
                 else if (str[end] == "0")
                 {
-                    Node child = n.addChild(directions[nodeNum]);
-                    child.setColor(Color.White);
-                    nodeNum++;     
+                    //MessageBox.Show(direction + " should be white");
+                    n.setColor(Color.White);
                     end++;
                 }
                 else if (str[end] == "2")
                 {
-                    Node child = n.addChild(directions[nodeNum]);
-                    child.setColor(Color.Gray);      
-                    end = stringToTree(ref str, end+1, child);
-                    nodeNum++; 
+                    //MessageBox.Show(direction + " should be gray");
+                    n.setColor(Color.Gray);
+                    Node NW = n.addChild("NW");
+                    end = stringToTreeHelper(ref str, end + 1, NW, "NW");
+                    Node SW = n.addChild("SW");
+                    end = stringToTreeHelper(ref str, end, SW, "SW");
+                    Node SE = n.addChild("SE");
+                    end = stringToTreeHelper(ref str, end, SE, "SE");
+                    Node NE = n.addChild("NE");
+                    end = stringToTreeHelper(ref str, end, NE, "NE");
                 }
                 else
                 {
-                    nodeNum++;
+                    MessageBox.Show("Something went wrong. Not a 0,1,2! "+str[end]);
+                    return str.Length;
                 }
-            }//while
             return end; //what number to return?
         }
-
-        private void treeToImage(Node n, ref int[,] image, int rStart, int cStart)
+        private void treeToImage(Node n, int rStart, int cStart)
         {
+
             if (n == null)
             {
+                MessageBox.Show("Null node");
                 return;
             }
-
             if (!n.hasChildren)
             {
                 int rows = n.numRows - 1;
@@ -809,17 +850,18 @@ namespace QTFormApp
                 {
                     for (int c = cStart; c < cStart + n.numCols; c++)
                     {
-                        //MessageBox.Show("rStart="+rStart+", cStart="+cStart+", r=" + r + ", c=" + c);
-                        image[r, c] = fill;
+                        //MessageBox.Show("rStart="+rStart+", cStart="+cStart+", r=" + r + ", c=" + c+" fill: "+fill);
+                        map[r, c] = fill;
                     }
                 }
             }
             else
             {
-                treeToImage(n.NW, ref image, rStart, cStart);
-                treeToImage(n.SW, ref image, rStart + (n.numRows/2), cStart); 
-                treeToImage(n.SE, ref image, rStart + (n.numRows/2), cStart + (n.numCols/2));
-                treeToImage(n.NE, ref image, rStart, cStart + (n.numCols/2));
+                //MessageBox.Show(n.toString()); //("Null? NW: " + (n.NW == null) + "  SW: " + (n.SW == null) + "  SE: " + (n.SE == null) + "  NE: " + (n.NE == null));
+                treeToImage(n.NW, rStart, cStart);
+                treeToImage(n.SW, rStart + (n.numRows/2), cStart); 
+                treeToImage(n.SE, rStart + (n.numRows/2), cStart + (n.numCols/2));
+                treeToImage(n.NE, rStart, cStart + (n.numCols/2));
             }
         }
         private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -979,7 +1021,17 @@ namespace QTFormApp
             }
             //displayToolStripMenuItem_Click(sender, e);
             parsePreorderInputFile();
-            drawImage();
+            String s = "";
+            for (int r = 0; r < map.GetLength(0); r++)
+            {
+                for (int c = 0; c < map.GetLength(1); c++)
+                {
+                    s += map[r, c];
+                }
+                s += Environment.NewLine;
+            }
+            //MessageBox.Show(s);
+                drawImage();
             //Node newRoot = imageToTree();
         }
         
