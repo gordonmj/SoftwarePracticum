@@ -238,6 +238,7 @@ namespace QTFormApp
             newRoot.numRows = numRows;
             stringToTree(ref parsedInput,2,newRoot);
             treeToImage(newRoot, 0, 0);
+            root = newRoot;
         }
 
 
@@ -911,6 +912,11 @@ namespace QTFormApp
 
         private String mapToString(int[,] matrix)
         {
+            if (matrix == null)
+            {
+                MessageBox.Show("You must select an input file first. Use 'Image>Load'");
+                return "";
+            }
             String s = "";
             int rows = matrix.GetLength(0);
             int cols = matrix.GetLength(1);
@@ -1033,6 +1039,59 @@ namespace QTFormApp
             //MessageBox.Show(s);
                 drawImage();
             //Node newRoot = imageToTree();
+        }
+
+        private void saveToolStripMenuItem1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void asTextFileToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "Text|*.txt";
+            save.Title = "Save the image";
+            String textToSave = mapToString(map);
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                System.IO.File.WriteAllText(save.FileName, textToSave);
+            }
+        }
+
+        private void imageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void asPreorderTextFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog oFD = new OpenFileDialog();
+            oFD.Filter = "Plaintext Files|*.txt";
+            oFD.Title = "Select a Plaintext File";
+
+            if (oFD.ShowDialog() == DialogResult.OK)
+            {
+                fileName = oFD.FileName;
+            }
+            //displayToolStripMenuItem_Click(sender, e);
+            parsePreorderInputFile();
+            String s = "";
+            for (int r = 0; r < map.GetLength(0); r++)
+            {
+                for (int c = 0; c < map.GetLength(1); c++)
+                {
+                    s += map[r, c];
+                }
+                s += Environment.NewLine;
+            }
+            //MessageBox.Show(s);
+            drawImage();
+            //Node newRoot = imageToTree();
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
         
     }//class
