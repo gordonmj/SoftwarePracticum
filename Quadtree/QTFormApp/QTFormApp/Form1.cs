@@ -449,6 +449,7 @@ namespace QTFormApp
         private void drawNode(Node n, Point draw)
         {
             nodes[currentPosition++] = n;
+            n.setPoint(draw);
             drawNodeHelper(n, draw);
         }
 
