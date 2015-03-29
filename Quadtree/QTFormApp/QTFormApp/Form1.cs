@@ -445,13 +445,26 @@ namespace QTFormApp
             drawNode(origin, destination);
             return nodes[origin];
         }
+
+        private void drawNode(Node n, Point draw)
+        {
+            nodes[currentPosition++] = n;
+            drawNodeHelper(n, draw);
+        }
+
         private Node drawNode(int origin, Point clicked)
         {
-            Point centerPoint = new Point(clicked.X - nodeWidth / 2, clicked.Y - nodeHeight / 2);
             nodes[origin].setPoint(clicked);
-            if (nodes[origin].getColor() != Color.Gray)
+            drawNodeHelper(nodes[origin], clicked);
+            return nodes[origin];
+        }
+
+        private void drawNodeHelper(Node n, Point clicked)
+        {
+            Point centerPoint = new Point(clicked.X - (nodeWidth / 2), clicked.Y - (nodeHeight / 2));
+            if (n.getColor() != Color.Gray)
             {
-                Brush brush = new SolidBrush(nodes[origin].getColor());
+                Brush brush = new SolidBrush(n.getColor());
                 panel2Graphics.FillEllipse(brush, new Rectangle(centerPoint, new Size(nodeWidth, nodeHeight)));
                 using (Graphics bmpGraphicForQT = Graphics.FromImage(bmpToSaveForQT))
                 {
@@ -472,13 +485,13 @@ namespace QTFormApp
                 blend.Factors = intensities;
                 blend.Positions = posit;
                 lgb.Blend = blend;
-                panel2Graphics.FillEllipse(lgb, new Rectangle(nodes[origin].getPoint(), new Size(nodeWidth, nodeHeight)));
+                panel2Graphics.FillEllipse(lgb, new Rectangle(n.getPoint(), new Size(nodeWidth, nodeHeight)));
                 using (Graphics bmpGraphicForQT = Graphics.FromImage(bmpToSaveForQT))
                 {
                     bmpGraphicForQT.FillEllipse(lgb, new Rectangle(centerPoint, new Size(nodeWidth, nodeHeight)));
                 }
             }
-            return nodes[origin];
+
         }
         private void addChildren(int origin)
         {
@@ -543,9 +556,10 @@ namespace QTFormApp
 
         private Node drawTree(Node n)
         {
-            if (!n.isRoot)
+            if (n.isRoot)
             {
-
+                Point panelCenterTop = new Point(panel2.Width / 2, nextLevelSpace);
+                drawNode(n, panelCenterTop);
             }
             return n;
         }
@@ -1091,7 +1105,17 @@ namespace QTFormApp
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            OpenFileDialog oFD = new OpenFileDialog();
+            oFD.Filter = "Plaintext Files|*.txt";
+            oFD.Title = "Select a Plaintext File";
 
+            if (oFD.ShowDialog() == DialogResult.OK)
+            {
+                fileName = oFD.FileName;
+            }
+            //displayToolStripMenuItem_Click(sender, e);
+            parsePreorderInputFile();
+            drawTree(root);
         }
         
     }//class
