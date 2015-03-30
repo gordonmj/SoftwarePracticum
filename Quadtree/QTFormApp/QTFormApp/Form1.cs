@@ -18,8 +18,8 @@ namespace QTFormApp
         private int lastClicked;
         private int prevClicked;
         private string fileName; 
-        private static int nodeWidth = 40;
-        private static int nodeHeight = 40;
+        private static int nodeWidth = 20;
+        private static int nodeHeight = 20;
         private System.Drawing.Graphics panel1Graphics;
         private System.Drawing.Graphics panel2Graphics;
         private System.Drawing.Graphics formGraphic;
@@ -35,7 +35,7 @@ namespace QTFormApp
         private String messageToDisplay;
         private Node[] nodes= new Node[100];
         private int currentPosition = 0;
-        private int nextLevelSpace = 50;
+        private int nextLevelSpace = 75;
         private int[,] map;
         private Node root;
         private int numRows;
@@ -555,19 +555,29 @@ namespace QTFormApp
 
         }
 
-        private Node drawTree(Node n)
+        private Node drawTree(Node n, int leftEnd, int rightEnd, int levelSpace)
         {
-            if (n.isRoot)
-            {
-                Point panelCenterTop = new Point(panel2.Width / 2, nextLevelSpace);
-                drawNode(n, panelCenterTop);
+            int center = (leftEnd+rightEnd)/2;
+            int spacing = (rightEnd - leftEnd) / 5;
+            int midSpacing = spacing/2;
+            Point panelCenterTop = new Point(center, levelSpace);
+            drawNode(n, panelCenterTop);  
+            if (n.hasChildren) {
+                drawTree(n.NW,leftEnd+midSpacing,leftEnd+(3 * midSpacing),levelSpace+nextLevelSpace);
+                connectTwoNodes(n, n.NW);
+                drawTree(n.SW, leftEnd + (3 * midSpacing),leftEnd+(5 * midSpacing), levelSpace + nextLevelSpace);
+                connectTwoNodes(n, n.SW);
+                drawTree(n.SE, leftEnd + (5 * midSpacing), leftEnd + (7 * midSpacing), levelSpace + nextLevelSpace);
+                connectTwoNodes(n, n.SE);
+                drawTree(n.NE, leftEnd + (7 * midSpacing), leftEnd + (9 * midSpacing), levelSpace + nextLevelSpace);
+                connectTwoNodes(n, n.NE);
             }
             return n;
         }
-
+       
         private void connectTwoNodes(Node a, Node b)
         {
-            Point start = a.getPoint();
+            Point start = adjustPointToCenterofNode(a.getPoint());
             Point end = b.getPoint();
             Pen arrow = new Pen(blackBrush, 3);
             if (b.getColor() == Color.Black)
@@ -1116,7 +1126,7 @@ namespace QTFormApp
             }
             //displayToolStripMenuItem_Click(sender, e);
             parsePreorderInputFile();
-            drawTree(root);
+            drawTree(root, 0,panel2.Width,nextLevelSpace);
         }
         
     }//class
