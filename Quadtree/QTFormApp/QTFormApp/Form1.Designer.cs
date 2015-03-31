@@ -66,6 +66,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.compareToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -306,7 +307,8 @@
             // 
             this.automatedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.imageToQuadtreeToolStripMenuItem,
-            this.quadtreeToImageToolStripMenuItem});
+            this.quadtreeToImageToolStripMenuItem,
+            this.compareToolStripMenuItem});
             this.automatedToolStripMenuItem.Name = "automatedToolStripMenuItem";
             this.automatedToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
             this.automatedToolStripMenuItem.Text = "Automated";
@@ -377,6 +379,12 @@
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDown);
             this.panel2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseUp);
             // 
+            // compareToolStripMenuItem
+            // 
+            this.compareToolStripMenuItem.Name = "compareToolStripMenuItem";
+            this.compareToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.compareToolStripMenuItem.Text = "Compare";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -440,5 +448,6 @@
         private System.Windows.Forms.ToolStripMenuItem preorderFormatToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem asMatrixTextFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem asPreorderTextFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem compareToolStripMenuItem;
     }
 }
