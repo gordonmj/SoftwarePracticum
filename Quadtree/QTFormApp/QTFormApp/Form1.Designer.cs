@@ -42,6 +42,8 @@
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.displayToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.asMatrixTextFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.asPreorderTextFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resizeTreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeNodeSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.smallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,8 +66,6 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.asMatrixTextFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.asPreorderTextFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -104,7 +104,7 @@
             this.matrixFormatToolStripMenuItem,
             this.preorderFormatToolStripMenuItem});
             this.loadToolStripMenuItem1.Name = "loadToolStripMenuItem1";
-            this.loadToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.loadToolStripMenuItem1.Size = new System.Drawing.Size(112, 22);
             this.loadToolStripMenuItem1.Text = "Load";
             this.loadToolStripMenuItem1.Click += new System.EventHandler(this.loadToolStripMenuItem1_Click);
             // 
@@ -125,7 +125,7 @@
             // displayToolStripMenuItem
             // 
             this.displayToolStripMenuItem.Name = "displayToolStripMenuItem";
-            this.displayToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.displayToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.displayToolStripMenuItem.Text = "Display";
             this.displayToolStripMenuItem.Click += new System.EventHandler(this.displayToolStripMenuItem_Click);
             // 
@@ -135,7 +135,7 @@
             this.asTextFileToolStripMenuItem,
             this.asQuadtreeTextToolStripMenuItem});
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -156,7 +156,7 @@
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
@@ -184,6 +184,7 @@
             this.displayToolStripMenuItem1.Name = "displayToolStripMenuItem1";
             this.displayToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.displayToolStripMenuItem1.Text = "Display";
+            this.displayToolStripMenuItem1.Click += new System.EventHandler(this.displayToolStripMenuItem1_Click);
             // 
             // saveToolStripMenuItem1
             // 
@@ -193,6 +194,19 @@
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
             this.saveToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem1.Text = "Save";
+            // 
+            // asMatrixTextFileToolStripMenuItem
+            // 
+            this.asMatrixTextFileToolStripMenuItem.Name = "asMatrixTextFileToolStripMenuItem";
+            this.asMatrixTextFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.asMatrixTextFileToolStripMenuItem.Text = "As matrix text file";
+            // 
+            // asPreorderTextFileToolStripMenuItem
+            // 
+            this.asPreorderTextFileToolStripMenuItem.Name = "asPreorderTextFileToolStripMenuItem";
+            this.asPreorderTextFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.asPreorderTextFileToolStripMenuItem.Text = "As preorder text file";
+            this.asPreorderTextFileToolStripMenuItem.Click += new System.EventHandler(this.asPreorderTextFileToolStripMenuItem_Click);
             // 
             // resizeTreeToolStripMenuItem
             // 
@@ -362,19 +376,6 @@
             this.panel2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDoubleClick);
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDown);
             this.panel2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseUp);
-            // 
-            // asMatrixTextFileToolStripMenuItem
-            // 
-            this.asMatrixTextFileToolStripMenuItem.Name = "asMatrixTextFileToolStripMenuItem";
-            this.asMatrixTextFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-            this.asMatrixTextFileToolStripMenuItem.Text = "As matrix text file";
-            // 
-            // asPreorderTextFileToolStripMenuItem
-            // 
-            this.asPreorderTextFileToolStripMenuItem.Name = "asPreorderTextFileToolStripMenuItem";
-            this.asPreorderTextFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-            this.asPreorderTextFileToolStripMenuItem.Text = "As preorder text file";
-            this.asPreorderTextFileToolStripMenuItem.Click += new System.EventHandler(this.asPreorderTextFileToolStripMenuItem_Click);
             // 
             // Form1
             // 

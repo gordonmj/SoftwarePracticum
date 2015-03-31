@@ -184,7 +184,7 @@ namespace QTFormApp
             parseMatrixInputFile();
             drawImage();
             Node newRoot = imageToTree();
-            MessageBox.Show("New root node for image of " + newRoot.numRows + " rows and " + newRoot.numCols + " columns");
+            //MessageBox.Show("New root node for image of " + newRoot.numRows + " rows and " + newRoot.numCols + " columns");
             map = new int[newRoot.numRows, newRoot.numCols];
             treeToImage(newRoot, 0, 0);
             drawImage();
@@ -1127,6 +1127,19 @@ namespace QTFormApp
             //displayToolStripMenuItem_Click(sender, e);
             parsePreorderInputFile();
             drawTree(root, 0,panel2.Width,nextLevelSpace);
+        }
+
+        private void displayToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (map != null)
+            {
+                Node root = imageToTree();
+                drawTree(root, 0, panel2.Width, nextLevelSpace);
+            }
+            else
+            {
+                return;
+            }
         }
         
     }//class
