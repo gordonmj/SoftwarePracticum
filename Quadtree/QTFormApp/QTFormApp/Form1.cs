@@ -181,6 +181,7 @@ namespace QTFormApp
 
         private void displayToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //TODO! Display image after loading quadtree from QT button
             parseMatrixInputFile();
             drawImage();
             Node newRoot = imageToTree();
@@ -448,7 +449,9 @@ namespace QTFormApp
 
         private void drawNode(Node n, Point draw)
         {
-            nodes[currentPosition++] = n;
+            nodes[currentPosition] = n;
+            n.setIndex(currentPosition);
+            currentPosition++;
             n.setPoint(draw);
             drawNodeHelper(n, draw);
         }

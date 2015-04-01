@@ -15,6 +15,7 @@ namespace QTFormApp
     {
         private Point coord;
         private Color color;
+        private int index;
         public Node NW = null;
         public Node SW = null;
         public Node NE = null;
@@ -28,8 +29,6 @@ namespace QTFormApp
 
         public Node()
         {
-            coord = new Point(20, 20);
-            color = Color.White;
             NW = null;
             SW = null;
             NE = null;
@@ -40,8 +39,6 @@ namespace QTFormApp
         public Node(bool isItRoot)
         {
             isRoot = isItRoot;
-            coord = new Point(20, 20);
-            color = Color.White;
             NW = null;
             SW = null;
             NE = null;
@@ -52,7 +49,6 @@ namespace QTFormApp
         public Node(Point p)
         {
             coord = p;
-            color = Color.White;
             NW = null;
             SW = null;
             NE = null;
@@ -62,7 +58,6 @@ namespace QTFormApp
 
         public Node(Color c)
         {
-            coord = new Point(20, 20);
             color = c;
             NW = null;
             SW = null;
@@ -80,6 +75,16 @@ namespace QTFormApp
             NE = null;
             SE = null;
             parent = null;
+        }
+
+        public Node(int i)
+        {
+            index = i;
+        }
+
+        public void setIndex(int i)
+        {
+            index = i;
         }
 
         public String toString()
