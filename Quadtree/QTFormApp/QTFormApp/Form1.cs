@@ -181,13 +181,6 @@ namespace QTFormApp
 
         private void displayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //TODO! Display image after loading quadtree from QT button
-            parseMatrixInputFile();
-            drawImage();
-            Node newRoot = imageToTree();
-            //MessageBox.Show("New root node for image of " + newRoot.numRows + " rows and " + newRoot.numCols + " columns");
-            map = new int[newRoot.numRows, newRoot.numCols];
-            treeToImage(newRoot, 0, 0);
             drawImage();
         }
 
@@ -1037,7 +1030,7 @@ namespace QTFormApp
             {
                 fileName = oFD.FileName;
             }
-            displayToolStripMenuItem_Click(sender, e);
+            //displayToolStripMenuItem_Click(sender, e);
             parseMatrixInputFile();
             drawImage();
             Node newRoot = imageToTree();
@@ -1093,28 +1086,14 @@ namespace QTFormApp
 
         private void asPreorderTextFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog oFD = new OpenFileDialog();
-            oFD.Filter = "Plaintext Files|*.txt";
-            oFD.Title = "Select a Plaintext File";
-
-            if (oFD.ShowDialog() == DialogResult.OK)
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "Text|*.txt";
+            save.Title = "Save the image";
+            String textToSave = numRows.ToString() + " " + numCols.ToString() + " " + treeToString(root);
+            if (save.ShowDialog() == DialogResult.OK)
             {
-                fileName = oFD.FileName;
+                System.IO.File.WriteAllText(save.FileName, textToSave);
             }
-            //displayToolStripMenuItem_Click(sender, e);
-            parsePreorderInputFile();
-            String s = "";
-            for (int r = 0; r < map.GetLength(0); r++)
-            {
-                for (int c = 0; c < map.GetLength(1); c++)
-                {
-                    s += map[r, c];
-                }
-                s += Environment.NewLine;
-            }
-            //MessageBox.Show(s);
-            drawImage();
-            //Node newRoot = imageToTree();
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1143,6 +1122,12 @@ namespace QTFormApp
             {
                 return;
             }
+        }
+
+        private void moveTreeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Click and drag the root node to move the tree.");
+            //TODO
         }
         
     }//class
