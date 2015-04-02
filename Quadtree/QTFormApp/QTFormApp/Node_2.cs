@@ -15,7 +15,7 @@ namespace QTFormApp
     {
         private Point coord;
         private Color color;
-        private int index;
+        private int index = -1;
         public Node NW = null;
         public Node SW = null;
         public Node NE = null;
@@ -23,8 +23,8 @@ namespace QTFormApp
         public Node parent = null;
         public bool hasChildren = false;
         public bool isRoot = true;
-        public int numRows;
-        public int numCols;
+        public int numRows = -1;
+        public int numCols = -1;
         public int level = 0;
 
         public Node()

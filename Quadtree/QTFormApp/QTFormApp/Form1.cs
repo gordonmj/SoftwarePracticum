@@ -170,22 +170,21 @@ namespace QTFormApp
 
         private void loadToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            /*
-            OpenFileDialog oFD = new OpenFileDialog();
-            oFD.Filter = "Plaintext Files|*.txt";
-            oFD.Title = "Select a Plaintext File";
 
-            if (oFD.ShowDialog() == DialogResult.OK)
-            {
-                fileName = oFD.FileName;
-            }
-            displayToolStripMenuItem_Click(sender, e);
-             */
         }
 
         private void displayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawImage();
+            if (map != null || root != null)
+            {
+                drawImage();
+
+            }
+            else
+            {
+                MessageBox.Show("Load an image first!");
+                loadToolStripMenuItem_Click(sender, e);
+            }
         }
 
         private void clearMap()
@@ -420,6 +419,11 @@ namespace QTFormApp
                 if (nodes[i] == null) break;
                 if (pointInNode(down, nodes[i].getPoint()))
                 {
+                    if (nodes[i].getIndex() != i)
+                    {
+                        MessageBox.Show("i=" + i + " and nodes[i]=" + nodes[i]);
+                        break;
+                    }
                     return i;
                 }   
             }
@@ -440,7 +444,9 @@ namespace QTFormApp
 
         private Node drawNewNode(int origin, Point destination, Color color)
         {
+            //MessageBox.Show("Node created, index is " + currentPosition+" "+origin);
             nodes[origin] = new Node(destination, color);
+            nodes[origin].setIndex(origin);
             currentPosition++;
             drawNode(origin, destination);
             return nodes[origin];
@@ -448,7 +454,7 @@ namespace QTFormApp
 
         private void drawNode(Node n, Point draw)
         {
-            if (n.getIndex() == null)
+            if (n.getIndex() == -1)
             {
                 nodes[currentPosition] = n;
                 n.setIndex(currentPosition);
@@ -456,7 +462,7 @@ namespace QTFormApp
             }
             else if (n.getIndex() != currentPosition)
             {
-                MessageBox.Show("Index error"); //PROBLEM HERE
+                //MessageBox.Show("Index error! currentPosition is "+currentPosition+" and n.index is "+n.getIndex()); //PROBLEM HERE
             }
             else
             {
@@ -695,9 +701,9 @@ namespace QTFormApp
 
         private void panel2_MouseUp(object sender, MouseEventArgs e)
         {
-            Point whereClicked = e.Location;
-            int whichNode = findTouchingNode(whereClicked);
-            if (whereClicked.X < 0 || whereClicked.Y < 0)
+            Point whereUnclicked = e.Location;
+            int whichNode = findTouchingNode(whereUnclicked);
+            if (whereUnclicked.X < 0 || whereUnclicked.Y < 0)
             {
                 deleteNode(lastClicked);
                 return;
@@ -712,7 +718,7 @@ namespace QTFormApp
             }
             if (menuChoice == "moveTree")
             {
-                root.setPoint(whereClicked);
+                root.setPoint(whereUnclicked);
                 redrawTree(root);
             }
             if (lastClicked == -1)
@@ -729,10 +735,18 @@ namespace QTFormApp
             }
             else
             {
-                Node thisNode = nodes[whichNode]; //PROBLEM HERE!
-                thisNode.setPoint(whereClicked);
-                redrawTree(root);
-                //redrawNode(lastClicked, whereClicked);
+                if (whichNode == -1)
+                {
+                    Node thisNode = nodes[lastClicked];
+                    thisNode.setPoint(whereUnclicked);
+                    redrawTree(root);
+                }
+                else
+                {
+                    Node thisNode = nodes[whichNode];
+                    thisNode.setPoint(whereUnclicked);
+                    redrawTree(root);
+                }
             }
         }
 
@@ -1155,19 +1169,30 @@ namespace QTFormApp
             parsePreorderInputFile();
             treeRightStart = panel2.Width - treeLeftStart;
             drawTree(root, treeLeftStart,treeRightStart,nextLevelSpace);
+            displayNodeList();
         }
 
+        private void displayNodeList()
+        {
+            String toDisplay = "";
+            for (int i = 0; i < currentPosition; i++)
+            {
+                toDisplay += " at " + i + " node: " + nodes[i].getIndex();
+            }
+            MessageBox.Show(toDisplay);
+        }
         private void displayToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (map != null)
             {
-                Node root = imageToTree();
+                root = imageToTree();
                 treeRightStart = panel2.Width - treeLeftStart;
                 drawTree(root, treeLeftStart, treeRightStart, nextLevelSpace);
             }
-            else
+            else if (root == null)
             {
-                return;
+                MessageBox.Show("Load an image!");
+                matrixFormatToolStripMenuItem_Click(sender, e);
             }
         }
 
@@ -1176,6 +1201,16 @@ namespace QTFormApp
             menuChoice = "moveTree";
             MessageBox.Show("Click and drag the root node to move the tree.");
             //TODO
+        }
+
+        private void imageToQuadtreeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            displayToolStripMenuItem1_Click(sender, e);
+        }
+
+        private void quadtreeToImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            displayToolStripMenuItem_Click(sender, e);
         }
         
     }//class
