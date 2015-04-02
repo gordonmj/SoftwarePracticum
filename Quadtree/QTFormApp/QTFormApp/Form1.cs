@@ -40,6 +40,9 @@ namespace QTFormApp
         private Node root;
         private int numRows;
         private int numCols;
+        private int treeLeftStart = -100;
+        private int treeRightStart;
+        private Point nullPoint = new Point(0, 0);
 
         public Form1()
         {
@@ -108,6 +111,7 @@ namespace QTFormApp
         {
             panel2Graphics = panel2.CreateGraphics();
             bmpToSaveForQT = new Bitmap(panel2.ClientSize.Width, panel2.ClientSize.Height);
+
         }
 
         private void panel2_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -432,6 +436,8 @@ namespace QTFormApp
             clearNode(origin);
             nodes[origin] = null;
         }
+
+
         private Node drawNewNode(int origin, Point destination, Color color)
         {
             nodes[origin] = new Node(destination, color);
@@ -442,9 +448,20 @@ namespace QTFormApp
 
         private void drawNode(Node n, Point draw)
         {
-            nodes[currentPosition] = n;
-            n.setIndex(currentPosition);
-            currentPosition++;
+            if (n.getIndex() == null)
+            {
+                nodes[currentPosition] = n;
+                n.setIndex(currentPosition);
+                currentPosition++;
+            }
+            else if (n.getIndex() != currentPosition)
+            {
+                MessageBox.Show("Index error"); //PROBLEM HERE
+            }
+            else
+            {
+
+            }
             n.setPoint(draw);
             drawNodeHelper(n, draw);
         }
@@ -490,6 +507,7 @@ namespace QTFormApp
             }
 
         }
+
         private void addChildren(int origin)
         {
             Node n = nodes[origin];
@@ -548,7 +566,8 @@ namespace QTFormApp
 
         private void redrawTree(Node n)
         {
-
+            clearAllNodes();
+            drawTree(n, treeLeftStart, treeRightStart, nextLevelSpace);
         }
 
         private Node drawTree(Node n, int leftEnd, int rightEnd, int levelSpace)
@@ -556,8 +575,16 @@ namespace QTFormApp
             int center = (leftEnd+rightEnd)/2;
             int spacing = (rightEnd - leftEnd) / 5;
             int midSpacing = spacing/2;
-            Point panelCenterTop = new Point(center, levelSpace);
-            drawNode(n, panelCenterTop);  
+            Point placeNode;
+            if (n.getPoint() == null || n.getPoint() == nullPoint)
+            {
+                placeNode = new Point(center, levelSpace);
+            }
+            else
+            {
+                placeNode = n.getPoint();
+            }
+            drawNode(n, placeNode);  
             if (n.hasChildren) {
                 drawTree(n.NW,leftEnd+midSpacing,leftEnd+(3 * midSpacing),levelSpace+nextLevelSpace);
                 connectTwoNodes(n, n.NW);
@@ -681,6 +708,12 @@ namespace QTFormApp
                 {
                     connectTwoNodes(nodes[prevClicked], nodes[whichNode]);
                 }
+                return;
+            }
+            if (menuChoice == "moveTree")
+            {
+                root.setPoint(whereClicked);
+                redrawTree(root);
             }
             if (lastClicked == -1)
             {
@@ -693,29 +726,13 @@ namespace QTFormApp
                 MessageBox.Show("You clicked a "+color+" node at "+coordinates+"!\nWhat do you want to do?\nJust click and drag the node to move it.\n");
                 //DialogResult answer = MessageBox.Show("You clicked a " + color + " node at " + coordinates + "!\nDo you want to create an arrow?", "Options", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 prevClicked = lastClicked;
-                /*
-                if (answer == DialogResult.Yes)
-                {
-                    MessageBox.Show("Click on the node you want to connect to!");
-                    menuChoice = "connectNodes";
-                }
-
-                else if (answer == DialogResult.No)
-                {
-                    MessageBox.Show("If you want to move the node, just drag and drop!");
-                }
-                */
-                if (color == "gray")
-                {
-//                    MessageBox.Show("");
-
-                }
-                //MessageBox.Show("You clicked a node!\nWhat do you want to do?\nJust click and drag the node to move it.\nWant to create children? Click __");
-
             }
             else
             {
-                redrawNode(lastClicked, whereClicked);
+                Node thisNode = nodes[whichNode]; //PROBLEM HERE!
+                thisNode.setPoint(whereClicked);
+                redrawTree(root);
+                //redrawNode(lastClicked, whereClicked);
             }
         }
 
@@ -726,6 +743,11 @@ namespace QTFormApp
 
         private void closeToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            clearAllNodes();
+        }
+
+        private void clearAllNodes()
+        {
             for (int i = 0; i < currentPosition; i++)
             {
                 nodes[i] = null;
@@ -735,7 +757,6 @@ namespace QTFormApp
             panel2Graphics.Clear(Color.PowderBlue);
 
         }
-
         private void redrawAllNodes()
         {
             bmpToSaveForQT = new Bitmap(panel2.ClientSize.Width, panel2.ClientSize.Height);
@@ -789,12 +810,24 @@ namespace QTFormApp
             {
                 n.setColor(Color.Gray);
                 Node NW = n.addChild("NW");
+                nodes[currentPosition] = NW;
+                NW.setIndex(currentPosition);
+                currentPosition++;
                 int end = stringToTreeHelper(ref str, start + 1, NW, "NW");
                 Node SW = n.addChild("SW");
+                nodes[currentPosition] = SW;
+                SW.setIndex(currentPosition);
+                currentPosition++;
                 end = stringToTreeHelper(ref str, end, SW, "SW");
                 Node SE = n.addChild("SE");
+                nodes[currentPosition] = SE;
+                SE.setIndex(currentPosition);
+                currentPosition++;
                 end = stringToTreeHelper(ref str, end, SE, "SE");
                 Node NE = n.addChild("NE");
+                nodes[currentPosition] = NE;
+                NE.setIndex(currentPosition);
+                currentPosition++;
                 end = stringToTreeHelper(ref str, end, NE, "NE");
             }
             else {
@@ -832,12 +865,24 @@ namespace QTFormApp
                     //MessageBox.Show(direction + " should be gray");
                     n.setColor(Color.Gray);
                     Node NW = n.addChild("NW");
+                    nodes[currentPosition] = NW;
+                    NW.setIndex(currentPosition);
+                    currentPosition++;
                     end = stringToTreeHelper(ref str, end + 1, NW, "NW");
                     Node SW = n.addChild("SW");
+                    nodes[currentPosition] = SW;
+                    SW.setIndex(currentPosition);
+                    currentPosition++;
                     end = stringToTreeHelper(ref str, end, SW, "SW");
                     Node SE = n.addChild("SE");
+                    nodes[currentPosition] = SE;
+                    SE.setIndex(currentPosition);
+                    currentPosition++;
                     end = stringToTreeHelper(ref str, end, SE, "SE");
                     Node NE = n.addChild("NE");
+                    nodes[currentPosition] = NE;
+                    NE.setIndex(currentPosition);
+                    currentPosition++;
                     end = stringToTreeHelper(ref str, end, NE, "NE");
                 }
                 else
@@ -1108,7 +1153,8 @@ namespace QTFormApp
             }
             //displayToolStripMenuItem_Click(sender, e);
             parsePreorderInputFile();
-            drawTree(root, 0,panel2.Width,nextLevelSpace);
+            treeRightStart = panel2.Width - treeLeftStart;
+            drawTree(root, treeLeftStart,treeRightStart,nextLevelSpace);
         }
 
         private void displayToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -1116,7 +1162,8 @@ namespace QTFormApp
             if (map != null)
             {
                 Node root = imageToTree();
-                drawTree(root, 0, panel2.Width, nextLevelSpace);
+                treeRightStart = panel2.Width - treeLeftStart;
+                drawTree(root, treeLeftStart, treeRightStart, nextLevelSpace);
             }
             else
             {
@@ -1126,6 +1173,7 @@ namespace QTFormApp
 
         private void moveTreeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            menuChoice = "moveTree";
             MessageBox.Show("Click and drag the root node to move the tree.");
             //TODO
         }

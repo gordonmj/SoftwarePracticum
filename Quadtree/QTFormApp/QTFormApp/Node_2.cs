@@ -87,6 +87,10 @@ namespace QTFormApp
             index = i;
         }
 
+        public int getIndex()
+        {
+            return index;
+        }
         public String toString()
         {
             return "Has children: " + hasChildren + ", color: " + getColorString() + ", is root: " + isRoot + ", level: " + level;
