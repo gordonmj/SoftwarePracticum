@@ -572,7 +572,7 @@ namespace QTFormApp
 
         private void redrawTree(Node n)
         {
-            clearAllNodes();
+            panel2Graphics.Clear(Color.PowderBlue);
             drawTree(n, treeLeftStart, treeRightStart, nextLevelSpace);
         }
 
@@ -1183,6 +1183,7 @@ namespace QTFormApp
         }
         private void displayToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            panel2Graphics.Clear(Color.PowderBlue);
             if (map != null)
             {
                 root = imageToTree();
