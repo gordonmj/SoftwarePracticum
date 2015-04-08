@@ -570,19 +570,21 @@ namespace QTFormApp
             return new Point(p.X - nodeWidth / 2, p.Y - nodeHeight / 2);
         }
 
-        private void redrawTree(Node n)
+        private void redrawTree(Node n, bool inPlace)
         {
             panel2Graphics.Clear(Color.PowderBlue);
-            drawTree(n, treeLeftStart, treeRightStart, nextLevelSpace);
+            int xShift = n.getPoint().X - (panel2.Width / 2);
+            int yShift = n.getPoint().Y - nextLevelSpace;
+            drawTree(n, treeLeftStart+xShift, treeRightStart+xShift, nextLevelSpace+yShift, inPlace);
         }
 
-        private Node drawTree(Node n, int leftEnd, int rightEnd, int levelSpace)
+        private Node drawTree(Node n, int leftEnd, int rightEnd, int levelSpace, bool inPlace)
         {
             int center = (leftEnd+rightEnd)/2;
             int spacing = (rightEnd - leftEnd) / 5;
             int midSpacing = spacing/2;
             Point placeNode;
-            if (n.getPoint() == null || n.getPoint() == nullPoint)
+            if (n.getPoint() == null || n.getPoint() == nullPoint || !inPlace)
             {
                 placeNode = new Point(center, levelSpace);
             }
@@ -592,13 +594,13 @@ namespace QTFormApp
             }
             drawNode(n, placeNode);  
             if (n.hasChildren) {
-                drawTree(n.NW,leftEnd+midSpacing,leftEnd+(3 * midSpacing),levelSpace+nextLevelSpace);
+                drawTree(n.NW,leftEnd+midSpacing,leftEnd+(3 * midSpacing),levelSpace+nextLevelSpace,inPlace);
                 connectTwoNodes(n, n.NW);
-                drawTree(n.SW, leftEnd + (3 * midSpacing),leftEnd+(5 * midSpacing), levelSpace + nextLevelSpace);
+                drawTree(n.SW, leftEnd + (3 * midSpacing),leftEnd+(5 * midSpacing), levelSpace + nextLevelSpace,inPlace);
                 connectTwoNodes(n, n.SW);
-                drawTree(n.SE, leftEnd + (5 * midSpacing), leftEnd + (7 * midSpacing), levelSpace + nextLevelSpace);
+                drawTree(n.SE, leftEnd + (5 * midSpacing), leftEnd + (7 * midSpacing), levelSpace + nextLevelSpace,inPlace);
                 connectTwoNodes(n, n.SE);
-                drawTree(n.NE, leftEnd + (7 * midSpacing), leftEnd + (9 * midSpacing), levelSpace + nextLevelSpace);
+                drawTree(n.NE, leftEnd + (7 * midSpacing), leftEnd + (9 * midSpacing), levelSpace + nextLevelSpace,inPlace);
                 connectTwoNodes(n, n.NE);
             }
             return n;
@@ -719,7 +721,7 @@ namespace QTFormApp
             if (menuChoice == "moveTree")
             {
                 root.setPoint(whereUnclicked);
-                redrawTree(root);
+                redrawTree(root,false);
             }
             if (lastClicked == -1)
             {
@@ -739,13 +741,13 @@ namespace QTFormApp
                 {
                     Node thisNode = nodes[lastClicked];
                     thisNode.setPoint(whereUnclicked);
-                    redrawTree(root);
+                    redrawTree(root,true);
                 }
                 else
                 {
                     Node thisNode = nodes[whichNode];
                     thisNode.setPoint(whereUnclicked);
-                    redrawTree(root);
+                    redrawTree(root,true);
                 }
             }
         }
@@ -1168,8 +1170,8 @@ namespace QTFormApp
             //displayToolStripMenuItem_Click(sender, e);
             parsePreorderInputFile();
             treeRightStart = panel2.Width - treeLeftStart;
-            drawTree(root, treeLeftStart,treeRightStart,nextLevelSpace);
-            displayNodeList();
+            drawTree(root, treeLeftStart,treeRightStart,nextLevelSpace,false);
+            //displayNodeList();
         }
 
         private void displayNodeList()
@@ -1188,7 +1190,7 @@ namespace QTFormApp
             {
                 root = imageToTree();
                 treeRightStart = panel2.Width - treeLeftStart;
-                drawTree(root, treeLeftStart, treeRightStart, nextLevelSpace);
+                drawTree(root, treeLeftStart, treeRightStart, nextLevelSpace,false);
             }
             else if (root == null)
             {
