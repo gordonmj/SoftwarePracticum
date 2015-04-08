@@ -33,7 +33,7 @@ namespace QTFormApp
         private Bitmap bmpToSave;
         private Bitmap bmpToSaveForQT;
         private String messageToDisplay;
-        private Node[] nodes= new Node[100];
+        private Node[] nodes= new Node[128*128];
         private int currentPosition = 0;
         private int nextLevelSpace = 75;
         private int[,] map;
@@ -244,6 +244,10 @@ namespace QTFormApp
             Pen border = new Pen(grayBrush, 1);
             int offset = 10;
             int size;
+            if (((formHeight - offset) / numRows) < offset)
+            {
+                offset = 0;
+            }
             if ((formWidth / numCols) / 2 > (formHeight - offset) / numRows)
                 size = ((formHeight - offset) / numRows) - offset;
             else
@@ -1214,6 +1218,22 @@ namespace QTFormApp
         private void quadtreeToImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             displayToolStripMenuItem_Click(sender, e);
+        }
+
+        private void randomMatrixToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int n = 128;
+            numRows = n;
+            numCols = n;
+            map = new int[numRows, numCols];
+            Random rnd = new Random();
+            for (int r = 0; r < numRows; r++){
+                for (int c = 0; c < numCols; c++)
+                {
+                    map[r,c] = rnd.Next(0, 2);
+                }
+            }
+            drawImage();
         }
         
     }//class
