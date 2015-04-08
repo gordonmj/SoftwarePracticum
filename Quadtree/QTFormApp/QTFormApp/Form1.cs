@@ -1230,7 +1230,12 @@ namespace QTFormApp
             for (int r = 0; r < numRows; r++){
                 for (int c = 0; c < numCols; c++)
                 {
-                    map[r,c] = rnd.Next(0, 2);
+                    int num = rnd.Next(0, 3);
+                    if (num == 2)
+                    {
+                        num = 0;
+                    }
+                    map[r, c] = num;
                 }
             }
             drawImage();
