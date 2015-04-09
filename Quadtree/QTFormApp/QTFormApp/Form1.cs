@@ -1240,6 +1240,57 @@ namespace QTFormApp
             }
             drawImage();
         }
+
+        private void smallToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            nodeHeight = 10;
+            nodeWidth = 10;
+            nextLevelSpace = 40;
+            treeLeftStart += (panel2.Width / 4);
+            treeRightStart -= (panel2.Width / 4);
+            if (root != null)
+            {
+                redrawTree(root, false);
+            }
+            else
+            {
+                MessageBox.Show("Load a quadtree first!");
+            }
+        }
+
+        private void mediumToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            nodeHeight = 20;
+            nodeWidth = 20;
+            nextLevelSpace = 75;
+            treeLeftStart = -100;
+            treeRightStart = panel2.Width - treeLeftStart;
+            if (root != null)
+            {
+                redrawTree(root, false);
+            }
+            else
+            {
+                MessageBox.Show("Load a quadtree first!");
+            }
+        }
+
+        private void largeToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            nodeHeight = 40;
+            nodeWidth = 40;
+            nextLevelSpace = 125;
+            treeLeftStart -= (panel2.Width / 4);
+            treeRightStart += (panel2.Width / 4);
+            if (root != null)
+            {
+                redrawTree(root, false);
+            }
+            else
+            {
+                MessageBox.Show("Load a quadtree first!");
+            }
+        }
         
     }//class
 }//namespace
