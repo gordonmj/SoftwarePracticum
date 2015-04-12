@@ -36,10 +36,14 @@ namespace QTFormApp
         private Node[] nodes= new Node[128*128];
         private int currentPosition = 0;
         private int nextLevelSpace = 75;
-        private int[,] map;
+        private int[,] map1;
+        private int[,] map2;
         private Node root;
         private int numRows;
         private int numCols;
+        private int numRows2;
+        private int numCols2;
+          
         private int treeLeftStart = -100;
         private int treeRightStart;
         private Point nullPoint = new Point(0, 0);
@@ -175,7 +179,7 @@ namespace QTFormApp
 
         private void displayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (map != null || root != null)
+            if (map1 != null || root != null)
             {
                 drawImage();
 
@@ -192,7 +196,7 @@ namespace QTFormApp
             
         }
 
-        private void parseMatrixInputFile()
+        private void parseMatrixInputFile(ref int[,] map)
         {
             if (fileName == null)
             {
@@ -202,22 +206,33 @@ namespace QTFormApp
             string[] lines = System.IO.File.ReadAllLines(@fileName);
             char[] delims = { ' ', '\n' };
             string[] firstLine = lines[0].Split(delims);
-            numRows = Convert.ToInt32(firstLine[0]);
-            numCols = Convert.ToInt32(firstLine[1]);
+            int rows, cols;
+            rows = Convert.ToInt32(firstLine[0]);
+            cols = Convert.ToInt32(firstLine[1]);
             int maxVal = Convert.ToInt32(firstLine[2]);
             int minVal = Convert.ToInt32(firstLine[3]);
-            map = new int[numRows, numCols];
-            for (int r = 0; r < numRows; r++)
+            map = new int[rows, cols];
+            for (int r = 0; r < rows; r++)
             {
                 string[] nextLine = lines[r + 1].Split(delims);
-                for (int c = 0; c < numCols; c++)
+                for (int c = 0; c < cols; c++)
                 {
                     map[r, c] = Convert.ToInt32(nextLine[c]);
                 }
             }
+            if (ReferenceEquals(map,map2))
+            {
+                numRows2 = rows;
+                numCols2 = cols;
+            }
+            else
+            {
+                numRows = rows;
+                numCols = cols;
+            }
         }
 
-        private void parsePreorderInputFile()
+        private void parsePreorderInputFile(int[,] map)
         {
             if (fileName == null)
             {
@@ -234,7 +249,7 @@ namespace QTFormApp
             newRoot.numCols = numCols;
             newRoot.numRows = numRows;
             stringToTree(ref parsedInput,2,newRoot);
-            treeToImage(newRoot, 0, 0);
+            treeToImage(newRoot, 0, 0,map);
             root = newRoot;
         }
 
@@ -260,14 +275,14 @@ namespace QTFormApp
                 {
                     for (int c = 0; c < numCols; c++)
                     {
-                        if (map[r, c] == 1)
+                        if (map1[r, c] == 1)
                         {
                             panel1Graphics.FillRectangle(blackBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             bmpGraphic.FillRectangle(blackBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                         }
-                        else if (map[r,c] == 0)
+                        else if (map1[r,c] == 0)
                         {
                             panel1Graphics.FillRectangle(whiteBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
@@ -287,13 +302,23 @@ namespace QTFormApp
 
         }
 
-        private Node imageToTree()
+        private Node imageToTree(int[,] map)
         {
             root = new Node();
-            root.numCols = numCols;
-            root.numRows = numRows;
+            int rows, cols;
+            if (ReferenceEquals(map,map2))
+            {
+                rows = numRows2;
+                cols = numCols2;
+            }
+            else {
+                rows = numRows;
+                cols = numCols;
+            }
+            root.numCols = cols;
+            root.numRows = rows;
             root.level = 0;
-            root = whatColor(root, map, 0, numRows - 1, 0, numCols - 1, "root");
+            root = whatColor(root, map, 0, rows - 1, 0, cols - 1, "root");
             messageToDisplay = "";
             nodeList(root, "root", " ");
             //MessageBox.Show(messageToDisplay);
@@ -912,7 +937,7 @@ namespace QTFormApp
                 }
             return end; //what number to return?
         }
-        private void treeToImage(Node n, int rStart, int cStart)
+        private void treeToImage(Node n, int rStart, int cStart, int[,] map)
         {
 
             if (n == null)
@@ -945,10 +970,10 @@ namespace QTFormApp
             else
             {
                 //MessageBox.Show(n.toString()); //("Null? NW: " + (n.NW == null) + "  SW: " + (n.SW == null) + "  SE: " + (n.SE == null) + "  NE: " + (n.NE == null));
-                treeToImage(n.NW, rStart, cStart);
-                treeToImage(n.SW, rStart + (n.numRows/2), cStart); 
-                treeToImage(n.SE, rStart + (n.numRows/2), cStart + (n.numCols/2));
-                treeToImage(n.NE, rStart, cStart + (n.numCols/2));
+                treeToImage(n.NW, rStart, cStart,map);
+                treeToImage(n.SW, rStart + (n.numRows/2), cStart,map); 
+                treeToImage(n.SE, rStart + (n.numRows/2), cStart + (n.numCols/2),map);
+                treeToImage(n.NE, rStart, cStart + (n.numCols/2),map);
             }
         }
         private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -974,7 +999,7 @@ namespace QTFormApp
             SaveFileDialog save = new SaveFileDialog();
             save.Filter = "Text|*.txt";
             save.Title = "Save the image";
-            String textToSave = mapToString(map);
+            String textToSave = mapToString(map1);
             if (save.ShowDialog() == DialogResult.OK)
             {
                 System.IO.File.WriteAllText(save.FileName, textToSave);
@@ -1096,9 +1121,9 @@ namespace QTFormApp
                 fileName = oFD.FileName;
             }
             //displayToolStripMenuItem_Click(sender, e);
-            parseMatrixInputFile();
+            parseMatrixInputFile(ref map1);
             drawImage();
-            Node newRoot = imageToTree();
+            Node newRoot = imageToTree(map1);
         }
 
         private void preorderFormatToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1112,13 +1137,13 @@ namespace QTFormApp
                 fileName = oFD.FileName;
             }
             //displayToolStripMenuItem_Click(sender, e);
-            parsePreorderInputFile();
+            parsePreorderInputFile(map1);
             String s = "";
-            for (int r = 0; r < map.GetLength(0); r++)
+            for (int r = 0; r < map1.GetLength(0); r++)
             {
-                for (int c = 0; c < map.GetLength(1); c++)
+                for (int c = 0; c < map1.GetLength(1); c++)
                 {
-                    s += map[r, c];
+                    s += map1[r, c];
                 }
                 s += Environment.NewLine;
             }
@@ -1137,7 +1162,7 @@ namespace QTFormApp
             SaveFileDialog save = new SaveFileDialog();
             save.Filter = "Text|*.txt";
             save.Title = "Save the image";
-            String textToSave = mapToString(map);
+            String textToSave = mapToString(map1);
             if (save.ShowDialog() == DialogResult.OK)
             {
                 System.IO.File.WriteAllText(save.FileName, textToSave);
@@ -1172,7 +1197,7 @@ namespace QTFormApp
                 fileName = oFD.FileName;
             }
             //displayToolStripMenuItem_Click(sender, e);
-            parsePreorderInputFile();
+            parsePreorderInputFile(map1);
             treeRightStart = panel2.Width - treeLeftStart;
             drawTree(root, treeLeftStart,treeRightStart,nextLevelSpace,false);
             //displayNodeList();
@@ -1190,9 +1215,9 @@ namespace QTFormApp
         private void displayToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             panel2Graphics.Clear(Color.PowderBlue);
-            if (map != null)
+            if (map1 != null)
             {
-                root = imageToTree();
+                root = imageToTree(map1);
                 treeRightStart = panel2.Width - treeLeftStart;
                 drawTree(root, treeLeftStart, treeRightStart, nextLevelSpace,false);
             }
@@ -1225,7 +1250,7 @@ namespace QTFormApp
             int n = 128;
             numRows = n;
             numCols = n;
-            map = new int[numRows, numCols];
+            map1 = new int[numRows, numCols];
             Random rnd = new Random();
             for (int r = 0; r < numRows; r++){
                 for (int c = 0; c < numCols; c++)
@@ -1235,7 +1260,7 @@ namespace QTFormApp
                     {
                         num = 0;
                     }
-                    map[r, c] = num;
+                    map1[r, c] = num;
                 }
             }
             drawImage();
@@ -1291,6 +1316,65 @@ namespace QTFormApp
                 MessageBox.Show("Load a quadtree first!");
             }
         }
+
+        private void comparisonImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (map1 == null)
+            {
+                MessageBox.Show("Please use Image>Load>Matrix to load your first image");
+                return;
+            }
+            OpenFileDialog oFD = new OpenFileDialog();
+            oFD.Filter = "Plaintext Files|*.txt";
+            oFD.Title = "Select a Plaintext File";
+
+            if (oFD.ShowDialog() == DialogResult.OK)
+            {
+                fileName = oFD.FileName;
+            }
+            parseMatrixInputFile(ref map2);
+            Node root1 = imageToTree(map1);
+            Node root2 = imageToTree(map2);
+            String string1 = treeToString(root1);
+            String string2 = treeToString(root2);
+            bool similar = checkForSimilar(string1, string2);
+            if (similar){
+                bool identical = checkForIdentical(root1, root2);
+                if (identical){
+                    MessageBox.Show("The two images are identical.");
+                }
+                else {
+                    MessageBox.Show("The two images are similar, but not identical.");
+                }
+            }
+            else {
+                MessageBox.Show("The two images are not the same at all.");
+
+            }
+        }
+
+        public bool checkForSimilar(String s1, String s2)
+        {
+            for (int i = 0; i < s1.Length; i++)
+            {
+                if (s1[i] != s2[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool checkForIdentical(Node r1, Node r2)
+        {
+            return (r1.numRows == r2.numRows && r1.numCols == r2.numCols);
+        }
+
+        private void compareToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
         
     }//class
 }//namespace
