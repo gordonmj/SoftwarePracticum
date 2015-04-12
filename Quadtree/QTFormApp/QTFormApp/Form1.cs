@@ -182,7 +182,7 @@ namespace QTFormApp
         {
             if (map1 != null || root != null)
             {
-                drawImage();
+                drawImage(ref map1);
 
             }
             else
@@ -257,9 +257,22 @@ namespace QTFormApp
         }
 
 
-        private void drawImage()
+        private void drawImage(ref int[,] map)
+        {
+            int[] regions = { 0, 0, 0, 0 };
+            drawImageHelper(ref map,regions);
+        }
+
+        private void drawImageHighlight(ref int[,] map, int[] regions)
+        {
+            drawImageHelper(ref map, regions);
+        }
+
+        private void drawImageHelper(ref int[,] map, int[] regions)
         {
             Pen border = new Pen(grayBrush, 1);
+            Brush red = new SolidBrush(Color.Red);
+            Pen highlight = new Pen(red, 3);
             int offset = 10;
             int size;
             if (((formHeight - offset) / numRows) < offset)
@@ -278,32 +291,38 @@ namespace QTFormApp
                 {
                     for (int c = 0; c < numCols; c++)
                     {
-                        if (map1[r, c] == 1)
+                        if (map[r, c] == 1)
                         {
                             panel1Graphics.FillRectangle(blackBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            bmpGraphic.FillRectangle(blackBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                        }
-                        else if (map1[r,c] == 0)
+                            //bmpGraphic.FillRectangle(blackBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            //bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                        }//if
+                        else if (map[r, c] == 0)
                         {
                             panel1Graphics.FillRectangle(whiteBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            bmpGraphic.FillRectangle(whiteBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                        }
+                            //panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            //bmpGraphic.FillRectangle(whiteBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            //bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                        }//else if
                         else
                         {
                             panel1Graphics.FillRectangle(grayBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            bmpGraphic.FillRectangle(grayBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            //panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            //bmpGraphic.FillRectangle(grayBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            //bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                        }//else
+                        if (r >= regions[1] && c >= regions[0] && r < regions[3]+regions[1] && c < regions[2]+regions[0])
+                        {
+                            panel1Graphics.DrawRectangle(highlight, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                         }
-                    }
-                }
-            }
-
-        }
+                        else
+                        {
+                            panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                        }
+                    }//for c
+                }//for r
+            }//bmp
+        }//drawImageHelper
 
         private Node imageToTree(int[,] map)
         {
@@ -372,7 +391,7 @@ namespace QTFormApp
             Gray
         }
 
-        private Node whatColor(Node root, int[,] m, int rowStart, int rowStop, int colStart, int colStop, String desc)
+        private Node whatColor(Node n, int[,] m, int rowStart, int rowStop, int colStart, int colStop, String desc)
         {
             Node returnRoot;
             if ((rowStop - rowStart != colStop - colStart))
@@ -389,36 +408,40 @@ namespace QTFormApp
             }
             else if (rowStop - rowStart == 0)
             {
+                n.hasChildren = false;
                 if (m[rowStart, colStart] == 1)
                 {
-                    root.setColor(Color.Black);
-                    returnRoot = root;
+                    n.setColor(Color.Black);
+                    returnRoot = n;
                 }
                 else
-                    root.setColor(Color.White);
-                    returnRoot = root;
+                {
+                    n.setColor(Color.White);
+                    returnRoot = n;
+                }
             }
+
             else
             {
                 int midPointRow = (rowStop + rowStart) / 2;
                 int midPointCol = (colStop + colStart) / 2;
-                root.addChild("NW",whatColor(new Node(), m, rowStart, midPointRow, colStart, midPointCol,desc+"->NW"));
-                root.addChild("SW",whatColor(new Node(), m, midPointRow + 1, rowStop, colStart, midPointCol, desc + "->SW"));
-                root.addChild("SE", whatColor(new Node(), m, midPointRow + 1, rowStop, midPointCol + 1, colStop, desc + "->SE"));
-                root.addChild("NE", whatColor(new Node(), m, rowStart, midPointRow, midPointCol + 1, colStop, desc + "->NE"));
+                n.addChild("NW",whatColor(new Node(n), m, rowStart, midPointRow, colStart, midPointCol,desc+"->NW"));
+                n.addChild("SW",whatColor(new Node(n), m, midPointRow + 1, rowStop, colStart, midPointCol, desc + "->SW"));
+                n.addChild("SE", whatColor(new Node(n), m, midPointRow + 1, rowStop, midPointCol + 1, colStop, desc + "->SE"));
+                n.addChild("NE", whatColor(new Node(n), m, rowStart, midPointRow, midPointCol + 1, colStop, desc + "->NE"));
                 //MessageBox.Show("NW: "+root.NW.getColor()+" SW: "+root.SW.getColor()+" SE: "+root.SE.getColor()+" NE: "+root.NE.getColor());
-                if (root.NW.getColor() == root.SW.getColor() && root.SW.getColor() == root.SE.getColor() && root.SE.getColor() == root.NE.getColor())
+                if (n.NW.getColor() == n.SW.getColor() && n.SW.getColor() == n.SE.getColor() && n.SE.getColor() == n.NE.getColor())
                 {
             //        MessageBox.Show("In range x " + colStart + "-" + colStop + " and y " + rowStart + "-" + rowStop + " the color is " + root.NW.getColor());
-                    root.setColor(root.NW.getColor());
-                    if (root.NW.getColor()!=Color.Gray)
-                        root.prune();
-                    returnRoot = root;
+                    n.setColor(n.NW.getColor());
+                    if (n.NW.getColor()!=Color.Gray)
+                        n.prune();
+                    returnRoot = n;
                 }
                 else
                 {
-                    root.setColor(Color.Gray);
-                    returnRoot = root;
+                    n.setColor(Color.Gray);
+                    returnRoot = n;
                 }
             }
 
@@ -797,6 +820,8 @@ namespace QTFormApp
                 String coordinates = thisNode.getPoint().ToString();
                 MessageBox.Show("You clicked a "+color+" node at "+coordinates+"!\nWhat do you want to do?\nJust click and drag the node to move it.\n");
                 //DialogResult answer = MessageBox.Show("You clicked a " + color + " node at " + coordinates + "!\nDo you want to create an arrow?", "Options", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                int[] highReg = highlightRegion(thisNode);
+                drawImageHighlight(ref map1, highReg);
                 prevClicked = lastClicked;
             }
             else
@@ -814,6 +839,36 @@ namespace QTFormApp
                     redrawTree(root,true);
                 }
             }
+        }
+
+        private int[] highlightRegion(Node n)
+        {
+            int[] region = { 0, 0, 0, 0 }; //x,y...
+            Node walker = n;
+            while (walker!=null && !walker.isRoot)
+            {
+                switch (walker.getDirectionString())
+                {
+                    case "NW":
+                        break;
+                    case "SW":
+                        region[1] += walker.numRows;
+                        break;
+                    case "SE":
+                        region[0] += walker.numCols;
+                        region[1] += walker.numRows;
+                        break;
+                    case "NE":
+                        region[0] += walker.numCols;
+                        break;
+                    default: //walker is root?
+                        break;
+                }//switch
+                walker = walker.parent;
+            }//while
+            region[2] += n.numCols;
+            region[3] += n.numRows;
+            return region;
         }
 
         private bool pointInNode(Point click, Point node)
@@ -1161,7 +1216,7 @@ namespace QTFormApp
             {
                 return;
             }
-            drawImage();
+            drawImage(ref map1);
             Node newRoot = imageToTree(map1);
         }
 
@@ -1187,7 +1242,7 @@ namespace QTFormApp
                 s += Environment.NewLine;
             }
             //MessageBox.Show(s);
-                drawImage();
+                drawImage(ref map1);
             //Node newRoot = imageToTree();
         }
 
@@ -1303,7 +1358,7 @@ namespace QTFormApp
                     map1[r, c] = num;
                 }
             }
-            drawImage();
+            drawImage(ref map1);
         }
 
         private void smallToolStripMenuItem1_Click(object sender, EventArgs e)

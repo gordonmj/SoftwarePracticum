@@ -77,6 +77,21 @@ namespace QTFormApp
             parent = null;
         }
 
+        public Node(Node prnt)
+        {
+            NW = null;
+            SW = null;
+            NE = null;
+            SE = null;
+            parent = prnt;
+            prnt.hasChildren = true;
+            hasChildren = false;
+            isRoot = false;
+            level = prnt.level + 1;
+            numCols = prnt.numCols / 2;
+            numRows = prnt.numRows / 2;
+        }
+
         public Node(int i)
         {
             index = i;
@@ -201,10 +216,10 @@ namespace QTFormApp
         }
         public void addChild(String s, Node n)
         {
-            hasChildren = true;
+            this.hasChildren = true;
             n.isRoot = false;
             n.parent = this;
-            n.level = level+1;
+            n.level = this.level+1;
             n.numCols = numCols / 2;
             n.numRows = numRows / 2;
             switch (s)
@@ -229,7 +244,7 @@ namespace QTFormApp
 
         public void addChildren()
         {
-            hasChildren = true;
+            this.hasChildren = true;
 
             addChild("NW");
             addChild("SW");
