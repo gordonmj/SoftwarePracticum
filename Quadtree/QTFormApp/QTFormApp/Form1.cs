@@ -23,17 +23,17 @@ namespace QTFormApp
         private System.Drawing.Graphics panel1Graphics;
         private System.Drawing.Graphics panel2Graphics;
         private System.Drawing.Graphics formGraphic;
-        private System.Drawing.Graphics canvasGraphics;
         private Brush blackBrush = new SolidBrush(Color.Black);
         private Brush whiteBrush = new SolidBrush(Color.White);
         private Brush grayBrush = new SolidBrush(Color.Gray);
-        private Brush slateGrayBrush = new SolidBrush(Color.SlateGray);        
+        private Brush slateGrayBrush = new SolidBrush(Color.SlateGray);
+        private Brush bgBrush = new SolidBrush(Color.PowderBlue);
         private int formWidth;
         private int formHeight;
         private Bitmap bmpToSave;
         private Bitmap bmpToSaveForQT;
         private String messageToDisplay;
-        private Node[] nodes= new Node[128*128];
+        private Node[] nodes= new Node[100];
         private int currentPosition = 0;
         private int nextLevelSpace = 75;
         private int[,] map1;
@@ -196,12 +196,12 @@ namespace QTFormApp
             
         }
 
-        private void parseMatrixInputFile(ref int[,] map)
+        private int parseMatrixInputFile(ref int[,] map)
         {
             if (fileName == null)
             {
                 MessageBox.Show("You must select an input file first. Use 'Image>Load'");
-                return;
+                return -1;
             }
             string[] lines = System.IO.File.ReadAllLines(@fileName);
             char[] delims = { ' ', '\n' };
@@ -209,6 +209,7 @@ namespace QTFormApp
             int rows, cols;
             rows = Convert.ToInt32(firstLine[0]);
             cols = Convert.ToInt32(firstLine[1]);
+            nodes = new Node[rows*cols*2];
             int maxVal = Convert.ToInt32(firstLine[2]);
             int minVal = Convert.ToInt32(firstLine[3]);
             map = new int[rows, cols];
@@ -230,6 +231,7 @@ namespace QTFormApp
                 numRows = rows;
                 numCols = cols;
             }
+            return 0;
         }
 
         private void parsePreorderInputFile(int[,] map)
@@ -654,6 +656,18 @@ namespace QTFormApp
             }
         }
 
+        private void eraseArrow(Node a, Node b)
+        {
+            Point start = adjustPointToCenterofNode(a.getPoint());
+            Point end = b.getPoint();
+            Pen arrow = new Pen(bgBrush, 3);
+            AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
+            arrow.CustomEndCap = bigArrow;
+            panel2Graphics.DrawLine(arrow, start, end);
+            redrawNode(a.getIndex(), a.getPoint());
+            redrawNode(b.getIndex(), b.getPoint());
+        }
+
         private Node redrawNode(int origin, Point destination)
         {
             if (findTouchingNode(destination) != -1 && findTouchingNode(destination) != origin)
@@ -744,6 +758,15 @@ namespace QTFormApp
                 if (nodes[prevClicked] != null && nodes[whichNode] != null)
                 {
                     connectTwoNodes(nodes[prevClicked], nodes[whichNode]);
+                }
+                return;
+            }
+            if (menuChoice == "moveArrowHead")
+            {
+                if (nodes[lastClicked] != null && nodes[whichNode] != null)
+                {
+                    eraseArrow(nodes[lastClicked].parent, nodes[lastClicked]);
+                    connectTwoNodes(nodes[lastClicked].parent, nodes[whichNode]);
                 }
                 return;
             }
@@ -1121,7 +1144,11 @@ namespace QTFormApp
                 fileName = oFD.FileName;
             }
             //displayToolStripMenuItem_Click(sender, e);
-            parseMatrixInputFile(ref map1);
+            int result = parseMatrixInputFile(ref map1);
+            if (result == -1)
+            {
+                return;
+            }
             drawImage();
             Node newRoot = imageToTree(map1);
         }
@@ -1251,6 +1278,7 @@ namespace QTFormApp
             numRows = n;
             numCols = n;
             map1 = new int[numRows, numCols];
+            nodes = new Node[n * n * 2];
             Random rnd = new Random();
             for (int r = 0; r < numRows; r++){
                 for (int c = 0; c < numCols; c++)
@@ -1332,7 +1360,10 @@ namespace QTFormApp
             {
                 fileName = oFD.FileName;
             }
-            parseMatrixInputFile(ref map2);
+            int result = parseMatrixInputFile(ref map2);
+            if (result == -1) { 
+                return;
+            }
             Node root1 = imageToTree(map1);
             Node root2 = imageToTree(map2);
             String string1 = treeToString(root1);
@@ -1373,6 +1404,17 @@ namespace QTFormApp
         private void compareToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void moveArrowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Click on a node to move the connected arrow head");
+            menuChoice = "moveArrowHead";
+        }
+
+        private void moveNodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            menuChoice = "moveNode";
         }
 
         

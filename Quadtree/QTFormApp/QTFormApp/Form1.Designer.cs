@@ -73,6 +73,8 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.moveArrowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -315,7 +317,9 @@
             this.manualToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.drawNodeToolStripMenuItem,
             this.drawArrowToolStripMenuItem,
-            this.moveTreeToolStripMenuItem});
+            this.moveTreeToolStripMenuItem,
+            this.moveArrowToolStripMenuItem,
+            this.moveNodeToolStripMenuItem});
             this.manualToolStripMenuItem.Name = "manualToolStripMenuItem";
             this.manualToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.manualToolStripMenuItem.Text = "Manual";
@@ -442,6 +446,20 @@
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDown);
             this.panel2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseUp);
             // 
+            // moveArrowToolStripMenuItem
+            // 
+            this.moveArrowToolStripMenuItem.Name = "moveArrowToolStripMenuItem";
+            this.moveArrowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.moveArrowToolStripMenuItem.Text = "Move arrow";
+            this.moveArrowToolStripMenuItem.Click += new System.EventHandler(this.moveArrowToolStripMenuItem_Click);
+            // 
+            // moveNodeToolStripMenuItem
+            // 
+            this.moveNodeToolStripMenuItem.Name = "moveNodeToolStripMenuItem";
+            this.moveNodeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.moveNodeToolStripMenuItem.Text = "Move node";
+            this.moveNodeToolStripMenuItem.Click += new System.EventHandler(this.moveNodeToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -512,5 +530,7 @@
         private System.Windows.Forms.ToolStripMenuItem mediumToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem largeToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem comparisonImageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem moveArrowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem moveNodeToolStripMenuItem;
     }
 }
