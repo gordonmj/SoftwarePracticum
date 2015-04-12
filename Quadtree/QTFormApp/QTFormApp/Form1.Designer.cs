@@ -75,8 +75,6 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.headToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.baseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -373,9 +371,6 @@
             // 
             // moveArrowToolStripMenuItem
             // 
-            this.moveArrowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.headToolStripMenuItem,
-            this.baseToolStripMenuItem});
             this.moveArrowToolStripMenuItem.Name = "moveArrowToolStripMenuItem";
             this.moveArrowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.moveArrowToolStripMenuItem.Text = "Move arrow";
@@ -465,20 +460,6 @@
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDown);
             this.panel2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseUp);
             // 
-            // headToolStripMenuItem
-            // 
-            this.headToolStripMenuItem.Name = "headToolStripMenuItem";
-            this.headToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.headToolStripMenuItem.Text = "Head";
-            this.headToolStripMenuItem.Click += new System.EventHandler(this.headToolStripMenuItem_Click);
-            // 
-            // baseToolStripMenuItem
-            // 
-            this.baseToolStripMenuItem.Name = "baseToolStripMenuItem";
-            this.baseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.baseToolStripMenuItem.Text = "Base";
-            this.baseToolStripMenuItem.Click += new System.EventHandler(this.baseToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -551,7 +532,5 @@
         private System.Windows.Forms.ToolStripMenuItem comparisonImageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moveArrowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moveNodeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem headToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem baseToolStripMenuItem;
     }
 }

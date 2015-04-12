@@ -17,6 +17,7 @@ namespace QTFormApp
         private Point firstClick;
         private int lastClicked;
         private int prevClicked;
+        private int beforeLastClicked;
         private string fileName; 
         private static int nodeWidth = 20;
         private static int nodeHeight = 20;
@@ -767,6 +768,8 @@ namespace QTFormApp
                 {
                     eraseArrow(nodes[lastClicked].parent, nodes[lastClicked]);
                     connectTwoNodes(nodes[lastClicked].parent, nodes[whichNode]);
+                    beforeLastClicked = whichNode;
+                    menuChoice = "moveArrowBase";
                 }
                 return;
             }
@@ -774,8 +777,9 @@ namespace QTFormApp
             {
                 if (nodes[lastClicked] != null && nodes[whichNode] != null)
                 {
-                    eraseArrow(nodes[lastClicked], nodes[lastClicked].parent);
-                    connectTwoNodes(nodes[whichNode],nodes[lastClicked]);
+                    eraseArrow(nodes[lastClicked], nodes[beforeLastClicked]);
+                    connectTwoNodes(nodes[whichNode],nodes[beforeLastClicked]);
+                    menuChoice = "moveArrowHead";
                 }
                 return;
             } if (menuChoice == "moveTree")
@@ -1416,7 +1420,8 @@ namespace QTFormApp
 
         private void moveArrowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("Click and drag on a node to move the connected arrow head. Then click and drag to move base.");
+            menuChoice = "moveArrowHead";
         }
 
         private void moveNodeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1426,8 +1431,7 @@ namespace QTFormApp
 
         private void headToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Click on a node to move the connected arrow head");
-            menuChoice = "moveArrowHead";
+            
         }
 
         private void baseToolStripMenuItem_Click(object sender, EventArgs e)
