@@ -770,7 +770,15 @@ namespace QTFormApp
                 }
                 return;
             }
-            if (menuChoice == "moveTree")
+            if (menuChoice == "moveArrowBase")
+            {
+                if (nodes[lastClicked] != null && nodes[whichNode] != null)
+                {
+                    eraseArrow(nodes[lastClicked], nodes[lastClicked].parent);
+                    connectTwoNodes(nodes[whichNode],nodes[lastClicked]);
+                }
+                return;
+            } if (menuChoice == "moveTree")
             {
                 root.setPoint(whereUnclicked);
                 redrawTree(root,false);
@@ -1408,13 +1416,24 @@ namespace QTFormApp
 
         private void moveArrowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Click on a node to move the connected arrow head");
-            menuChoice = "moveArrowHead";
+
         }
 
         private void moveNodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             menuChoice = "moveNode";
+        }
+
+        private void headToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Click on a node to move the connected arrow head");
+            menuChoice = "moveArrowHead";
+        }
+
+        private void baseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Click on a node to move the connected arrow base");
+            menuChoice = "moveArrowBase";
         }
 
         
