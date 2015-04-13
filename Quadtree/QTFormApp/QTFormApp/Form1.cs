@@ -116,7 +116,6 @@ namespace QTFormApp
         {
             panel2Graphics = panel2.CreateGraphics();
             bmpToSaveForQT = new Bitmap(panel2.ClientSize.Width, panel2.ClientSize.Height);
-
         }
 
         private void panel2_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -260,64 +259,74 @@ namespace QTFormApp
         private void drawImage(ref int[,] map)
         {
             int[] regions = { 0, 0, 0, 0 };
-            drawImageHelper(ref map,regions);
+            drawImageHelper(ref map, regions, panel1Graphics);
         }
 
         private void drawImageHighlight(ref int[,] map, int[] regions)
         {
-            drawImageHelper(ref map, regions);
+            drawImageHelper(ref map, regions, panel1Graphics);
         }
 
-        private void drawImageHelper(ref int[,] map, int[] regions)
+        private void drawImageHelper(ref int[,] map, int[] regions, Graphics gp)
         {
             Pen border = new Pen(grayBrush, 1);
             Brush red = new SolidBrush(Color.Red);
             Pen highlight = new Pen(red, 3);
             int offset = 10;
-            int size;
-            if (((formHeight - offset) / numRows) < offset)
+            int size, rows, cols;
+            if (ReferenceEquals(map, map1))
+            {
+                rows = numRows;
+                cols = numCols;
+            }
+            else
+            {
+                rows = numRows2;
+                cols = numCols2;
+            }
+            if (((formHeight - offset) / rows) < offset)
             {
                 offset = 0;
             }
-            if ((formWidth / numCols) / 2 > (formHeight - offset) / numRows)
-                size = ((formHeight - offset) / numRows) - offset;
+            if ((formWidth / cols) / 2 > (formHeight - offset) / rows)
+                size = ((formHeight - offset) / rows) - offset;
             else
-                size = (((formWidth - offset) / numCols) / 2) - offset;
-            panel1Graphics.Clear(Color.DarkCyan);
+                size = (((formWidth - offset) / cols) / 2) - offset;
+            gp.Clear(Color.DarkCyan);
             bmpToSave = new Bitmap(panel1.ClientSize.Width, panel1.ClientSize.Height);
             using (Graphics bmpGraphic = Graphics.FromImage(bmpToSave))
             {
-                for (int r = 0; r < numRows; r++)
+                for (int r = 0; r < rows; r++)
                 {
-                    for (int c = 0; c < numCols; c++)
+                    for (int c = 0; c < cols; c++)
                     {
                         if (map[r, c] == 1)
                         {
-                            panel1Graphics.FillRectangle(blackBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            gp.FillRectangle(blackBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             //bmpGraphic.FillRectangle(blackBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             //bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                         }//if
                         else if (map[r, c] == 0)
                         {
-                            panel1Graphics.FillRectangle(whiteBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            gp.FillRectangle(whiteBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             //panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             //bmpGraphic.FillRectangle(whiteBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             //bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                         }//else if
                         else
                         {
-                            panel1Graphics.FillRectangle(grayBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            gp.FillRectangle(grayBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             //panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             //bmpGraphic.FillRectangle(grayBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                             //bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                         }//else
                         if (r >= regions[1] && c >= regions[0] && r < regions[3]+regions[1] && c < regions[2]+regions[0])
                         {
-                            panel1Graphics.DrawRectangle(highlight, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            gp.DrawRectangle(highlight, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                         }
                         else
                         {
-                            panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            gp.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
                         }
                     }//for c
                 }//for r
@@ -1431,6 +1440,8 @@ namespace QTFormApp
             if (result == -1) { 
                 return;
             }
+            int[] r = {0,0,0,0};
+            drawImageHelper(ref map2, r, panel2Graphics);
             Node root1 = imageToTree(map1);
             Node root2 = imageToTree(map2);
             String string1 = treeToString(root1);
