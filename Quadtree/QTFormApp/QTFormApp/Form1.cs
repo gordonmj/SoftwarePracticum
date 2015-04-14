@@ -234,7 +234,7 @@ namespace QTFormApp
             return 0;
         }
 
-        private void parsePreorderInputFile(int[,] map)
+        private void parsePreorderInputFile(ref int [,] map)
         {
             if (fileName == null)
             {
@@ -247,6 +247,7 @@ namespace QTFormApp
             numRows = Convert.ToInt32(parsedInput[0]);
             numCols = Convert.ToInt32(parsedInput[1]);
             map = new int[numRows, numCols];
+            nodes = new Node[numRows * numCols * 2];
             Node newRoot = new Node();
             newRoot.numCols = numCols;
             newRoot.numRows = numRows;
@@ -255,10 +256,14 @@ namespace QTFormApp
             root = newRoot;
         }
 
+        private void isolateQuadrant(int[,] map, int[] boundaries, Graphics gp){
+
+            drawImageHelper(ref map, boundaries, gp);
+        }
 
         private void drawImage(ref int[,] map)
         {
-            int[] regions = { 0, 0, 0, 0 };
+            int[] regions = { 0, 0, map.GetLength(0), map.GetLength(1) };
             drawImageHelper(ref map, regions, panel1Graphics);
         }
 
@@ -300,34 +305,29 @@ namespace QTFormApp
                 {
                     for (int c = 0; c < cols; c++)
                     {
-                        if (map[r, c] == 1)
+                        if (r >= regions[1] && c >= regions[0] && r < regions[3] + regions[1] && c < regions[2] + regions[0])
                         {
-                            gp.FillRectangle(blackBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            //bmpGraphic.FillRectangle(blackBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            //bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                        }//if
-                        else if (map[r, c] == 0)
-                        {
-                            gp.FillRectangle(whiteBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            //panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            //bmpGraphic.FillRectangle(whiteBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            //bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                        }//else if
-                        else
-                        {
-                            gp.FillRectangle(grayBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            //panel1Graphics.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            //bmpGraphic.FillRectangle(grayBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                            //bmpGraphic.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                        }//else
-                        if (r >= regions[1] && c >= regions[0] && r < regions[3]+regions[1] && c < regions[2]+regions[0])
-                        {
-                            gp.DrawRectangle(highlight, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            if (map[r, c] == 1)
+                            {
+                                gp.FillRectangle(blackBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            }//if
+                            else if (map[r, c] == 0)
+                            {
+                                gp.FillRectangle(whiteBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            }//else if
+                            else
+                            {
+                                gp.FillRectangle(grayBrush, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                            }//else
                         }
-                        else
-                        {
+                        //if (r >= regions[1] && c >= regions[0] && r < regions[3]+regions[1] && c < regions[2]+regions[0])
+                        //{
+                        //    gp.DrawRectangle(highlight, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
+                        //}
+                        //else
+                        //{
                             gp.DrawRectangle(border, new Rectangle(offset + (c * size), offset + 10 + (r * size), size, size));
-                        }
+                        //}
                     }//for c
                 }//for r
             }//bmp
@@ -775,6 +775,65 @@ namespace QTFormApp
             Point whereClicked = e.Location;
             int whichNode = findTouchingNode(whereClicked);
             lastClicked = whichNode;
+        }
+        private void panel1_MouseUp(object sender, MouseEventArgs e)
+        {
+            int size;
+            int offset = 10;
+            if ((formWidth / numCols) / 2 > (formHeight - offset) / numRows)
+                size = ((formHeight - offset) / numRows) - offset;
+            else
+                size = (((formWidth - offset) / numCols) / 2) - offset;
+            int leftBound = offset;
+            int rightBound = offset + (size * numCols);
+            int upBound = offset;
+            int bottomBound = offset + (size * numRows);
+            int mid = (upBound+bottomBound)/2;
+            int ctr = (leftBound + rightBound) / 2;
+            Point whereClicked = e.Location;
+            int[] bounds = new int[4];
+            Node newRoot = new Node();
+            bool east;
+            if (whereClicked.X > ctr)
+            {
+                bounds[0] = numCols / 2;
+                bounds[2] = numCols;
+                east = false;
+            }
+            else
+            {
+                bounds[0] = 0;
+                bounds[2] = numCols / 2;
+                east = true;
+            }
+            if (whereClicked.Y > mid)
+            {
+                bounds[1] = numRows / 2;
+                bounds[3] = numRows;
+                if (east)
+                {
+                    newRoot = root.NE;
+                }
+                else
+                {
+                    newRoot = root.NW;
+                }
+            }
+            else
+            {
+                bounds[1] = 0;
+                bounds[3] = numRows / 2;
+                if (east)
+                {
+                    newRoot = root.SE;
+                }
+                else
+                {
+                    newRoot = root.SW;
+                }
+            }
+            redrawTree(newRoot, true);
+            //isolateQuadrant(map1, bounds, panel1Graphics);
         }
 
         private void panel2_MouseUp(object sender, MouseEventArgs e)
@@ -1240,7 +1299,7 @@ namespace QTFormApp
                 fileName = oFD.FileName;
             }
             //displayToolStripMenuItem_Click(sender, e);
-            parsePreorderInputFile(map1);
+            parsePreorderInputFile(ref map1);
             String s = "";
             for (int r = 0; r < map1.GetLength(0); r++)
             {
@@ -1300,7 +1359,7 @@ namespace QTFormApp
                 fileName = oFD.FileName;
             }
             //displayToolStripMenuItem_Click(sender, e);
-            parsePreorderInputFile(map1);
+            parsePreorderInputFile(ref map1);
             treeRightStart = panel2.Width - treeLeftStart;
             drawTree(root, treeLeftStart,treeRightStart,nextLevelSpace,false);
             //displayNodeList();
@@ -1504,6 +1563,11 @@ namespace QTFormApp
         {
             MessageBox.Show("Click on a node to move the connected arrow base");
             menuChoice = "moveArrowBase";
+        }
+
+        private void panel1_MouseUp_1(object sender, MouseEventArgs e)
+        {
+            panel1_MouseUp(sender, e);
         }
 
         
