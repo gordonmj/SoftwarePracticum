@@ -798,13 +798,13 @@ namespace QTFormApp
             {
                 bounds[0] = numCols / 2;
                 bounds[2] = numCols;
-                east = false;
+                east = true;
             }
             else
             {
                 bounds[0] = 0;
                 bounds[2] = numCols / 2;
-                east = true;
+                east = false;
             }
             if (whereClicked.Y > mid)
             {
@@ -1499,7 +1499,7 @@ namespace QTFormApp
             if (result == -1) { 
                 return;
             }
-            int[] r = {0,0,0,0};
+            int[] r = {0,0,map2.GetLength(0),map2.GetLength(1)};
             drawImageHelper(ref map2, r, panel2Graphics);
             Node root1 = imageToTree(map1);
             Node root2 = imageToTree(map2);
