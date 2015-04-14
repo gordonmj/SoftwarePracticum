@@ -116,6 +116,7 @@ namespace QTFormApp
         {
             panel2Graphics = panel2.CreateGraphics();
             bmpToSaveForQT = new Bitmap(panel2.ClientSize.Width, panel2.ClientSize.Height);
+            MessageBox.Show("Welcome to QuadTree Viewer!\nLoad an 'image' (text file of either a 2^n x 2^n matrix of 0s and 1s) or a 'quadtree preorder format file'\nClick on a node in the tree to display the corresponding part of the image.\nYou can also load two images to compare if they are identical or just similar in structure.\nHave fun moving around and resizing the nodes!");
         }
 
         private void panel2_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -812,11 +813,11 @@ namespace QTFormApp
                 bounds[3] = numRows;
                 if (east)
                 {
-                    newRoot = root.NE;
+                    newRoot = root.SE;
                 }
                 else
                 {
-                    newRoot = root.NW;
+                    newRoot = root.SW;
                 }
             }
             else
@@ -825,11 +826,11 @@ namespace QTFormApp
                 bounds[3] = numRows / 2;
                 if (east)
                 {
-                    newRoot = root.SE;
+                    newRoot = root.NE;
                 }
                 else
                 {
-                    newRoot = root.SW;
+                    newRoot = root.NW;
                 }
             }
             redrawTree(newRoot, true);
@@ -886,10 +887,18 @@ namespace QTFormApp
                 Node thisNode = nodes[whichNode];
                 String color = thisNode.getColorString();
                 String coordinates = thisNode.getPoint().ToString();
-                MessageBox.Show("You clicked a "+color+" node at "+coordinates+"!\nWhat do you want to do?\nJust click and drag the node to move it.\n");
+                if (menuChoice == "nodeInfo")
+                {
+                    MessageBox.Show("You clicked a "+color+" node at "+coordinates+"!\nWhat do you want to do?\nJust click and drag the node to move it.\n");
+
+                }
+                else
+                {
+                    int[] highReg = highlightRegion(thisNode);
+                    drawImageHighlight(ref map1, highReg);
+                }
                 //DialogResult answer = MessageBox.Show("You clicked a " + color + " node at " + coordinates + "!\nDo you want to create an arrow?", "Options", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                int[] highReg = highlightRegion(thisNode);
-                drawImageHighlight(ref map1, highReg);
+
                 prevClicked = lastClicked;
             }
             else
@@ -1359,9 +1368,11 @@ namespace QTFormApp
                 fileName = oFD.FileName;
             }
             //displayToolStripMenuItem_Click(sender, e);
+            //parseMatrixInputFile(ref map1);
             parsePreorderInputFile(ref map1);
             treeRightStart = panel2.Width - treeLeftStart;
             drawTree(root, treeLeftStart,treeRightStart,nextLevelSpace,false);
+            displayToolStripMenuItem1_Click(sender, e);
             //displayNodeList();
         }
 
@@ -1399,11 +1410,14 @@ namespace QTFormApp
 
         private void imageToQuadtreeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            matrixFormatToolStripMenuItem_Click(sender, e);
             displayToolStripMenuItem1_Click(sender, e);
         }
 
         private void quadtreeToImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+            loadToolStripMenuItem_Click(sender, e);
             displayToolStripMenuItem_Click(sender, e);
         }
 
@@ -1418,10 +1432,30 @@ namespace QTFormApp
             for (int r = 0; r < numRows; r++){
                 for (int c = 0; c < numCols; c++)
                 {
-                    int num = rnd.Next(0, 3);
-                    if (num == 2)
+                    int num = rnd.Next(0, 9);
+                    if (r > 1 && c > 1)
                     {
-                        num = 0;
+                        if (num == 2 || num == 6)
+                        {
+                            //num = 0;
+                            num = map1[r - 1, c];
+                        }
+                        else if (num == 3 || num == 7)
+                        {
+                            num = map1[r, c - 1];
+                        }
+                        else if (num == 4 || num == 8)
+                        {
+                            num = map1[r - 1, c - 1];
+                        }
+                        else if (num == 5)
+                        {
+                            num = 1;
+                        }
+                    }
+                    else
+                    {
+                        num = rnd.Next(0, 2);
                     }
                     map1[r, c] = num;
                 }
@@ -1568,6 +1602,16 @@ namespace QTFormApp
         private void panel1_MouseUp_1(object sender, MouseEventArgs e)
         {
             panel1_MouseUp(sender, e);
+        }
+
+        private void nodeInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            menuChoice = "nodeInfo";
+        }
+
+        private void isolateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            menuChoice = "";
         }
 
         
