@@ -278,7 +278,7 @@ namespace QTFormApp
             Pen border = new Pen(grayBrush, 1);
             Brush red = new SolidBrush(Color.Red);
             Pen highlight = new Pen(red, 3);
-            int offset = 10;
+            int offset = 1;
             int size, rows, cols;
             if (ReferenceEquals(map, map1))
             {
@@ -290,14 +290,16 @@ namespace QTFormApp
                 rows = numRows2;
                 cols = numCols2;
             }
+            /*
             if (((formHeight - offset) / rows) < offset)
             {
                 offset = 0;
             }
+            */
             if ((formWidth / cols) / 2 > (formHeight - offset) / rows)
-                size = ((formHeight - offset) / rows) - offset;
+                size = ((formHeight) / rows);
             else
-                size = (((formWidth - offset) / cols) / 2) - offset;
+                size = (((formWidth) / cols) / 2);
             gp.Clear(Color.DarkCyan);
             bmpToSave = new Bitmap(panel1.ClientSize.Width, panel1.ClientSize.Height);
             using (Graphics bmpGraphic = Graphics.FromImage(bmpToSave))
@@ -479,20 +481,29 @@ namespace QTFormApp
 
         private int findTouchingNode(Point down)
         {
-            for (int i = 0; i < currentPosition; i++)
+            try
             {
-                if (nodes[i] == null) break;
-                if (pointInNode(down, nodes[i].getPoint()))
+                for (int i = 0; i < currentPosition; i++)
                 {
-                    if (nodes[i].getIndex() != i)
+                    if (nodes[i] == null) break;
+                    if (pointInNode(down, nodes[i].getPoint()))
                     {
-                        MessageBox.Show("i=" + i + " and nodes[i]=" + nodes[i]);
-                        break;
+                        if (nodes[i].getIndex() != i)
+                        {
+                            MessageBox.Show("i=" + i + " and nodes[i]=" + nodes[i]);
+                            break;
+                        }
+                        return i;
                     }
-                    return i;
-                }   
-            }
+                }
                 return -1;
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Could not find the node you meant. Try again.");
+                return -1;
+            }
         }
 
         private void clearNode(int origin)
@@ -519,22 +530,34 @@ namespace QTFormApp
 
         private void drawNode(Node n, Point draw)
         {
-            if (n.getIndex() == -1)
+            try
             {
-                nodes[currentPosition] = n;
-                n.setIndex(currentPosition);
-                currentPosition++;
-            }
-            else if (n.getIndex() != currentPosition)
-            {
-                //MessageBox.Show("Index error! currentPosition is "+currentPosition+" and n.index is "+n.getIndex()); //PROBLEM HERE
-            }
-            else
-            {
+                if (n.getIndex() == -1)
+                {
+                    nodes[currentPosition] = n;
+                    n.setIndex(currentPosition);
+                    currentPosition++;
+                }
+                else if (n.getIndex() != currentPosition)
+                {
+                    //MessageBox.Show("Index error! currentPosition is "+currentPosition+" and n.index is "+n.getIndex()); //PROBLEM HERE
+                }
+                else
+                {
+
+                }
+                n.setPoint(draw);
+                drawNodeHelper(n, draw);
 
             }
-            n.setPoint(draw);
-            drawNodeHelper(n, draw);
+            catch (IndexOutOfRangeException ioore)
+            {
+                MessageBox.Show("Index out of range. Index is" + currentPosition+" and array size is "+nodes.GetLength(0));
+            }
+            catch (NullReferenceException nre)
+            {
+                MessageBox.Show("null pointer");
+            }
         }
 
         private Node drawNode(int origin, Point clicked)
@@ -839,82 +862,91 @@ namespace QTFormApp
 
         private void panel2_MouseUp(object sender, MouseEventArgs e)
         {
-            Point whereUnclicked = e.Location;
-            int whichNode = findTouchingNode(whereUnclicked);
-            if (whereUnclicked.X < 0 || whereUnclicked.Y < 0)
+            try
             {
-                deleteNode(lastClicked);
-                return;
-            }
-            if (menuChoice == "connectNodes")
-            {
-                if (nodes[prevClicked] != null && nodes[whichNode] != null)
+                Point whereUnclicked = e.Location;
+                int whichNode = findTouchingNode(whereUnclicked);
+                if (whereUnclicked.X < 0 || whereUnclicked.Y < 0)
                 {
-                    connectTwoNodes(nodes[prevClicked], nodes[whichNode]);
+                    deleteNode(lastClicked);
+                    return;
                 }
-                return;
-            }
-            if (menuChoice == "moveArrowHead")
-            {
-                if (nodes[lastClicked] != null && nodes[whichNode] != null)
+                if (menuChoice == "connectNodes")
                 {
-                    eraseArrow(nodes[lastClicked].parent, nodes[lastClicked]);
-                    connectTwoNodes(nodes[lastClicked].parent, nodes[whichNode]);
-                    beforeLastClicked = whichNode;
-                    menuChoice = "moveArrowBase";
+                    if (nodes[prevClicked] != null && nodes[whichNode] != null)
+                    {
+                        connectTwoNodes(nodes[prevClicked], nodes[whichNode]);
+                    }
+                    return;
                 }
-                return;
-            }
-            if (menuChoice == "moveArrowBase")
-            {
-                if (nodes[lastClicked] != null && nodes[whichNode] != null)
+                if (menuChoice == "moveArrowHead")
                 {
-                    eraseArrow(nodes[lastClicked], nodes[beforeLastClicked]);
-                    connectTwoNodes(nodes[whichNode],nodes[beforeLastClicked]);
-                    menuChoice = "moveArrowHead";
+                    if (nodes[lastClicked] != null && nodes[whichNode] != null)
+                    {
+                        eraseArrow(nodes[beforeLastClicked].parent, nodes[lastClicked]);
+                        connectTwoNodes(nodes[lastClicked].parent, nodes[whichNode]);
+                        beforeLastClicked = whichNode;
+                        menuChoice = "moveArrowBase";
+                    }
+                    return;
                 }
-                return;
-            } if (menuChoice == "moveTree")
-            {
-                root.setPoint(whereUnclicked);
-                redrawTree(root,false);
-            }
-            if (lastClicked == -1)
-            {
-                return;
-            }
-            if (lastClicked == whichNode){
-                Node thisNode = nodes[whichNode];
-                String color = thisNode.getColorString();
-                String coordinates = thisNode.getPoint().ToString();
-                if (menuChoice == "nodeInfo")
+                if (menuChoice == "moveArrowBase")
                 {
-                    MessageBox.Show("You clicked a "+color+" node at "+coordinates+"!\nWhat do you want to do?\nJust click and drag the node to move it.\n");
-
-                }
-                else
+                    if (nodes[lastClicked] != null && nodes[whichNode] != null)
+                    {
+                        eraseArrow(nodes[lastClicked], nodes[beforeLastClicked]);
+                        connectTwoNodes(nodes[whichNode], nodes[beforeLastClicked]);
+                        menuChoice = "moveArrowHead";
+                    }
+                    return;
+                } if (menuChoice == "moveTree")
                 {
-                    int[] highReg = highlightRegion(thisNode);
-                    drawImageHighlight(ref map1, highReg);
+                    root.setPoint(whereUnclicked);
+                    redrawTree(root, false);
                 }
-                //DialogResult answer = MessageBox.Show("You clicked a " + color + " node at " + coordinates + "!\nDo you want to create an arrow?", "Options", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                prevClicked = lastClicked;
-            }
-            else
-            {
-                if (whichNode == -1)
+                if (lastClicked == -1)
                 {
-                    Node thisNode = nodes[lastClicked];
-                    thisNode.setPoint(whereUnclicked);
-                    redrawTree(root,true);
+                    return;
                 }
-                else
+                if (lastClicked == whichNode)
                 {
                     Node thisNode = nodes[whichNode];
-                    thisNode.setPoint(whereUnclicked);
-                    redrawTree(root,true);
+                    String color = thisNode.getColorString();
+                    String coordinates = thisNode.getPoint().ToString();
+                    if (menuChoice == "nodeInfo")
+                    {
+                        MessageBox.Show("You clicked a " + color + " node at " + coordinates + "!\nWhat do you want to do?\nJust click and drag the node to move it.\n");
+
+                    }
+                    else
+                    {
+                        int[] highReg = highlightRegion(thisNode);
+                        drawImageHighlight(ref map1, highReg);
+                    }
+                    //DialogResult answer = MessageBox.Show("You clicked a " + color + " node at " + coordinates + "!\nDo you want to create an arrow?", "Options", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    prevClicked = lastClicked;
                 }
+                else
+                {
+                    if (whichNode == -1)
+                    {
+                        Node thisNode = nodes[lastClicked];
+                        thisNode.setPoint(whereUnclicked);
+                        redrawTree(root, true);
+                    }
+                    else
+                    {
+                        Node thisNode = nodes[whichNode];
+                        thisNode.setPoint(whereUnclicked);
+                        redrawTree(root, true);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Sorry. I had trouble understanding that move. Please try again.");
             }
         }
 
@@ -1359,21 +1391,6 @@ namespace QTFormApp
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog oFD = new OpenFileDialog();
-            oFD.Filter = "Plaintext Files|*.txt";
-            oFD.Title = "Select a Plaintext File";
-
-            if (oFD.ShowDialog() == DialogResult.OK)
-            {
-                fileName = oFD.FileName;
-            }
-            //displayToolStripMenuItem_Click(sender, e);
-            //parseMatrixInputFile(ref map1);
-            parsePreorderInputFile(ref map1);
-            treeRightStart = panel2.Width - treeLeftStart;
-            drawTree(root, treeLeftStart,treeRightStart,nextLevelSpace,false);
-            displayToolStripMenuItem1_Click(sender, e);
-            //displayNodeList();
         }
 
         private void displayNodeList()
@@ -1391,7 +1408,6 @@ namespace QTFormApp
             if (map1 != null)
             {
                 root = imageToTree(map1);
-                treeRightStart = panel2.Width - treeLeftStart;
                 drawTree(root, treeLeftStart, treeRightStart, nextLevelSpace,false);
             }
             else if (root == null)
@@ -1399,6 +1415,12 @@ namespace QTFormApp
                 MessageBox.Show("Load an image!");
                 matrixFormatToolStripMenuItem_Click(sender, e);
             }
+        }
+
+        private int getTreeRightStart()
+        {
+            return panel2.Width - treeLeftStart;
+
         }
 
         private void moveTreeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1423,13 +1445,19 @@ namespace QTFormApp
 
         private void randomMatrixToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int n = 128;
+            
+        }
+
+        private void randomMatrix(int n)
+        {
+            clearAllNodes();
             numRows = n;
             numCols = n;
             map1 = new int[numRows, numCols];
-            nodes = new Node[n * n * 2];
+            nodes = new Node[(n * n * 2)+1];
             Random rnd = new Random();
-            for (int r = 0; r < numRows; r++){
+            for (int r = 0; r < numRows; r++)
+            {
                 for (int c = 0; c < numCols; c++)
                 {
                     int num = rnd.Next(0, 9);
@@ -1460,7 +1488,6 @@ namespace QTFormApp
                     map1[r, c] = num;
                 }
             }
-            drawImage(ref map1);
         }
 
         private void smallToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -1613,6 +1640,123 @@ namespace QTFormApp
         {
             menuChoice = "";
         }
+
+        private void x4ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            randomMatrix(4);
+            drawImage(ref map1);
+        }
+
+        private void x8ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            randomMatrix(8);
+            drawImage(ref map1);
+        }
+
+        private void x16ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            randomMatrix(16);
+            drawImage(ref map1);
+        }
+
+        private void x32ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            randomMatrix(32);
+            drawImage(ref map1);
+        }
+
+        private void x64ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            randomMatrix(64);
+            drawImage(ref map1);
+        }
+
+        private void x128ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            randomMatrix(128);
+            drawImage(ref map1);
+        }
+
+        private void fromPreorderFormatToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog oFD = new OpenFileDialog();
+            oFD.Filter = "Plaintext Files|*.txt";
+            oFD.Title = "Select a Plaintext File";
+
+            if (oFD.ShowDialog() == DialogResult.OK)
+            {
+                fileName = oFD.FileName;
+            }
+            //displayToolStripMenuItem_Click(sender, e);
+            //parseMatrixInputFile(ref map1);
+            parsePreorderInputFile(ref map1);
+            treeRightStart = panel2.Width - treeLeftStart;
+            drawTree(root, treeLeftStart, treeRightStart, nextLevelSpace, false);
+            displayToolStripMenuItem1_Click(sender, e);
+            //displayNodeList();
+
+        }
+
+        private void fromMatrixToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog oFD = new OpenFileDialog();
+            oFD.Filter = "Plaintext Files|*.txt";
+            oFD.Title = "Select a Plaintext File";
+
+            if (oFD.ShowDialog() == DialogResult.OK)
+            {
+                fileName = oFD.FileName;
+            }
+            int result = parseMatrixInputFile(ref map1);
+            if (result == -1)
+            {
+                return;
+            }//displayToolStripMenuItem_Click(sender, e);
+            treeFromMatrix();
+        }
+
+        private void treeFromMatrix()
+        {
+            root = imageToTree(map1);
+            treeRightStart = panel2.Width - treeLeftStart;
+            drawTree(root, treeLeftStart, treeRightStart, nextLevelSpace, false);
+        }
+        private void x4ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            randomMatrix(4);
+            treeFromMatrix();
+        }
+
+        private void x8ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            randomMatrix(8);
+            treeFromMatrix();
+        }
+
+        private void x16ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            randomMatrix(16);
+            treeFromMatrix();
+        }
+
+        private void x32ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            randomMatrix(32);
+            treeFromMatrix();
+        }
+
+        private void x64ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            randomMatrix(64);
+            treeFromMatrix();
+        }
+
+        private void x128ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            randomMatrix(128);
+            treeFromMatrix();
+        }
+
 
         
     }//class
