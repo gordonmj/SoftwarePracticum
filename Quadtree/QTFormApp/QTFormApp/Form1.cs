@@ -313,6 +313,7 @@ namespace QTFormApp
                 size = (((formWidth) / cols) / 2);
             gp.Clear(Color.DarkCyan);
             bmpToSave = new Bitmap(panel1.ClientSize.Width, panel1.ClientSize.Height);
+            //recrusiveDraw(root);
             using (Graphics bmpGraphic = Graphics.FromImage(bmpToSave))
             {
                 for (int r = 0; r < rows; r++)
@@ -347,6 +348,13 @@ namespace QTFormApp
             }//bmp
         }//drawImageHelper
 
+        private void recursiveDraw(Node n)
+        {
+            if (!n.hasChildren)
+            {
+                //gp.FillRectangle(new SolidBrush(n.getColor()), new Rectangle());
+            }
+        }
         private Node imageToTree(int[,] map)
         {
             root = new Node();
@@ -831,6 +839,12 @@ namespace QTFormApp
         }
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
+            Point whereClicked = e.Location;
+            isolate(whereClicked);
+        }
+
+        private void isolate(Point whereClicked)
+        {
             int size;
             int offset = 10;
             if ((formWidth / numCols) / 2 > (formHeight - offset) / numRows)
@@ -841,9 +855,8 @@ namespace QTFormApp
             int rightBound = offset + (size * numCols);
             int upBound = offset;
             int bottomBound = offset + (size * numRows);
-            int mid = (upBound+bottomBound)/2;
+            int mid = (upBound + bottomBound) / 2;
             int ctr = (leftBound + rightBound) / 2;
-            Point whereClicked = e.Location;
             int[] bounds = new int[4];
             Node newRoot = new Node();
             bool east;
@@ -886,9 +899,8 @@ namespace QTFormApp
                 }
             }
             redrawTree(newRoot, true);
-            //isolateQuadrant(map1, bounds, panel1Graphics);
+            isolateQuadrant(map1, bounds, panel1Graphics);
         }
-
         private void panel2_MouseUp(object sender, MouseEventArgs e)
         {
             Point whereUnclicked = e.Location;
@@ -1455,6 +1467,7 @@ namespace QTFormApp
             if (map1 != null)
             {
                 root = imageToTree(map1);
+                treeRightStart = panel2.Width - treeLeftStart;
                 drawTree(root, treeLeftStart, treeRightStart, nextLevelSpace,false);
             }
             else if (root == null)
@@ -1510,18 +1523,33 @@ namespace QTFormApp
                     int num = rnd.Next(0, 9);
                     if (r > 1 && c > 1)
                     {
-                        if (num == 2 || num == 6)
+                        if (num == 2)
                         {
                             //num = 0;
                             num = map1[r - 1, c];
                         }
-                        else if (num == 3 || num == 7)
+                        else if (num == 3)
                         {
                             num = map1[r, c - 1];
                         }
-                        else if (num == 4 || num == 8)
+                        else if (num == 4)
                         {
                             num = map1[r - 1, c - 1];
+                        }
+                        else if (num == 8)
+                        {
+                            num = rnd.Next(0, 2);
+                            map1[r - 1, c] = num;
+                        }
+                        else if (num == 7)
+                        {
+                            num = rnd.Next(0, 2);
+                            map1[r, c-1] = num;
+                        }
+                        else if (num == 6)
+                        {
+                            num = rnd.Next(0, 2);
+                            map1[r - 1, c - 1] = num;
                         }
                         else if (num == 5)
                         {
