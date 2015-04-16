@@ -92,6 +92,7 @@
             this.x32ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.x64ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.x128ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.manualGuidedDrawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -385,6 +386,7 @@
             // manualToolStripMenuItem
             // 
             this.manualToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.manualGuidedDrawToolStripMenuItem,
             this.drawNodeToolStripMenuItem,
             this.drawArrowToolStripMenuItem,
             this.moveTreeToolStripMenuItem,
@@ -616,6 +618,13 @@
             this.x128ToolStripMenuItem1.Text = "128x128";
             this.x128ToolStripMenuItem1.Click += new System.EventHandler(this.x128ToolStripMenuItem1_Click);
             // 
+            // manualGuidedDrawToolStripMenuItem
+            // 
+            this.manualGuidedDrawToolStripMenuItem.Name = "manualGuidedDrawToolStripMenuItem";
+            this.manualGuidedDrawToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.manualGuidedDrawToolStripMenuItem.Text = "Manual guided draw";
+            this.manualGuidedDrawToolStripMenuItem.Click += new System.EventHandler(this.manualGuidedDrawToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -705,5 +714,6 @@
         private System.Windows.Forms.ToolStripMenuItem x32ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem x64ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem x128ToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem manualGuidedDrawToolStripMenuItem;
     }
 }

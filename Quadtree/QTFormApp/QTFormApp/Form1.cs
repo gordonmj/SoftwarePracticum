@@ -132,9 +132,20 @@ namespace QTFormApp
                     drawNewNode(currentPosition, whereClicked, Color.Black);              
                     break;
                 case "drawGreyNode":
-                     Node newGray = drawNewNode(currentPosition, whereClicked, Color.Gray);
-                     if (newGray != null) addChildren(currentPosition-1);
+                    drawNewNode(currentPosition, whereClicked, Color.Gray);              
                    break;
+                case "manualDraw":
+                    root = drawNewNode(currentPosition, whereClicked, Color.Gray);
+                    if (root != null) addChildren(root);
+                    String manDrawTree = treeToString(root);
+                    String[] manDrawTreeArray = manDrawTree.Split(' ');
+                    stringToTree(ref manDrawTreeArray,2,root);
+                    map1 = new int[numRows, numCols];
+                    root.backSetDimensions(numRows, numCols);
+                    treeToImage(root, 0, 0,ref map1);
+                    MessageBox.Show("Thanks! I don't know the exact dimensions of the image represented by your tree, but I'll guess at least "+numRows+"x"+numCols);
+                    drawImage(ref map1);
+                    break;
                 case "drawArrow":
                     menuChoice = "finishArrow";
                     firstClick = whereClicked;
@@ -180,7 +191,7 @@ namespace QTFormApp
 
         private void displayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (map1 != null || root != null)
+            if (map1 != null && root != null)
             {
                 drawImage(ref map1);
 
@@ -253,7 +264,7 @@ namespace QTFormApp
             newRoot.numCols = numCols;
             newRoot.numRows = numRows;
             stringToTree(ref parsedInput,2,newRoot);
-            treeToImage(newRoot, 0, 0,map);
+            treeToImage(newRoot, 0, 0,ref map);
             root = newRoot;
         }
 
@@ -602,9 +613,8 @@ namespace QTFormApp
 
         }
 
-        private void addChildren(int origin)
+        private void addChildren(Node n)
         {
-            Node n = nodes[origin];
             if (n.getColorString() == "black" || n.getColorString() == "white")
             {
                 MessageBox.Show("Black or White nodes are leaf nodes!");
@@ -615,34 +625,53 @@ namespace QTFormApp
                 int spacing = panel2.Width / 5;
                 Point p;
                 Color c;
-                Node[] children = new Node[] {n.NW, n.SW, n.NE, n.SE};
+                Node[] children = {n.NW, n.SW, n.SE, n.NE};
                 for (int childNum = 0; childNum < 4; childNum++ )
                 {
                     bool isGray = false;
                     p = new Point((childNum+1) * spacing, n.getPoint().Y + nextLevelSpace);
-                    DialogResult dialogResult = MessageBox.Show("Yes for black, No for white, Cancel for gray", "Black or white?", MessageBoxButtons.YesNoCancel);
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        c = Color.Black;
+                    DialogResult leaf = MessageBox.Show("Yes for a leaf node, No for gray node, Cancel to cancel", "Leaf or not?", MessageBoxButtons.YesNoCancel);
+                    if (leaf == DialogResult.Yes)
+                        {
+                            DialogResult black = MessageBox.Show("Yes for a black node, No for white node, Cancel to cancel", "Blac or not?", MessageBoxButtons.YesNoCancel);
+           
+                        if (black == DialogResult.Yes)
+                        {
+                            c = Color.Black;
+                        }
+                        else if (black == DialogResult.No)
+                        {
+                            c = Color.White;
+                        }
+                        else 
+                        {
+                            return;
+                        }
                     }
-                    else if (dialogResult == DialogResult.No)
-                    {
-                        c = Color.White;
-                    }
-                    else
+                    else if (leaf==DialogResult.No)
                     {
                         c = Color.Gray;
                         isGray = true;
                     }
-                    children[childNum] = drawNewNode(currentPosition, p, c);
+                    else
+                    {
+                        return;
+                    }
+                    if (numRows < (Math.Pow(2, n.level+1)))
+                    {
+                        numRows = Convert.ToInt32(Math.Pow(2, n.level+1));
+                        numCols = numRows;
+                        //MessageBox.Show("Node level is " + n.level + " and numRows is " + numRows);
+                    }
                     children[childNum].setColor(c);
                     children[childNum].setPoint(p);
+                    drawNode(children[childNum],p);
                     connectTwoNodes(n, children[childNum]);
                     //MessageBox.Show("isGray?" + isGray + " currentPosition=" + currentPosition);
-                    MessageBox.Show("Correct node? " + (children[childNum] == nodes[currentPosition - 1]) + " and color?" + children[childNum].getColorString()+" and number "+childNum);
+                    //MessageBox.Show("Correct node? " + (children[childNum] == nodes[currentPosition - 1]) + " and color?" + children[childNum].getColorString()+" and number "+childNum);
                     if (isGray && nodes[currentPosition - 1] != null)
                     {
-                        addChildren(currentPosition - 1);
+                        addChildren(children[childNum]);
                     }
                 }//for
             }//else
@@ -862,10 +891,10 @@ namespace QTFormApp
 
         private void panel2_MouseUp(object sender, MouseEventArgs e)
         {
+            Point whereUnclicked = e.Location;
+            int whichNode = findTouchingNode(whereUnclicked);
             try
             {
-                Point whereUnclicked = e.Location;
-                int whichNode = findTouchingNode(whereUnclicked);
                 if (whereUnclicked.X < 0 || whereUnclicked.Y < 0)
                 {
                     deleteNode(lastClicked);
@@ -883,7 +912,7 @@ namespace QTFormApp
                 {
                     if (nodes[lastClicked] != null && nodes[whichNode] != null)
                     {
-                        eraseArrow(nodes[beforeLastClicked].parent, nodes[lastClicked]);
+                        eraseArrow(nodes[beforeLastClicked], nodes[lastClicked]);
                         connectTwoNodes(nodes[lastClicked].parent, nodes[whichNode]);
                         beforeLastClicked = whichNode;
                         menuChoice = "moveArrowBase";
@@ -943,6 +972,14 @@ namespace QTFormApp
                     }
                 }
 
+            }
+            catch (IndexOutOfRangeException ioore)
+            {
+                MessageBox.Show("Array issue. nodes[] length="+nodes.GetLength(0)+"whichNode="+whichNode);
+            }
+            catch (NullReferenceException nre)
+            {
+                MessageBox.Show("null ref somewhere.");
             }
             catch (Exception ex)
             {
@@ -1027,15 +1064,20 @@ namespace QTFormApp
             {
                 return "0";
             }
-            else
+            else if (n.getColor() == Color.Gray)
             {
                 String children = "";
-                children += " "+treeToString(n.NW);
-                children += " " + treeToString(n.SW);
-                children += " " + treeToString(n.NE); 
-                children += " " + treeToString(n.SE); 
+                children = children +" "+treeToString(n.NW);
+                children = children + " " + treeToString(n.SW);
+                children = children + " " + treeToString(n.SE);
+                children = children + " " + treeToString(n.NE); 
 
                 return "2" + children;
+            }
+            else
+            {
+                MessageBox.Show("Something went wrong in treeToString.");
+                return "!";
             }
         }//treeToString
         
@@ -1136,7 +1178,7 @@ namespace QTFormApp
                 }
             return end; //what number to return?
         }
-        private void treeToImage(Node n, int rStart, int cStart, int[,] map)
+        private void treeToImage(Node n, int rStart, int cStart, ref int[,] map)
         {
 
             if (n == null)
@@ -1153,9 +1195,13 @@ namespace QTFormApp
                 {
                     fill = 1;
                 }
-                else
+                else if (n.getColorString() == "white")
                 {
                     fill = 0;
+                }
+                else
+                {
+                    fill = 2;
                 }
                 for (int r = rStart; r < rStart + n.numRows; r++)
                 {
@@ -1169,10 +1215,10 @@ namespace QTFormApp
             else
             {
                 //MessageBox.Show(n.toString()); //("Null? NW: " + (n.NW == null) + "  SW: " + (n.SW == null) + "  SE: " + (n.SE == null) + "  NE: " + (n.NE == null));
-                treeToImage(n.NW, rStart, cStart,map);
-                treeToImage(n.SW, rStart + (n.numRows/2), cStart,map); 
-                treeToImage(n.SE, rStart + (n.numRows/2), cStart + (n.numCols/2),map);
-                treeToImage(n.NE, rStart, cStart + (n.numCols/2),map);
+                treeToImage(n.NW, rStart, cStart,ref map);
+                treeToImage(n.SW, rStart + (n.numRows/2), cStart,ref map); 
+                treeToImage(n.SE, rStart + (n.numRows/2), cStart + (n.numCols/2), ref map);
+                treeToImage(n.NE, rStart, cStart + (n.numCols/2),ref map);
             }
         }
         private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -1755,6 +1801,12 @@ namespace QTFormApp
         {
             randomMatrix(128);
             treeFromMatrix();
+        }
+
+        private void manualGuidedDrawToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            menuChoice = "manualDraw";
+            MessageBox.Show("Double-click where you want your root node.");
         }
 
 

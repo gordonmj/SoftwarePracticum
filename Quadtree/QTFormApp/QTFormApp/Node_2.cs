@@ -278,5 +278,21 @@ namespace QTFormApp
                 }
             }
         }
+
+        public void backSetDimensions(int r, int c)
+        {
+            if (!hasChildren)
+            {
+                numRows = r;
+                numCols = c;
+            }
+            else
+            {
+                NW.backSetDimensions(r / 2, c / 2);
+                SW.backSetDimensions(r / 2, c / 2);
+                SE.backSetDimensions(r / 2, c / 2);
+                NE.backSetDimensions(r / 2, c / 2);
+            }
+        }
     }
 }
