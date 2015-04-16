@@ -281,12 +281,9 @@ namespace QTFormApp
 
         public void backSetDimensions(int r, int c)
         {
-            if (!hasChildren)
-            {
-                numRows = r;
-                numCols = c;
-            }
-            else
+            numRows = r;
+            numCols = c;
+            if (hasChildren)
             {
                 NW.backSetDimensions(r / 2, c / 2);
                 SW.backSetDimensions(r / 2, c / 2);

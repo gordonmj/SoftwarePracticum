@@ -138,8 +138,9 @@ namespace QTFormApp
                     root = drawNewNode(currentPosition, whereClicked, Color.Gray);
                     if (root != null) addChildren(root);
                     String manDrawTree = treeToString(root);
-                    String[] manDrawTreeArray = manDrawTree.Split(' ');
-                    stringToTree(ref manDrawTreeArray,2,root);
+                    char[] delims = { ' ', '\n' };
+                    String[] manDrawTreeArray = manDrawTree.Split(delims);
+                    stringToTree(ref manDrawTreeArray,0,root);
                     map1 = new int[numRows, numCols];
                     root.backSetDimensions(numRows, numCols);
                     treeToImage(root, 0, 0,ref map1);
@@ -260,12 +261,11 @@ namespace QTFormApp
             numCols = Convert.ToInt32(parsedInput[1]);
             map = new int[numRows, numCols];
             nodes = new Node[numRows * numCols * 2];
-            Node newRoot = new Node();
-            newRoot.numCols = numCols;
-            newRoot.numRows = numRows;
-            stringToTree(ref parsedInput,2,newRoot);
-            treeToImage(newRoot, 0, 0,ref map);
-            root = newRoot;
+            //Node newRoot = new Node();
+            //newRoot.numCols = numCols;
+            //newRoot.numRows = numRows;
+            stringToTree(ref parsedInput,2,root);
+            treeToImage(root, 0, 0,ref map);
         }
 
         private void isolateQuadrant(int[,] map, int[] boundaries, Graphics gp){
@@ -1050,6 +1050,7 @@ namespace QTFormApp
 
         private String treeToString(Node n)
         {
+            //MessageBox.Show("Node is "+n.getColorString());
             if (n == null)
             {
                 MessageBox.Show("NULL!");
@@ -1070,8 +1071,8 @@ namespace QTFormApp
                 children = children +" "+treeToString(n.NW);
                 children = children + " " + treeToString(n.SW);
                 children = children + " " + treeToString(n.SE);
-                children = children + " " + treeToString(n.NE); 
-
+                children = children + " " + treeToString(n.NE);
+                //MessageBox.Show("Returning string 2" + children);
                 return "2" + children;
             }
             else
