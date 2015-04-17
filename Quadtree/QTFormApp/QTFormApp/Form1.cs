@@ -29,6 +29,8 @@ namespace QTFormApp
         private Brush grayBrush = new SolidBrush(Color.Gray);
         private Brush slateGrayBrush = new SolidBrush(Color.SlateGray);
         private Brush bgBrush = new SolidBrush(Color.PowderBlue);
+        private Color p2color = Color.PowderBlue;
+        private Color p1color = Color.DarkCyan;
         private int formWidth;
         private int formHeight;
         private Bitmap bmpToSave;
@@ -311,7 +313,7 @@ namespace QTFormApp
                 size = ((formHeight) / rows);
             else
                 size = (((formWidth) / cols) / 2);
-            gp.Clear(Color.DarkCyan);
+            gp.Clear(p1color);
             bmpToSave = new Bitmap(panel1.ClientSize.Width, panel1.ClientSize.Height);
             //recrusiveDraw(root);
             using (Graphics bmpGraphic = Graphics.FromImage(bmpToSave))
@@ -388,7 +390,7 @@ namespace QTFormApp
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            panel1Graphics.Clear(Color.DarkCyan);
+            panel1Graphics.Clear(p1color);
         }
 
         private void blackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -527,7 +529,7 @@ namespace QTFormApp
 
         private void clearNode(int origin)
         {
-            panel2Graphics.FillEllipse(new SolidBrush(Color.PowderBlue), new Rectangle(adjustPointOtherWay(nodes[origin].getPoint()), new Size(nodeWidth, nodeHeight)));
+            panel2Graphics.FillEllipse(new SolidBrush(p2color), new Rectangle(adjustPointOtherWay(nodes[origin].getPoint()), new Size(nodeWidth, nodeHeight)));
         }
 
         private void deleteNode(int origin)
@@ -697,7 +699,7 @@ namespace QTFormApp
 
         private void redrawTree(Node n, bool inPlace)
         {
-            panel2Graphics.Clear(Color.PowderBlue);
+            panel2Graphics.Clear(p2color);
             int xShift = n.getPoint().X - (panel2.Width / 2);
             int yShift = n.getPoint().Y - nextLevelSpace;
             drawTree(n, treeLeftStart+xShift, treeRightStart+xShift, nextLevelSpace+yShift, inPlace);
@@ -1047,13 +1049,13 @@ namespace QTFormApp
             }
             currentPosition = 0;
             bmpToSaveForQT = new Bitmap(panel2.ClientSize.Width, panel2.ClientSize.Height);
-            panel2Graphics.Clear(Color.PowderBlue);
+            panel2Graphics.Clear(p2color);
 
         }
         private void redrawAllNodes()
         {
             bmpToSaveForQT = new Bitmap(panel2.ClientSize.Width, panel2.ClientSize.Height);
-            panel2Graphics.Clear(Color.PowderBlue);
+            panel2Graphics.Clear(p2color);
             for (int i = 0; i < currentPosition; i++)
             {
                 redrawNode(i, nodes[i].getPoint());
@@ -1463,7 +1465,7 @@ namespace QTFormApp
         }
         private void displayToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            panel2Graphics.Clear(Color.PowderBlue);
+            panel2Graphics.Clear(p2color);
             if (map1 != null)
             {
                 root = imageToTree(map1);
@@ -1836,6 +1838,42 @@ namespace QTFormApp
         {
             menuChoice = "manualDraw";
             MessageBox.Show("Double-click where you want your root node.");
+        }
+
+        private void powderBlueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            p1color = Color.PowderBlue;
+            panel1Graphics.Clear(p1color);
+        }
+
+        private void darkCyanToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            p1color = Color.DarkCyan;
+            panel1Graphics.Clear(p1color);
+        }
+
+        private void greenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            p1color = Color.Green;
+            panel1Graphics.Clear(p1color);
+        }
+
+        private void powderBlueToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            p2color = Color.PowderBlue;
+            panel2Graphics.Clear(p2color);
+        }
+
+        private void darkCyanToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            p2color = Color.DarkCyan;
+            panel2Graphics.Clear(p2color);
+        }
+
+        private void greenToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            p2color = Color.Green;
+            panel2Graphics.Clear(p2color);
         }
 
 
